@@ -10,7 +10,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 export default class Homescreen extends Component{
     constructor(props){
         super(props);
-        console.log(this.props.navigation.state.params.data.data.product_categories)
+        console.log(this.props.navigation.state.params.data)
         this.state={
             isLoading:true,
             category_id:'',
@@ -23,16 +23,6 @@ export default class Homescreen extends Component{
         this._CupboardBtnPressed = this._CupboardBtnPressed.bind(this);
     }
 
-    componentWillMount(){
-        const { navigation } = this.props;
-        const udata=navigation.getParam('data')
-        // console.log("here:  "+JSON.stringify(this.state.user_data.data))
-        console.log(this.state.imageArray)
-        this.setState({
-            user_data:udata
-        })
-
-    }
 
     SwiperImages(){
         console.log('swiperimages')
@@ -45,9 +35,6 @@ export default class Homescreen extends Component{
         console.log(filteredArray[0])
         if(filteredArray!=undefined && filteredArray.length>0)
           return filteredArray.map((element) => {
-            // console.log(element.image)
-            // this.setState({currentImg:element.image})
-            // console.log("current image :"+this.state.currentImg)
             console.log(element[0])
            return (
   
@@ -60,14 +47,7 @@ export default class Homescreen extends Component{
   
         })              
     }
-    // componentWillMount(){
-    //     setTimeout(() => {
-    //       this.setState({
-    //         isLoading:false
-    //       })
-    //     },
-    //     1000)
-    //   }
+
     _TableBtnPressed(){ 
         this.props.navigation.navigate('productListing',{'category_id':1});
     }
@@ -80,25 +60,8 @@ export default class Homescreen extends Component{
     _CupboardBtnPressed(){ 
         this.props.navigation.navigate('productListing',{'category_id':4});
     }
-    render(){
-        // console.log(imgSliderData[0].image1_url)
+    render(){    
         return (
-        //     this.state.isLoading?
-        //     <View style={{flex:1,backgroundColor:'white',opacity:1
-              
-        //       }}>
-        //     <ActivityIndicator
-        //               animating = {true}
-        //               size="large"
-        //               color='red'
-        //               style={{flex:1,
-        //                       marginTop:'50%',
-        //                       opacity:1,
-        //                       position:'absolute', left:0, right:0, bottom:0, top:0 
-        //                     }}
-        //           />
-        //   </View>
-        //   :
             <View style={{flex: 1}}>
                 <View> 
                     <Header styles={styles.header} 

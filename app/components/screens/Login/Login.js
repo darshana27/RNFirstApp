@@ -5,6 +5,7 @@ import FeatherIcon from 'react-native-vector-icons/dist/Feather';
 let validators=require('../../../utils/validators').validators();
 // import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
+import * as urls from '../../../lib/urls';
 
 export default class Login extends Component{
     constructor(props){
@@ -59,34 +60,38 @@ export default class Login extends Component{
                     Alert.alert(response.user_msg)
                 }
                 else{
+                    
                     AsyncStorage.setItem('user_access_token',JSON.stringify(response.data.access_token));
-                    console.log("After Login : "+response.data.access_token)
-                    fetch(`http://staging.php-dev.in:8844/trainingapp/api/users/getUserData`,{
-                        method:'GET',
-                        headers:{
-                          'access_token':JSON.parse(value) 
-                        }
-                      })
-                      .then(response => response.json())
-                      .then(response => {console.log("Fetch after login: "+response)
-                      if(response.status!=200){
-                        AsyncStorage.removeItem('user_access_token')
-                        this.props.navigation.replace('Login')
-                        // AsyncStorage.setItem('screen','Login')
-                      }
-                      else{
-                     
-                        this.props.navigation.replace('Homescreen',{'data':response})
-                        console.log(response.data.product_categories)
-                     
-                      } 
-                    })
-
-                    console.log("After Login : "+response.data.access_token)
-                    this.props.navigation.replace('Homescreen');}}
+                    var accessToken=AsyncStorage.getItem('user_access_token')
+                    console.log("From AsyncStorage : "+JSON.stringify(accessToken))
+                            console.log("After Login : "+response.data.access_token)
+                            console.log("After Login Parsed: "+JSON.stringify(response.data.access_token))
+                            fetch(`http://staging.php-dev.in:8844/trainingapp/api/users/getUserData`,{
+                                method:'GET',
+                                headers:{
+                                'access_token':response.data.access_token,
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(response => {console.log(response)
+                            if(response.status!=200){
+                                AsyncStorage.removeItem('user_access_token')
+                                this.props.navigation.replace('Login')
+                                // AsyncStorage.setItem('screen','Login')
+                            }
+                            else{
+                                this.props.navigation.replace('Homescreen',{
+                                    'data':response
+                                })
+                                console.log(response.data.product_categories)   
+                            } 
+                            })
+                            console.log("After Login : "+response.data.access_token)
+     
+                
+                }}
                 );
         }
-   
     }
     render(){
         return (

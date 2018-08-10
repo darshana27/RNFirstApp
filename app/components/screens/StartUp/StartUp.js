@@ -35,9 +35,9 @@ export default class StartUp extends Component {
                         .then(response => {
                             console.log(response)
                             if (response.status != 200) {
-                                throw new Error();
+                                throw Error(response.message)
                                 AsyncStorage.removeItem('user_access_token')
-                                Alert.alert('Something went wrong.Please try again later')
+                                // Alert.alert('Something went wrong.Please try again later')
                                 this.props.navigation.replace('Login')
                                 // AsyncStorage.setItem('screen','Login')
                             } else {
@@ -50,7 +50,7 @@ export default class StartUp extends Component {
                             }
                         })
                         .catch(err => {
-                            alert('Something went wrong. Please try again later' + err)
+                            alert('Something went wrong.Please try again later' )
                         })
                 } else {
                     console.log('Key is null');
