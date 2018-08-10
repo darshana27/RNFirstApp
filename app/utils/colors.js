@@ -1,0 +1,10 @@
+export const red = "#e91c1a";
+export const white="#ffffff";
+export const deepRed="#9e0100";
+export const productHeading1="#4f4f4f";
+export const productPrice="#FE4040";
+export const lightGray="#7F7F7F";
+export const starFilled='#FFBA00';
+export const productDetailsHeading1='#262626';
+export const descHeading='#111111';
+export const descContent='#333333';
