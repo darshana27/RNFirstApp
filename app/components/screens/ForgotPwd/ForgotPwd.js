@@ -5,6 +5,8 @@ import FeatherIcon from 'react-native-vector-icons/dist/Feather';
 let validators=require('../../../utils/validators').validators();
 // import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
+let fetchApi=require('../../../lib/api').fetchApi();
+import * as urls from '../../../lib/urls';
 
 export default class ForgotPwd extends Component{
     constructor(props){
@@ -45,20 +47,30 @@ export default class ForgotPwd extends Component{
             let formData=new FormData();
                 formData.append("email",this.state.email);
                 console.log(formData);
-                fetch("http://staging.php-dev.in:8844/trainingapp/api/users/forgot",{ 
-                    method:'POST',
-                    body:formData })
-                .then(response => response.json())
-                .then(  response =>{console.log(response);
-                    if(response.status==200){
-                        Alert.alert(response.user_msg)
-                    }
-                    else{
-                        console.log(response.user_msg)
-                    } 
-                })
+                fetchApi.fetchData(''+urls.host_url+urls.user_forgot_password,'POST',null,formData,this.callbackFn)
+                // fetch("http://staging.php-dev.in:8844/trainingapp/api/users/forgot",{ 
+                //     method:'POST',
+                //     body:formData })
+                // .then(response => response.json())
+                // .then(  response =>{console.log(response);
+                //     if(response.status==200){
+                //         Alert.alert(response.user_msg)
+                //     }
+                //     else{
+                //         console.log(response.user_msg)
+                //     } 
+                // })
                 }
    
+    }
+    callbackFn(response){
+        console.log(response);
+        if(response.status==200){
+            Alert.alert(response.user_msg)
+        }
+        else{
+            console.log(response.user_msg)
+        } 
     }
     render(){
         return (

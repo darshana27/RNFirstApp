@@ -1,9 +1,10 @@
 import React from 'react';
 import { Text, View, FlatList, Image, ScrollView, TouchableOpacity,ActivityIndicator } from 'react-native';
-
 import Header from '../../header/header';
 import styles from '../productListing/styles';
 import StarRating from 'react-native-star-rating';
+let fetchApi=require('../../../lib/api').fetchApi();
+import * as urls from '../../../lib/urls';
 import Icon from 'react-native-vector-icons/FontAwesome';
 // import {Loader} from '../../Loader/Loader';
 
@@ -13,8 +14,8 @@ export default class productListing extends React.Component {
     this.state ={
       isLoading: true,
       product_category_id:0,
-    
     }
+    this.callbackFn=this.callbackFn.bind(this);
   }
   // componentWillMount(){
   //   setTimeout(() => {
@@ -25,42 +26,37 @@ export default class productListing extends React.Component {
   //   1500)
   // }
   componentDidMount(){
-
+    console.log("ComponentDidMount")
     const category_id = this.props.navigation.getParam('category_id');
     console.log("category_id", category_id)
     // this.setState({product_category_id:category_id})
-    
-
     // console.log("sidebar_category", sidebar_category);
-    {category_id!==null?
-    fetch(`http://staging.php-dev.in:8844/trainingapp/api/products/getList?product_category_id=`+category_id,
-          {method:'GET'}
-        )
-        .then(response => response.json())
-        .then(responseJson => {
-             
-          this.setState({ 
-            dataSource: responseJson.data,
-          }, function(){
-  
-          });
-        })
-      :
-      fetch(`http://staging.php-dev.in:8844/trainingapp/api/products/getList?product_category_id=`+sidebar_category,
-      {method:'GET'}
-      )
-      .then(response => response.json())
-      .then(responseJson => {
-     
-      this.setState({   
-        dataSource: responseJson.data,
-      }, function(){
-
-      });
-    })}
-   
+    // {category_id!==null?
+    category_id!==null?
+    fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+category_id,'GET',{},null,this.callbackFn)
+    :console.log("Null")
+    // fetch(`http://staging.php-dev.in:8844/trainingapp/api/products/getList?product_category_id=`+category_id,
+    //       {method:'GET'}
+    //     )
+    //     .then(response => response.json())
+    //     .then(responseJson => {   
   }
-  
+  callbackFn(response){
+    console.log(response)
+    console.log("Callback called")
+    this.setState({ 
+      dataSource: response.data,
+    }, function(){
+
+    });
+  }
+  // callbackFnSidebar(response){
+  //   this.setState({   
+  //     dataSource: responseJson.data,
+  //   }, function(){
+
+  //   });
+  // }
   renderSeparator = () => (
     <View
       style={{

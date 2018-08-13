@@ -9,6 +9,9 @@ import * as fontSize from '../../../utils/fontSizes';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Modal from "react-native-modal";
 // import Share, {ShareSheet, Button} from 'react-native-share';
+let fetchApi=require('../../../lib/api').fetchApi();
+import * as urls from '../../../lib/urls';
+
 
 export default class productDetails extends React.Component {
   constructor(props){
@@ -26,6 +29,7 @@ export default class productDetails extends React.Component {
       this._toggleModal1 = this._toggleModal1.bind(this);
       this._toggleModal2 = this._toggleModal2.bind(this);
       this.rateNow=this.rateNow.bind(this);
+      this.callbackFn=this.callbackFn.bind(this);
   }
 
   // onCancel() {
@@ -43,18 +47,24 @@ export default class productDetails extends React.Component {
     console.log(product_id);
    this.setState({productID:product_id})
     // this.setState({ productId : product_id})
-    fetch(`http://staging.php-dev.in:8844/trainingapp/api/products/getDetail?product_id=`+product_id,
-    {method:'GET'}
-    )
-    .then(response => response.json())
-    .then(response => {
-      console.log(response.data)
-      this.setState({productDet:response.data})
-      this.setState({currentImg:this.state.productDet.product_images[0].image})
-      // console.log("ComponentDidMount currimg:"+this.state.currentImg)
-      console.log(this.state.productDet.product_images[0].image)
-    })
+
+    fetchApi.fetchData(''+urls.host_url+urls.get_product_details+'?product_id='+product_id,'GET',{},null,this.callbackFn)
+    // fetch(`http://staging.php-dev.in:8844/trainingapp/api/products/getDetail?product_id=`+product_id,
+    // {method:'GET'}
+    // )
+    // .then(response => response.json())
+    // .then(response => {
+
+    // })
     // const product_id=this.props.navigation.getParam('product_id')
+  }
+  callbackFn(response){
+    console.log("Product Details Callback called")
+    console.log(response.data)
+    this.setState({productDet:response.data})
+    this.setState({currentImg:this.state.productDet.product_images[0].image})
+    // console.log("ComponentDidMount currimg:"+this.state.currentImg)
+    console.log(this.state.productDet.product_images[0].image)
   }
   onClick() {
     Share.share({
@@ -75,34 +85,34 @@ export default class productDetails extends React.Component {
     formData.append('product_id',this.state.productID);
     formData.append('rating',this.state.starCount);
     console.log(this.state.productID)
-      fetch('http://staging.php-dev.in:8844/trainingapp/api/products/setRating',
-      {
-        method:'POST',
-       body: formData,
-      }
-      )
-      .then(response => response.json())
-      .then(response => {
-        console.log(response)
-        if(response.status==200){
-          alert(response.message)
-          this._toggleModal1()
-        }
+    fetchApi.fetchData(''+urls.host_url+urls.set_product_ratings,'POST',null,formData,this.callbackRating)
+    this._toggleModal1()
+      // fetch('http://staging.php-dev.in:8844/trainingapp/api/products/setRating',
+      // {
+      //   method:'POST',
+      //  body: formData,
+      // }
+      // )
+      // .then(response => response.json())
+      // .then(response => {
+
         
-      })
+      // })
       
     }
-
+    callbackRating(response){
+      console.log(response)
+      if(response.status==200){
+        alert(response.message)
+      }
+    }
     _toggleModal1(){
       console.log("function called")
       this.setState({ isModal1Visible: !this.state.isModal1Visible });
-      
-    
     }
     _toggleModal2(){
       console.log("function called")
       this.setState({ isModal2Visible: !this.state.isModal2Visible });
-    
     }
 
     onStarRatingPress(rating) {

@@ -35,10 +35,10 @@ export default class MyAccount extends Component{
     }
 
     _edit(){
-      this.props.navigation.navigate('EditProfile')
+      this.props.navigation.navigate('EditProfile',{'data':this.state.userDet})
     }
     _reset(){
-        this.props.navigation.navigate('ForgotPassword')
+        this.props.navigation.navigate('ForgotPassword',{'data':this.state.userDet})
     }
     render(){
       console.log(this.state.first_name)

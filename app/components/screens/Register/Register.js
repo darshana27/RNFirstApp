@@ -6,7 +6,8 @@ import styles from './styles';
 import Header from '../../header/header';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/dist/MaterialIcons';
-
+import * as urls from '../../../lib/urls';
+let fetchApi=require('../../../lib/api').fetchApi();
 let validators=require('../../../utils/validators').validators();
 
 export default class Register extends Component{
@@ -25,6 +26,7 @@ export default class Register extends Component{
         }
         
         this._register = this._register.bind(this);
+        this.callbackFn = this.callbackFn.bind(this);
     }
     getInitialState(){
         return {
@@ -69,42 +71,48 @@ export default class Register extends Component{
         //     formData.append("email", "");
         //     formData.append("password", "");
         //    console.log(formData._parts[0][1]);
-           var formData = new FormData();
-            formData.append("first_name",this.state.fname);
-            formData.append("last_name", this.state.lname);
-            formData.append("email", this.state.email);
-            formData.append("password", this.state.pwd);
-            formData.append("confirm_password", this.state.cnfPwd);
-            formData.append("gender", "F");
-            formData.append("phone_no", 7738002842);
-            console.log(formData._parts[0][1]);
-            console.log(formData._parts[1][1]);
-            console.log(formData._parts[2][1]);
-            console.log(formData._parts[3][1]);
-            console.log(formData._parts[4][1]);
-            console.log(formData._parts[5][1]);
-            console.log(formData._parts[6][1]);
-           
-               fetch('http://staging.php-dev.in:8844/trainingapp/api/users/register', {
-                    method: 'POST',
-                    body: formData,
-                  })
-                  .then(response => response.json())
-                  .then(  response =>{console.log(response);
-                    
-                    if( response.status != 200){
-                        Alert.alert(response.user_msg)
-                    }
-                    else{
-                        Alert.alert('Registration Successful');
+                var formData = new FormData();
+                formData.append("first_name",this.state.fname);
+                formData.append("last_name", this.state.lname);
+                formData.append("email", this.state.email);
+                formData.append("password", this.state.pwd);
+                formData.append("confirm_password", this.state.cnfPwd);
+                formData.append("gender", "F");
+                formData.append("phone_no", 7738002842);
+                console.log(formData._parts[0][1]);
+                console.log(formData._parts[1][1]);
+                console.log(formData._parts[2][1]);
+                console.log(formData._parts[3][1]);
+                console.log(formData._parts[4][1]);
+                console.log(formData._parts[5][1]);
+                console.log(formData._parts[6][1]);
+                fetchApi.fetchData(''+urls.host_url+urls.user_register,'POST',null,formData,this.callbackFn)
+                // fetch('http://staging.php-dev.in:8844/trainingapp/api/users/register', {
+                //         method: 'POST',
+                //         body: formData,
+                //     }
+                // )
+                // .then(response => response.json())
+                // .then(response => 
+                //         {
 
-                    }}
-                    );}
-
-                    
+                //         }
+                //     );
+            }            
         }
     }
 
+    callbackFn(response){
+        console.log("Register Callback Called")
+        console.log(response);        
+        if( response.status != 200){
+            Alert.alert(response.user_msg)
+        }
+        else{
+            Alert.alert('Registration Successful');
+
+        }
+    }
     render(){
         var radio_props = [
             {label: 'Male  ', value: 0 },

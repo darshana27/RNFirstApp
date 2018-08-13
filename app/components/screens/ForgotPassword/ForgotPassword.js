@@ -5,21 +5,26 @@ import FeatherIcon from 'react-native-vector-icons/dist/Feather';
 import styles from './styles';
 import Header from '../../header/header';
 let validators=require('../../../utils/validators').validators();
+let fetchApi=require('../../../lib/api').fetchApi();
+import * as urls from '../../../lib/urls';
+
+
 export default class Homescreen extends Component{
     constructor(props){
         super(props);
         this.state={currPwd:'',
                     nPwd:'',
                     cPwd:'',
-                    access_token:''};
+                    access_token:'',
+            };
         this._forgotPassword=this._forgotPassword.bind(this);
     }
     async componentDidMount(){
-        var data=await AsyncStorage.getItem('user_data')
-        var pdata=JSON.parse(data)
-        console.log(pdata.access_token)
-        this.setState({access_token:pdata.access_token})
-        console.log(this.state.access_token)
+        // var data=await AsyncStorage.getItem('user_data')
+        // var pdata=JSON.parse(data)
+        // console.log(pdata.access_token)
+        // this.setState({access_token:pdata.access_token})
+        // console.log(this.state.access_token)
     }
 
     _forgotPassword(){
@@ -51,15 +56,31 @@ export default class Homescreen extends Component{
         formData.append("password",this.state.nPwd);
         formData.append("confirm_password",this.state.cPwd);
         console.log(formData);
-        debugger
-        fetch('http://staging.php-dev.in:8844/trainingapp/api/users/change',{ 
-            method:'POST',
-            headers:{
-                'access_token':this.state.access_token    
-            },
-            body:formData })
-            .then(response => response.json())
-            .then(response =>{console.log(response)
+        var access=this.props.navigation.getParam('data')
+        console.log(access)
+        fetchApi.fetchData(''+urls.host_url+urls.user_change_password,'POST',{},formData,this.callbackFn)
+        // fetch('http://staging.php-dev.in:8844/trainingapp/api/users/change',{ 
+        //     method:'POST',
+        //     headers:{
+        //         'access_token':this.state.access_token    
+        //     },
+        //     body:formData })
+        //     .then(response => response.json())
+        //     .then(response =>{console.log(response)
+            
+        //     if(response.status==200){
+        //         Alert.alert(response.user_msg)
+        //     }
+        //     else{
+        //         Alert.alert(response.user_msg)
+        //     } 
+        // })
+    }
+}
+
+
+    callbackFn(response){
+        console.log(response)
             
             if(response.status==200){
                 Alert.alert(response.user_msg)
@@ -67,10 +88,7 @@ export default class Homescreen extends Component{
             else{
                 Alert.alert(response.user_msg)
             } 
-        })
     }
-}
-
     render(){
       
         return(
@@ -97,6 +115,7 @@ export default class Homescreen extends Component{
                                 ref={(currentPassword) => {this.CurrentPwd= currentPassword}}
                                 onSubmitEditing={() => {this.nPwd.focus();} }
                                 blurOnSubmit={false}
+                                secureTextEntry={true}
                                 underlineColorAndroid='transparent'
                                 onChangeText={(currPwd) => this.setState({currPwd})}
                             />
@@ -114,6 +133,7 @@ export default class Homescreen extends Component{
                                 ref={(newPassword) => {this.NewPwd= newPassword}}
                                 onSubmitEditing={() => {this.cPwd.focus();} }
                                 blurOnSubmit={false}
+                                secureTextEntry={true}
                                 underlineColorAndroid='transparent'
                                 onChangeText={(nPwd) => this.setState({nPwd})}
                             />
@@ -130,6 +150,7 @@ export default class Homescreen extends Component{
                                 returnKeyType="next"
                                 ref={(conPassword) => {this.ConPwd= conPassword}}
                                 blurOnSubmit={false}
+                                secureTextEntry={true}
                                 underlineColorAndroid='transparent'
                                 onChangeText={(cPwd) => this.setState({cPwd})}
                             />

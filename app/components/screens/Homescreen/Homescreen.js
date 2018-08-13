@@ -35,7 +35,6 @@ export default class Homescreen extends Component{
         console.log(filteredArray[0])
         if(filteredArray!=undefined && filteredArray.length>0)
           return filteredArray.map((element) => {
-            console.log(element[0])
            return (
   
                 <View style={styles.slides}>

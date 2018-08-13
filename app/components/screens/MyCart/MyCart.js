@@ -1,5 +1,6 @@
 import React from 'react';
 import { View,StyleSheet, Text } from 'react-native';
+import Header from '../../header/header';
 
 export default class MyCart extends React.Component {
   static navigationOptions = {
@@ -7,8 +8,14 @@ export default class MyCart extends React.Component {
   }
   render() {
     return (
+      <View>
+      <Header styles={styles.header}   
+                  title="My Cart"
+                  isSearch={true}
+                  back={() => {this.props.navigation.goBack()}} />
       <View style={styles.container}>
         <Text style={styles.text}>My Cart</Text>
+      </View>
       </View>
     );
   }

@@ -4,7 +4,9 @@ import styles from './styles';
 import Header from '../../header/header';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/dist/MaterialIcons';
-import DatePicker from 'react-native-datepicker'
+import DatePicker from 'react-native-datepicker';
+let fetchApi=require('../../../lib/api').fetchApi();
+import * as urls from '../../../lib/urls';
 
 let validators=require('../../../utils/validators').validators();
 
@@ -42,14 +44,20 @@ export default class EditProfile extends Component{
         formData.append("profile_pic",btoa('../../../assets/user_placeholder.png'));
         console.log(formData)
         console.log("editDetails() :"+this.state.access_token);
-        fetch('http://staging.php-dev.in:8844/trainingapp/api/users/update',{
-            method:'POST',
-            headers:{
-                'access_token':this.state.access_token    
-            },
-            body:formData })
-            .then(response => response.json())
-            .then(response =>{console.log(response)
+        var access=this.props.navigation.getParam('data')
+        fetchApi.fetchData(''+urls.host_url+urls.user_update_details,'POST',{},formData,this.callbackFn)
+        // fetch('http://staging.php-dev.in:8844/trainingapp/api/users/update',{
+        //     method:'POST',
+        //     headers:{
+        //         'access_token':this.state.access_token    
+        //     },
+        //     body:formData })
+        //     .then(response => response.json())
+        //     .then(response =>{
+        // })
+    }
+    callbackFn(response){
+        console.log(response)
             
             if(response.status==200){
                 Alert.alert(response.user_msg)
@@ -57,9 +65,7 @@ export default class EditProfile extends Component{
             else{
                 Alert.alert(response.user_msg)
             } 
-        })
     }
-
     render(){
          return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>

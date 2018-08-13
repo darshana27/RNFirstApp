@@ -6,6 +6,7 @@ let validators=require('../../../utils/validators').validators();
 // import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
 import * as urls from '../../../lib/urls';
+let fetchApi=require('../../../lib/api').fetchApi();
 
 export default class Login extends Component{
     constructor(props){
@@ -13,10 +14,12 @@ export default class Login extends Component{
         this.state={uname:'darshana27997@gmail.com',pwd:'Darshana27997',toggle:false};
         this._onPress = this._onPress.bind(this);
         this._onRegister = this._onRegister.bind(this);
+        this.callbackFn=this.callbackFn.bind(this);
+        this.callbackFnFetch=this.callbackFnFetch.bind(this);
     }
 
     componentWillMount(){
-
+       
     }
     // componentDidMount(){
     //     return fetch('https://staging.php-dev.in:8844/trainingapp/api/users/login', {
@@ -49,50 +52,57 @@ export default class Login extends Component{
             let formData=new FormData();
             formData.append("email", this.state.uname);
             formData.append("password", this.state.pwd);
-            fetch('http://staging.php-dev.in:8844/trainingapp/api/users/login', {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.json())
-            .then(  response =>{console.log(response);
-                
-                if( response.status != 200){
-                    Alert.alert(response.user_msg)
+            fetchApi.fetchData(''+urls.host_url+urls.user_login,'POST',null,formData,this.callbackFn)
+            // fetch(''+urls.host_url+urls.user_login, {
+            //     method: 'POST',
+            //     body: formData,
+            // })
+            // .then(response => response.json())
+            // .then(  response =>{console.log(response);
                 }
-                else{
-                    
-                    AsyncStorage.setItem('user_access_token',JSON.stringify(response.data.access_token));
-                    var accessToken=AsyncStorage.getItem('user_access_token')
-                    console.log("From AsyncStorage : "+JSON.stringify(accessToken))
-                            console.log("After Login : "+response.data.access_token)
-                            console.log("After Login Parsed: "+JSON.stringify(response.data.access_token))
-                            fetch(`http://staging.php-dev.in:8844/trainingapp/api/users/getUserData`,{
-                                method:'GET',
-                                headers:{
-                                'access_token':response.data.access_token,
-                                }
-                            })
-                            .then(response => response.json())
-                            .then(response => {console.log(response)
-                            if(response.status!=200){
-                                AsyncStorage.removeItem('user_access_token')
-                                this.props.navigation.replace('Login')
-                                // AsyncStorage.setItem('screen','Login')
-                            }
-                            else{
-                                this.props.navigation.replace('Homescreen',{
-                                    'data':response
-                                })
-                                console.log(response.data.product_categories)   
-                            } 
-                            })
-                            console.log("After Login : "+response.data.access_token)
-     
-                
-                }}
-                );
-        }
-    }
+        }          
+        callbackFn(response){
+            console.log("Callback function called")
+            {console.log(response)}
+            if( response.status != 200){
+                Alert.alert(response.user_msg)
+            }
+            else{
+                var accessToken=response.data.access_token
+                console.log(accessToken)
+                AsyncStorage.setItem('user_access_token',accessToken);
+                console.log(AsyncStorage.getItem('user_access_token'))
+                console.log("From AsyncStorage : "+JSON.stringify(accessToken))
+                        console.log("After Login : "+response.data.access_token)
+                        console.log("After Login Parsed: "+JSON.stringify(response.data.access_token))
+                        fetchApi.fetchData(''+urls.host_url+urls.user_fetch_details,'GET',{},null,this.callbackFnFetch)
+                        // fetch(`http://staging.php-dev.in:8844/trainingapp/api/users/getUserData`,{
+                        //     method:'GET',
+                        //     headers:{
+                        //     'access_token':response.data.access_token,
+                        //     }
+                        // })
+                        // .then(response => response.json())
+                        // .then(response => {console.log(response)
+            }   
+        } 
+        callbackFnFetch(response){
+            if(response.status!=200){
+                AsyncStorage.removeItem('user_access_token')
+                this.props.navigation.replace('Login')
+                // AsyncStorage.setItem('screen','Login')
+            }
+            else{
+                console.log("RESPONSE 200")
+                this.props.navigation.replace('Homescreen',{
+                    'data':response
+                })
+                console.log(response.data.product_categories)   
+            } 
+            // console.log("After Login : "+response.data.access_token)
+            }  
+        
+    
     render(){
         return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>
