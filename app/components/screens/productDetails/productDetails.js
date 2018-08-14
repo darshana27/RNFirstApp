@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { View,StyleSheet, Text,Alert,Image,ScrollView,Dimensions,TouchableOpacity,TextInput,Share} from 'react-native';
 import Header from '../../header/header';
@@ -23,13 +24,16 @@ export default class productDetails extends React.Component {
       starCount:0,
       productDet:{},
       currentImg:'',
-      isShareVisible:false
+      isShareVisible:false,
+      product_quantity:0,
      
     }
       this._toggleModal1 = this._toggleModal1.bind(this);
       this._toggleModal2 = this._toggleModal2.bind(this);
       this.rateNow=this.rateNow.bind(this);
+      this.onSubmit=this.onSubmit.bind(this);
       this.callbackFn=this.callbackFn.bind(this);
+      this.callbackAddToCart=this.callbackAddToCart.bind(this);
   }
 
   // onCancel() {
@@ -85,7 +89,7 @@ export default class productDetails extends React.Component {
     formData.append('product_id',this.state.productID);
     formData.append('rating',this.state.starCount);
     console.log(this.state.productID)
-    fetchApi.fetchData(''+urls.host_url+urls.set_product_ratings,'POST',null,formData,this.callbackRating)
+    fetchApi.fetchData(''+urls.host_url+urls.set_product_ratings,'POST',{},formData,this.callbackRating)
     this._toggleModal1()
       // fetch('http://staging.php-dev.in:8844/trainingapp/api/products/setRating',
       // {
@@ -144,6 +148,29 @@ export default class productDetails extends React.Component {
 
       })               
   }
+  onSubmit(){
+    let formData1=new FormData();
+    formData1.append('product_id',this.state.productID)
+    formData1.append('quantity',this.state.product_quantity)
+    console.log(formData1)
+    console.log(this.state.product_quantity)
+    console.log(this.state.productID)
+    this.state.product_quantity != null ?
+    fetchApi.fetchData('http://staging.php-dev.in:8844/trainingapp/api/addToCart','POST',{},formData1,this.callbackAddToCart):
+    console.log("Null")
+    this._toggleModal2()
+  }
+
+  callbackAddToCart(response){
+    console.log("Add to cart")
+    console.log(response)
+      if(response.status==200){
+        alert(response.message)
+      }
+      else{
+        alert(response.message)
+      }
+  }
   // multipleImages(){
   //   let imageset=[]
   //   let images = this.state.productDet.product_images.map(element => {
@@ -178,7 +205,7 @@ export default class productDetails extends React.Component {
         <Modal isVisible={this.state.isModal1Visible}>
           <View style={styles.ModalView}>
             <Text style={styles.modalRatingName}>{this.state.productDet.name}</Text>
-            <Image style={styles.modalRatingImage} source={furniture[0].image2_url}></Image>
+            <Image style={styles.modalRatingImage} source={{uri:this.state.currentImg}}></Image>
             <View style={styles.starRating}>
             <StarRating
               
@@ -205,15 +232,16 @@ export default class productDetails extends React.Component {
           <View style={styles.ModalView2}>
             <Text style={styles.modalRatingName}>{this.state.productDet.name}</Text>
             <View style={styles.modalImageView}>
-              <Image style={styles.modalQtyImage} source={furniture[0].image2_url}></Image>
+              <Image style={styles.modalQtyImage} source={{uri:this.state.currentImg}}></Image>
             </View>
             <Text style={styles.modalText}>Enter Qty</Text>
             <TextInput 
               style={styles.modalTextInput}
-              underlineColorAndroid='transparent'></TextInput>
+              underlineColorAndroid='transparent'
+              onChangeText={(product_quantity) => this.setState({product_quantity})}></TextInput>
             <TouchableOpacity
               style={styles.modalQtyBtn}
-              onPress={this._toggleModal2}>
+              onPress={this.onSubmit}>
               <Text>SUBMIT</Text>
             </TouchableOpacity>
           </View>
