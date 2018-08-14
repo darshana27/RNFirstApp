@@ -54,7 +54,7 @@ export default class Sidebar extends Component {
             <FlatList
                 data={[
                     // {img:require('../assets/images/Chair.png'),key:'Homescreen'},
-                    {img:require('../assets/cart.png'),key:'My Cart',screenName:'productListing',value:0},
+                    {img:require('../assets/cart.png'),key:'My Cart',screenName:'MyCart',value:0},
                     {img:require('../assets/tables.png'),key:'Tables',screenName:'productListing',value:1,category:1},
                     {img:require('../assets/sofa.png'),key:'Sofa',screenName:'productListing',value:2,category:3},
                     {img:require('../assets/chairs.png'),key:'Chairs',screenName:'productListing',value:3,category:2},

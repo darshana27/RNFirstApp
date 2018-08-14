@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { KeyboardAvoidingView, ImageBackground, Text, TextInput, View, TouchableOpacity, Alert,AsyncStorage } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+
 import FeatherIcon from 'react-native-vector-icons/dist/Feather';
 let validators=require('../../../utils/validators').validators();
 // import Icon from 'react-native-vector-icons/MaterialIcons';

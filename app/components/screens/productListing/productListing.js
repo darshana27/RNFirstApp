@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, FlatList, Image, ScrollView, TouchableOpacity,ActivityIndicator } from 'react-native';
+
 import Header from '../../header/header';
 import styles from '../productListing/styles';
 import StarRating from 'react-native-star-rating';
@@ -13,10 +14,16 @@ export default class productListing extends React.Component {
     super(props);
     this.state ={
       isLoading: true,
-      product_category_id:0,
+      product_category_id:1,
+      list:[],
+      page:1,
+      refreshing:true
     }
-    this.callbackFn=this.callbackFn.bind(this);
+    this.callback=this.callback.bind(this)
+    // this.callbackFn=this.callbackFn.bind(this);
   }
+
+
   // componentWillMount(){
   //   setTimeout(() => {
   //     this.setState({
@@ -25,31 +32,23 @@ export default class productListing extends React.Component {
   //   },
   //   1500)
   // }
-  componentDidMount(){
-    console.log("ComponentDidMount")
-    const category_id = this.props.navigation.getParam('category_id');
-    console.log("category_id", category_id)
-    // this.setState({product_category_id:category_id})
-    // console.log("sidebar_category", sidebar_category);
-    // {category_id!==null?
-    category_id!==null?
-    fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+category_id,'GET',{},null,this.callbackFn)
-    :console.log("Null")
-    // fetch(`http://staging.php-dev.in:8844/trainingapp/api/products/getList?product_category_id=`+category_id,
-    //       {method:'GET'}
-    //     )
-    //     .then(response => response.json())
-    //     .then(responseJson => {   
-  }
-  callbackFn(response){
-    console.log(response)
-    console.log("Callback called")
-    this.setState({ 
-      dataSource: response.data,
-    }, function(){
-
-    });
-  }
+                  componentDidMount(){
+                    console.log("componentdidmount")
+                    this.makeRemoteRequest()
+                  //   console.log("ComponentDidMount")
+                  //   const category_id = this.props.navigation.getParam('category_id');
+                  //   console.log("category_id", category_id)
+                  //   category_id!==null?
+                  //   fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+category_id,'GET',{},null,this.callbackFn)
+                  //   :console.log("Null") 
+                  // }
+                  // callbackFn(response){
+                  //   console.log(response)
+                  //   console.log("Callback called")
+                  //   this.setState({ 
+                  //     dataSource: response.data,
+                  //   });
+                  }
   // callbackFnSidebar(response){
   //   this.setState({   
   //     dataSource: responseJson.data,
@@ -57,21 +56,97 @@ export default class productListing extends React.Component {
 
   //   });
   // }
-  renderSeparator = () => (
-    <View
-      style={{
-        backgroundColor: '#222',
-        height: 1,
-        opacity:0.7
-      }}
-    />
-  );
+  // fetchResult = ()=>{
+  //   // const limit=6
+  //   // const page=1
+  //   console.log("ComponentDidMount")
+  //   const category_id = this.props.navigation.getParam('category_id');
+  //   console.log("category_id", category_id)
+  //   category_id!==null?
+  //   fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+category_id+'&limit=100','GET',{},null,this.callbackFnLazy)
+  //   :console.log("Null") 
+  //   };
+  
+  //   callbackFnLazy = (response) =>{
+  //     console.log(response)
+  //     this.setState({dataSource: response.data})
+  //     console.log(this.state.dataSource.length)
+  //     const { offset ,limit, list} = this.state;
+  //     this.setState({maxlimit:this.state.dataSource.length})
+      
+  //       if(response.data!=null){
+  //         this.setState({ 
+  //           list: list.concat(this.state.dataSource.slice(offset,offset+6<limit?limit:offset+6)),
+  //           offset: offset + 6,
+  //           limit: limit+6
+  //         })
+  //         console.log(this.state.list)
+  //         console.log(this.state.limit)
+  //         console.log(this.state.offset)
+  //   }}
+    makeRemoteRequest(){
+      console.log("makeremoterequest")
+      const category_id = this.props.navigation.getParam('category_id');
+      console.log(category_id)
+      this.setState({product_category_id:category_id})
+      console.log("Set state : "+this.state.product_category_id)
+      console.log("Page : "+this.state.page)
+      setTimeout(()=>{
+        fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+this.state.product_category_id+'&page='+this.state.page+'&limit='+4,'GET',{},null,this.callback)
+      },1000)
+      this.setState({isLoading:true})
+      
+    }
+    callback(response){
+      if(response.status==200){
+      this.setState({
+        list:[...this.state.list,...response.data],
+        refreshing:false,
+        isLoading:false
+      })
+    }
+      else{
+        console.log(response)
+      }
+      console.log(this.state.list)
+    }
+    handleRefresh =() => {
+      this.setState({
+        page:1,
+        refreshing:true
+      },() => this.makeRemoteRequest())
+    }
+    handleLoadMore = () => {
+        this.setState({
+          page:this.state.page + 1
+        },() => {this.makeRemoteRequest();
+        })
+    }
+    renderFooter = () =>{
+      if(!this.state.isLoading) return null;
+      return(
+        <View
+          style={{paddingVertical:20,borderTopWidth:1,borderColor:'blue'}}
+        >
+        <ActivityIndicator animating size="large"></ActivityIndicator>
+        </View>
+      )
+    }              
+    renderSeparator = () => (
+      <View
+        style={{
+          backgroundColor: '#222',
+          height: 1,
+          opacity:0.7
+        }}
+      />
+    );
   
   render() {
     const { navigation } = this.props;
     const screen = navigation.getParam('screen');
-    console.log(screen)
-    console.log(this.state.isLoading)
+    // console.log(screen)
+    // console.log(this.state.isLoading)
 
    
     return (
@@ -104,13 +179,18 @@ export default class productListing extends React.Component {
                   back={() => {this.props.navigation.goBack()}} />:null}
         </View>
         <View style={styles.container}>
+        
         <FlatList
-                data={this.state.dataSource}
-                
+        
+                data={this.state.list}
+                onEndReached={this.handleLoadMore}
+                onEndReachedThreshold={0.7}
                 ItemSeparatorComponent={this.renderSeparator}
-                renderItem = { ({item}) => 
+                refreshing={this.handleRefresh}
+                ListFooterComponent={this.renderFooter}
+                renderItem = { ({item,index}) => 
                 
-                <TouchableOpacity onPress={()=>{this.props.navigation.navigate('productDetails',{product_id:item.id})}}>
+                <TouchableOpacity key={index} onPress={()=>{this.props.navigation.navigate('productDetails',{product_id:item.id})}}>
                     <View style={styles.itemContainer}>
                       <View style={styles.productImage}>
                           <Image 
