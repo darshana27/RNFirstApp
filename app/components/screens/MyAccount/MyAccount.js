@@ -42,7 +42,7 @@ export default class MyAccount extends Component{
     }
     render(){
       console.log(this.state.first_name)
-      console.log(btoa('../../../assets/images/Android_Master_bg.jpg'))
+     
       
 
          return (

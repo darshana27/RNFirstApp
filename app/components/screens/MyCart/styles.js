@@ -23,7 +23,7 @@ export default styles=StyleSheet.create({
     },
     productDetails:{
         height:'100%',
-        width:'72%',
+        width:'70%',
         paddingLeft:14,
         alignContent:'flex-start',
         justifyContent:'center',
@@ -48,13 +48,13 @@ export default styles=StyleSheet.create({
     price:{
         marginTop:5,
         color:Colors.productPrice,
-        fontSize:18,
+        fontSize:12,
         
         fontFamily:fontRegular
     },
     ratingsView:{
         height:'100%',
-        width:'14%',
+        width:'16%',
         justifyContent:'flex-end',
         paddingBottom:10,
     },

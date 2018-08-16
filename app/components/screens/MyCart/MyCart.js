@@ -1,13 +1,13 @@
 import React from 'react';
 import { Text, View, FlatList, Image, ScrollView, TouchableOpacity,ActivityIndicator } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
-
+import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 import Header from '../../header/header';
-import styles from '../productListing/styles';
+import styles from '../MyCart/styles';
 import StarRating from 'react-native-star-rating';
 let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import FeatherIcon from 'react-native-vector-icons/dist/Feather';
 // import {Loader} from '../../Loader/Loader';
 
 export default class productListing extends React.Component {
@@ -120,11 +120,12 @@ export default class productListing extends React.Component {
         <SwipeListView
                 useFlatList
                 data={this.state.dataSource}
-                
+                disableRightSwipe
+                closeOnRowPress
                 ItemSeparatorComponent={this.renderSeparator}
-                renderItem = { ({item}) => 
-                
-                <TouchableOpacity onPress={()=>{this.props.navigation.navigate('productDetails',{product_id:item.id})}}>
+                renderItem = { ({item,index}) => 
+
+                <TouchableOpacity key={index}>
                     <View style={styles.itemContainer}>
                       <View style={styles.productImage}>
                           <Image 
@@ -134,19 +135,29 @@ export default class productListing extends React.Component {
                       <View style={styles.productDetails}>
                           <Text style={styles.item}>{item.product.name}</Text>
                           <Text style={styles.producer}>{'('+item.product.product_category+')'}</Text>
-                          <ModalDropdown options={['option 1', 'option 2']}/>
+                          <View style={{flexDirection:'row',backgroundColor:'#EDEDED',width:50,alignItems:'center',justifyContent:'center'}}>
+                          <ModalDropdown style={{width:30,height:30,alignItems:'center'}}
+                                         defaultValue="1"
+                                         dropdownStyle={{width:80,marginRight:50}}
+                                         options={['1','2','3','4','5','6','7','8']}/>
+                          <FeatherIcon name="chevron-down" size={15}/>
+                           </View>
                       </View>
                       <View style={styles.ratingsView}>
                       <Text style={styles.price}>Rs.{item.product.cost}</Text>
                       </View>            
                      </View> 
                      </TouchableOpacity>
+                   
                      }
-                     renderHiddenItem={(
-                      <View style={styles.rowBack}>
-                         
-                          <Text>Right</Text>
-                      </View>)}
+                     renderHiddenItem={()=>
+                      <View style={{height:80,alignContent:'flex-end',justifyContent:'center',alignItems:'flex-end'}}>
+                          <View style={{height:50,width:50,backgroundColor:'red',borderRadius:50,alignItems:'center',justifyContent:'center',right:10}}>
+                              <FeatherIcon name="trash" size={30} color="#FFFFFF"/>
+                          </View>
+                      </View>}
+                      // leftOpenValue={-75}
+                      rightOpenValue={-75}
                   >
             
             </SwipeListView>

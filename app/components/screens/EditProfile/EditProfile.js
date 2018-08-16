@@ -41,7 +41,7 @@ export default class EditProfile extends Component{
         formData.append("email",this.state.email);
         formData.append("dob",this.state.dob);
         formData.append("phone_no",this.state.phone_no);
-        formData.append("profile_pic",btoa('../../../assets/user_placeholder.png'));
+        // formData.append("profile_pic",btoa('../../../assets/user_placeholder.png'));
         console.log(formData)
         console.log("editDetails() :"+this.state.access_token);
         var access=this.props.navigation.getParam('data')

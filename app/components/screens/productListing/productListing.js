@@ -19,6 +19,7 @@ export default class productListing extends React.Component {
       page:1,
       refreshing:true
     }
+    
     this.callback=this.callback.bind(this)
     // this.callbackFn=this.callbackFn.bind(this);
   }
@@ -33,6 +34,7 @@ export default class productListing extends React.Component {
   //   1500)
   // }
                   componentDidMount(){
+
                     console.log("componentdidmount")
                     this.makeRemoteRequest()
                   //   console.log("ComponentDidMount")
@@ -87,12 +89,12 @@ export default class productListing extends React.Component {
     makeRemoteRequest(){
       console.log("makeremoterequest")
       const category_id = this.props.navigation.getParam('category_id');
-      console.log(category_id)
-      this.setState({product_category_id:category_id})
-      console.log("Set state : "+this.state.product_category_id)
-      console.log("Page : "+this.state.page)
+      // console.log(category_id)
+      // this.setState({product_category_id:category_id})
+      // console.log("Set state : "+this.state.product_category_id)
+      // console.log("Page : "+this.state.page)
       setTimeout(()=>{
-        fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+this.state.product_category_id+'&page='+this.state.page+'&limit='+4,'GET',{},null,this.callback)
+        fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+category_id+'&page='+this.state.page+'&limit='+7,'GET',{},null,this.callback)
       },1000)
       this.setState({isLoading:true})
       
@@ -112,7 +114,6 @@ export default class productListing extends React.Component {
     }
     handleRefresh =() => {
       this.setState({
-        page:1,
         refreshing:true
       },() => this.makeRemoteRequest())
     }
@@ -121,13 +122,13 @@ export default class productListing extends React.Component {
           page:this.state.page + 1
         },() => {this.makeRemoteRequest();
         })
+       
     }
     renderFooter = () =>{
       if(!this.state.isLoading) return null;
       return(
         <View
-          style={{paddingVertical:20,borderTopWidth:1,borderColor:'blue'}}
-        >
+          style={{paddingVertical:20,borderTopWidth:1,borderColor:'blue'}}>
         <ActivityIndicator animating size="large"></ActivityIndicator>
         </View>
       )
