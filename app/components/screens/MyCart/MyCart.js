@@ -1,10 +1,9 @@
 import React from 'react';
-import { Text, View, FlatList, Image, ScrollView, TouchableOpacity,ActivityIndicator } from 'react-native';
+import { Text, View,Image, ScrollView,Dimensions} from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
-import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
+import { SwipeListView } from 'react-native-swipe-list-view';
 import Header from '../../header/header';
 import styles from '../MyCart/styles';
-import StarRating from 'react-native-star-rating';
 let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
 import FeatherIcon from 'react-native-vector-icons/dist/Feather';
@@ -20,16 +19,9 @@ export default class productListing extends React.Component {
      
     }
     this.callbackFn=this.callbackFn.bind(this);
-    this.onValueChange=this.onValueChange.bind(this);
+    
   }
-  // componentWillMount(){
-  //   setTimeout(() => {
-  //     this.setState({
-  //       isLoading:false
-  //     })
-  //   },
-  //   1500)
-  // }
+
   componentDidMount(){
     console.log("ComponentDidMount")
     const category_id = this.props.navigation.getParam('category_id');
@@ -46,6 +38,7 @@ export default class productListing extends React.Component {
     //     .then(response => response.json())
     //     .then(responseJson => {   
   }
+  
   callbackFn(response){
     console.log(response)
     console.log("Callback called")
@@ -56,13 +49,6 @@ export default class productListing extends React.Component {
     });
   }
 
-  onValueChange(value) {
-    console.log("OnValue change called")
-    this.setState({
-      selected: ''+value
-    });
-    console.log(this.state.selected)
-  }
   // callbackFnSidebar(response){
   //   this.setState({   
   //     dataSource: responseJson.data,
@@ -116,7 +102,9 @@ export default class productListing extends React.Component {
                   isSearch={true}
                   back={() => {this.props.navigation.goBack()}} />:null}
         </View>
+        
         <View style={styles.container}>
+        <ScrollView>
         <SwipeListView
                 useFlatList
                 data={this.state.dataSource}
@@ -125,7 +113,7 @@ export default class productListing extends React.Component {
                 ItemSeparatorComponent={this.renderSeparator}
                 renderItem = { ({item,index}) => 
 
-                <TouchableOpacity key={index}>
+                <View key={index}>
                     <View style={styles.itemContainer}>
                       <View style={styles.productImage}>
                           <Image 
@@ -135,32 +123,36 @@ export default class productListing extends React.Component {
                       <View style={styles.productDetails}>
                           <Text style={styles.item}>{item.product.name}</Text>
                           <Text style={styles.producer}>{'('+item.product.product_category+')'}</Text>
-                          <View style={{flexDirection:'row',backgroundColor:'#EDEDED',width:50,alignItems:'center',justifyContent:'center'}}>
-                          <ModalDropdown style={{width:30,height:30,alignItems:'center'}}
-                                         defaultValue="1"
-                                         dropdownStyle={{width:80,marginRight:50}}
+                          <View style={styles.dropdownContainer}>
+                          <ModalDropdown style={styles.modalDropdown}
+                                         defaultValue="Qty"
+                                         dropdownStyle={{width:46,left:0}}   
                                          options={['1','2','3','4','5','6','7','8']}/>
                           <FeatherIcon name="chevron-down" size={15}/>
                            </View>
                       </View>
                       <View style={styles.ratingsView}>
-                      <Text style={styles.price}>Rs.{item.product.cost}</Text>
+                        <Text style={styles.price}>Rs.{item.product.cost}</Text>
                       </View>            
-                     </View> 
-                     </TouchableOpacity>
+                     </View>
+                     </View>
                    
                      }
                      renderHiddenItem={()=>
-                      <View style={{height:80,alignContent:'flex-end',justifyContent:'center',alignItems:'flex-end'}}>
-                          <View style={{height:50,width:50,backgroundColor:'red',borderRadius:50,alignItems:'center',justifyContent:'center',right:10}}>
-                              <FeatherIcon name="trash" size={30} color="#FFFFFF"/>
+                      <View style={styles.backRow}>
+                          <View style={styles.deleteContainer}>
+                              <FeatherIcon name="trash" size={25} color="#FFFFFF"/>
                           </View>
                       </View>}
                       // leftOpenValue={-75}
                       rightOpenValue={-75}
                   >
-            
             </SwipeListView>
+            <View style={{height:80,flexDirection:'row',width:Dimensions.get('window').width}}>
+                      <View><Text>TOTAL</Text></View>
+                      <View ><Text>Rs. </Text></View>
+            </View>
+            </ScrollView>
         </View>
       </View>
     );

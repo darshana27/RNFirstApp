@@ -93,10 +93,11 @@ export default class productListing extends React.Component {
       // this.setState({product_category_id:category_id})
       // console.log("Set state : "+this.state.product_category_id)
       // console.log("Page : "+this.state.page)
+      this.setState({isLoading:true,refreshing:true})
       setTimeout(()=>{
         fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+category_id+'&page='+this.state.page+'&limit='+7,'GET',{},null,this.callback)
-      },1000)
-      this.setState({isLoading:true})
+      },5000)
+      this.setState({isLoading:true,refreshing:true})
       
     }
     callback(response){
@@ -125,7 +126,7 @@ export default class productListing extends React.Component {
        
     }
     renderFooter = () =>{
-      if(!this.state.isLoading) return null;
+      if(!this.state.isLoading && !this.state.refreshing) return null;
       return(
         <View
           style={{paddingVertical:20,borderTopWidth:1,borderColor:'blue'}}>
@@ -188,10 +189,13 @@ export default class productListing extends React.Component {
                 onEndReachedThreshold={0.7}
                 ItemSeparatorComponent={this.renderSeparator}
                 refreshing={this.handleRefresh}
+                keyExtractor={(item,index) => index+""}
                 ListFooterComponent={this.renderFooter}
                 renderItem = { ({item,index}) => 
                 
-                <TouchableOpacity key={index} onPress={()=>{this.props.navigation.navigate('productDetails',{product_id:item.id})}}>
+                <TouchableOpacity 
+                key={item}
+                onPress={()=>{this.props.navigation.navigate('productDetails',{product_id:item.id})}}>
                     <View style={styles.itemContainer}>
                       <View style={styles.productImage}>
                           <Image 

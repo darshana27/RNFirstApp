@@ -7,7 +7,7 @@ export default styles=StyleSheet.create({
     container:{
         height:Dimensions.get('window').height-80,
         width:Dimensions.get('window').width,
-        flexDirection:'row',
+        // flexDirection:'row',
         padding:7,
     //    height:150,
         // paddingLeft:6,
@@ -64,12 +64,24 @@ export default styles=StyleSheet.create({
         // padding:5,
         height:80,
         // paddingLeft:6,
-        backgroundColor:'#ffffff',
+        backgroundColor:Colors.white,
     },
     toast:{
         // width:Dimensions.get('window').width,
         backgroundColor:Colors.lightGray,
    
         marginTop:30
+    },
+    backRow:{
+        height:80,alignContent:'flex-end',justifyContent:'center',alignItems:'flex-end'
+    },
+    deleteContainer:{
+        height:45,width:45,backgroundColor:'red',borderRadius:50,alignItems:'center',justifyContent:'center',right:10
+    },
+    modalDropdown:{
+        width:30,height:30,alignItems:'flex-start',justifyContent:'center'
+    },
+    dropdownContainer:{
+        flexDirection:'row',backgroundColor:'#EDEDED',width:50,alignItems:'center',justifyContent:'center',borderRadius:5,padding:3
     }
 })
