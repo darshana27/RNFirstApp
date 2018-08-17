@@ -14,7 +14,9 @@ export default styles=StyleSheet.create({
         borderRadius:50,
         height:100,
         width:100,
-        top:40
+        top:40,
+        borderWidth:1,
+        borderColor:Colors.white
     },
     header:{
         top:0,
@@ -33,9 +35,9 @@ export default styles=StyleSheet.create({
     inputBox: {
         height: 45,
         width:'84%',
-        fontSize:16,
-        color:Colors.white,
-        fontFamily:fontRegular
+        // fontSize:16,
+        // color:Colors.white,
+        // fontFamily:fontRegular
         // borderBottomColor:Colors.white,
         // borderTopColor:Colors.white,
         // borderLeftColor:Colors.white,

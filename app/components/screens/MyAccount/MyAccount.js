@@ -28,10 +28,11 @@ export default class MyAccount extends Component{
         }
       }
       async componentDidMount(){
-        var data=await AsyncStorage.getItem('user_access_token')
-        var pdata=JSON.parse(data)
-        console.log(pdata.access_token)
-        this.setState(pdata)
+        this.state.userDet.profile_pic!=""? console.log(this.state.userDet.profile_pic):console.log("Null")
+        // var data=await AsyncStorage.getItem('user_access_token')
+        // var pdata=JSON.parse(data)
+        // console.log(pdata.access_token)
+        // this.setState(pdata)
     }
 
     _edit(){
@@ -41,11 +42,10 @@ export default class MyAccount extends Component{
         this.props.navigation.navigate('ForgotPassword',{'data':this.state.userDet})
     }
     render(){
-      console.log(this.state.first_name)
-     
-      
-
-         return (
+        console.log(this.state.userDet.profile_pic)
+        var profile_pic_url = this.state.userDet.profile_pic!=null?this.state.userDet.profile_pic:'../../../assets/user_placeholder.png';
+        console.log(profile_pic_url)
+        return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>
 
             <View style={styles.viewStyle}>
@@ -58,7 +58,7 @@ export default class MyAccount extends Component{
                 <View  style={styles.viewStyle}>
                 <Image 
                       style={styles.roundedImage}
-                      source={require('../../../assets/user_placeholder.png')}/>
+                      source={{uri:profile_pic_url}}/>
                       <View style={{marginTop:50}}>
                         <View style={styles.nestedView}>
 

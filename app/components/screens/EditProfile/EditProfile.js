@@ -22,7 +22,8 @@ export default class EditProfile extends Component{
             email:'',
             phone_no:'',
             dob:'',
-            avatarSource:''
+            avatarSource:'',
+            isPicSelected:false
 
         };
         this._editDetails=this._editDetails.bind(this); 
@@ -37,7 +38,11 @@ export default class EditProfile extends Component{
 
     }
     _editDetails(){
+        this.state.avatarSource!=""?console.log(this.state.avatarSource):console.log("null")
         let formData=new FormData();
+        formData.append("first_name",this.state.first_name)
+        formData.append("last_name",this.state.last_name)
+        formData.append("profile_pic",this.state.isPicSelected?this.state.avatarSource:null)
         formData.append("email",this.state.email);
         formData.append("dob",this.state.dob);
         formData.append("phone_no",this.state.phone_no);
@@ -93,13 +98,15 @@ export default class EditProfile extends Component{
               let source = { uri: 'data:image/jpeg;base64,' + response.data };
           
               this.setState({
+
+                isPicSelected:true,
                 avatarSource: source
               });
             }
           });
     }
-    render(){
-
+    render(){       
+        console.log(this.state.avatarSource)
          return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>
 

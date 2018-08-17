@@ -14,7 +14,7 @@ export default class Loader extends Component{
                     size="large"
                     style={{flex:1,
                             justifyContent:'center',
-                            color:'red'}}
+                            color:'yellow'}}
                 />
             );
         }
