@@ -14,7 +14,6 @@ export default class productListing extends React.Component {
     super(props);
     this.state ={
       isLoading: true,
-      product_category_id:1,
       list:[],
       page:1,
       refreshing:true
@@ -189,7 +188,7 @@ export default class productListing extends React.Component {
                 onEndReachedThreshold={0.7}
                 ItemSeparatorComponent={this.renderSeparator}
                 refreshing={this.handleRefresh}
-                keyExtractor={(item,index) => index+""}
+                keyExtractor={(item,index) => item.name}
                 ListFooterComponent={this.renderFooter}
                 renderItem = { ({item,index}) => 
                 

@@ -51,18 +51,22 @@ export default class productListing extends React.Component {
     });
   }
 
-  onPressDelete(item){
+  onPressDelete(rowData,rowMap){
+    
+    // console.log(rowData.item.product_id)
     Alert.alert(
       'Delete Confirmation',
       'Are you sure you want to delete this item?',
     [{text:'Cancel'},
      {text:'Delete',onPress:()=> {
-      console.log(item.item.product_id)
+      console.log(rowData,rowMap)
+      // console.log(rowData.item.product_id)
       var formData=new FormData()
-      formData.append('product_id',item.item.product_id)
+      formData.append('product_id',rowData)
       fetchApi.fetchData(''+urls.host_url+urls.delete_cart,'POST',{},formData,this.callback)
      }}],{cancelable: true}
   )
+    // rowMap[rowData].closeRow()
     console.log("Deleting Item")
     console.log(this.state.dataSource)
   }
@@ -137,7 +141,7 @@ export default class productListing extends React.Component {
                 data={this.state.dataSource}
                 disableRightSwipe
                 closeOnRowPress
-                keyExtractor={({item,index}) => ''+index}
+                keyExtractor={(item) => item.product.product_id}
                 ItemSeparatorComponent={this.renderSeparator}
                 renderItem = { ({item,index}) => 
 
@@ -166,11 +170,11 @@ export default class productListing extends React.Component {
                      </View>
                    
                      }
-                     renderHiddenItem={(item)=>
+                     renderHiddenItem={(rowData,rowMap)=>
                       
                       <View style={styles.backRow}>
                           <TouchableOpacity 
-                              onPress={()=>this.onPressDelete(item)}
+                              onPress={()=>this.onPressDelete(rowData.item.product_id,rowMap)}
                               style={styles.deleteContainer}>
                               <FeatherIcon name="trash" size={25} color="#FFFFFF"/>
                           </TouchableOpacity>
