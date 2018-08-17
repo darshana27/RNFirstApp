@@ -3,6 +3,7 @@ package com.firstapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.imagepicker.ImagePickerPackage;
 import cl.json.RNSharePackage;
 import fr.snapp.imagebase64.RNImgToBase64Package;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -26,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ImagePickerPackage(),
             new RNSharePackage(),
             new RNImgToBase64Package(),
             new VectorIconsPackage()

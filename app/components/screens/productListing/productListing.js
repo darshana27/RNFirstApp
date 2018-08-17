@@ -93,9 +93,9 @@ export default class productListing extends React.Component {
       // console.log("Set state : "+this.state.product_category_id)
       // console.log("Page : "+this.state.page)
       this.setState({isLoading:true,refreshing:true})
-      // setTimeout(()=>{
+      setTimeout(()=>{
         fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+category_id+'&page='+this.state.page+'&limit='+7,'GET',{},null,this.callback)
-      // },1000)
+      },1000)
       this.setState({isLoading:true,refreshing:true})
       
     }
@@ -125,7 +125,7 @@ export default class productListing extends React.Component {
        
     }
     renderFooter = () =>{
-      if(!this.state.isLoading && !this.state.refreshing) return null;
+      if(!this.state.refreshing) return null;
       return(
         <View
           style={{paddingVertical:20,borderTopWidth:1,borderColor:'blue'}}>

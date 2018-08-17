@@ -7,7 +7,7 @@ import MaterialIcon from 'react-native-vector-icons/dist/MaterialIcons';
 import DatePicker from 'react-native-datepicker';
 let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
-
+var ImagePicker = require('react-native-image-picker');
 let validators=require('../../../utils/validators').validators();
 
 export default class EditProfile extends Component{
@@ -21,9 +21,12 @@ export default class EditProfile extends Component{
             last_name:'',
             email:'',
             phone_no:'',
-            dob:''
+            dob:'',
+            avatarSource:''
+
         };
         this._editDetails=this._editDetails.bind(this); 
+        this.onPressPicture=this.onPressPicture.bind(this);
     }
     getInitialState(){
         return {
@@ -31,10 +34,7 @@ export default class EditProfile extends Component{
         }
       }
       async componentDidMount(){
-        var data=await AsyncStorage.getItem('user_data')
-        var pdata=JSON.parse(data)
-        console.log("Edit Profile: "+pdata.access_token)
-        this.setState({access_token:pdata.access_token})
+
     }
     _editDetails(){
         let formData=new FormData();
@@ -66,7 +66,40 @@ export default class EditProfile extends Component{
                 Alert.alert(response.user_msg)
             } 
     }
+    onPressPicture(){
+        var options = {
+
+            storageOptions: {
+              skipBackup: true,
+              path: 'images'
+            }
+          };
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+            console.log("Image Picker")
+            if (response.didCancel) {
+              console.log('User cancelled image picker');
+            }
+            else if (response.error) {
+              console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+              console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+            //   let source = { uri: response.uri };
+          
+              // You can also display the image using data:
+              let source = { uri: 'data:image/jpeg;base64,' + response.data };
+          
+              this.setState({
+                avatarSource: source
+              });
+            }
+          });
+    }
     render(){
+
          return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>
 
@@ -78,9 +111,10 @@ export default class EditProfile extends Component{
                 <KeyboardAvoidingView style={styles.viewStyle} behavior={Platform.OS === 'ios' ? 'padding' : null}>
                 <ScrollView>
                 <View style={styles.viewStyle}>
+                <TouchableOpacity onPress={this.onPressPicture}>
                 <Image 
                       style={styles.roundedImage}
-                      source={require('../../../assets/user_placeholder.png')}/>
+                      source={this.state.avatarSource}/></TouchableOpacity>
                       <View style={{marginTop:50}}>
                         <View style={styles.nestedView}>
 
