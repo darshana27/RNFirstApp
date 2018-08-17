@@ -139,6 +139,7 @@ export default class productDetails extends React.Component {
           // console.log("current image :"+this.state.currentImg)
          return (
           <TouchableOpacity 
+          key={element}
           onPress={this.changeImage.bind(this,element.image)}
           style={styles.imageTO}> 
           <Image style={styles.imgSmall} 
@@ -202,7 +203,8 @@ export default class productDetails extends React.Component {
       <View style={styles.container}>
 
 
-        <Modal isVisible={this.state.isModal1Visible}>
+        <Modal isVisible={this.state.isModal1Visible}
+        onBackdropPress={() => this.setState({ isModal1Visible: false })}>
           <View style={styles.ModalView}>
             <Text style={styles.modalRatingName}>{this.state.productDet.name}</Text>
             <Image style={styles.modalRatingImage} source={{uri:this.state.currentImg}}></Image>
@@ -228,7 +230,8 @@ export default class productDetails extends React.Component {
           </View>
         </Modal>
 
-        <Modal isVisible={this.state.isModal2Visible}>
+        <Modal isVisible={this.state.isModal2Visible}
+         onBackdropPress={() => this.setState({ isModal2Visible: false })}>
           <View style={styles.ModalView2}>
             <Text style={styles.modalRatingName}>{this.state.productDet.name}</Text>
             <View style={styles.modalImageView}>

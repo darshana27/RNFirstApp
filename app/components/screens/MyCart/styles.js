@@ -1,6 +1,8 @@
 import { StyleSheet,Dimensions } from 'react-native';
 // import * as appStyles from '../../../styles/appStyles';
 import * as Colors from '../../../utils/colors';
+import * as fontSizes from '../../../utils/fontSizes';
+
 import {fontMedium,fontBold,fontRegular} from '../../../styles/appStyles';
 
 export default styles=StyleSheet.create({
@@ -33,7 +35,7 @@ export default styles=StyleSheet.create({
         width:55,
     },
     item:{
-        fontSize:15,
+        fontSize:fontSizes.medium2,
         color:Colors.productHeading1,
         // fontWeight:'bold',
         // borderColor:'blue',
@@ -41,7 +43,7 @@ export default styles=StyleSheet.create({
         fontFamily:fontMedium
     },
     producer:{
-        fontSize:14,
+        fontSize:fontSizes.small,
         color:Colors.productHeading1,
         fontFamily:fontRegular
     },
@@ -83,5 +85,37 @@ export default styles=StyleSheet.create({
     },
     dropdownContainer:{
         flexDirection:'row',backgroundColor:'#EDEDED',width:50,alignItems:'center',justifyContent:'center',borderRadius:5,padding:3
+    },
+    ModalView:{
+        backgroundColor:Colors.white,
+        height:'20%',
+        width:'100%',
+        borderRadius:10,
+        alignItems:'center',
+        padding:20,      
+    },
+    modalRatingText:{
+        fontFamily:fontRegular,
+        fontSize:fontSizes.large
+    },
+    ModalBtns:{
+        marginTop:20,
+        flexDirection:'row',
+        justifyContent: 'space-between'
+    },
+    modalBtn:{
+        margin:10,
+        alignItems:'center',
+        justifyContent:'center',
+        width:100,
+        height:30,
+        borderRadius:5,
+        borderWidth:1,
+        borderColor:Colors.deepRed
+    },
+    btnText:{
+        color:Colors.deepRed,
+        fontFamily:fontMedium,
+        fontSize:fontSizes.small
     }
 })

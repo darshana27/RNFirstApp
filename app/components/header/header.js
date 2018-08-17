@@ -23,7 +23,7 @@ export default class Header extends Component{
                 {/* <View style={styles.rightContainer}> */}
                 <TouchableOpacity style={styles.rightContainer}
                     onPress={this.props.back}>
-                                {this.props.isSearch ? <FeatherIcon name="search" size={26} style={styles.menuIcon} color="#fff" /> : <FeatherIcon name="" size={26} style={styles.menuIcon} color="#fff" />}
+                                {this.props.isSearch ? <FeatherIcon name="search" size={26} style={styles.menuIcon} color="#fff" /> : null}
                 </TouchableOpacity>
                 {/* </View> */}
             </View>

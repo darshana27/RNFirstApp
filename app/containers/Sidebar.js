@@ -65,11 +65,11 @@ export default class Sidebar extends Component {
                     {img:require('../assets/logout.png'),key:'Logout',screenName:'Login',value:8},
                     {img:require('../assets/logout.png'),key:'Reset Password',screenName:'ForgotPassword',value:8},
                 ]}
-                keyExtractor={(item,index) => index+""}
+                keyExtractor={(item,index) => ''+index}
                 ItemSeparatorComponent={this.renderSeparator}
                 renderItem = { ({item,index}) => 
                     <TouchableOpacity
-                    key={item}
+                    
                     style={styles.container}
                     onPress={this.isLogout.bind(this,item)}>
                         <Image 

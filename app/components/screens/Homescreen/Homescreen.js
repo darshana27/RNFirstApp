@@ -3,7 +3,6 @@ import { View, Text,Image, ScrollView,TouchableOpacity,Alert,ActivityIndicator }
 import styles from './styles';
 import Header from '../../header/header';
 import Swiper from 'react-native-swiper';
-import {imgSliderData} from './images';
 import { DrawerActions } from 'react-navigation';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
@@ -37,7 +36,7 @@ export default class Homescreen extends Component{
           return filteredArray.map((element) => {
            return (
   
-                <View style={styles.slides}>
+                <View key={element} style={styles.slides}>
                     <Image 
                         style={styles.slideImages}
                         source={{uri:element.icon_image}}/>

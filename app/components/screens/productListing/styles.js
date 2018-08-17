@@ -8,11 +8,12 @@ export default styles=StyleSheet.create({
         height:Dimensions.get('window').height-80,
         width:Dimensions.get('window').width,
         flexDirection:'row',
-        padding:7,
+        
     //    height:150,
         // paddingLeft:6,
         backgroundColor:Colors.white,
-        
+        // borderWidth:1,
+        // borderColor:'red'
     },
     productImage:{
         height:'100%',
@@ -23,7 +24,7 @@ export default styles=StyleSheet.create({
     },
     productDetails:{
         height:'100%',
-        width:'72%',
+        width:'71.5%',
         paddingLeft:14,
         alignContent:'flex-start',
         justifyContent:'center',
@@ -49,27 +50,30 @@ export default styles=StyleSheet.create({
         marginTop:5,
         color:Colors.productPrice,
         fontSize:18,
-        
         fontFamily:fontRegular
     },
     ratingsView:{
+        marginRight:10,
         height:'100%',
-        width:'14%',
+        width:'16%',
         justifyContent:'flex-end',
         paddingBottom:10,
+        // borderWidth:1,
+        // borderColor:'black'
     },
     itemContainer : {  
         width:'100%',
         flexDirection:'row',
-        // padding:5,
+        padding:5,
         height:80,
         // paddingLeft:6,
         backgroundColor:'#ffffff',
+        // borderColor:'yellow',
+        // borderWidth:1
     },
     toast:{
         // width:Dimensions.get('window').width,
         backgroundColor:Colors.lightGray,
-   
         marginTop:30
     }
 })

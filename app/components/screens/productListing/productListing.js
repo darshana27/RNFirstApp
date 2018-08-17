@@ -94,9 +94,9 @@ export default class productListing extends React.Component {
       // console.log("Set state : "+this.state.product_category_id)
       // console.log("Page : "+this.state.page)
       this.setState({isLoading:true,refreshing:true})
-      setTimeout(()=>{
+      // setTimeout(()=>{
         fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+category_id+'&page='+this.state.page+'&limit='+7,'GET',{},null,this.callback)
-      },5000)
+      // },1000)
       this.setState({isLoading:true,refreshing:true})
       
     }

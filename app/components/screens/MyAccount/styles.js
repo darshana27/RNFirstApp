@@ -113,12 +113,12 @@ export default styles=StyleSheet.create({
         flex:1,
         height:null,
         width:null,
-        resizeMode: 'cover'
+        // resizeMode: 'cover'
     },
     resetPasswordBtn:{
         width:Dimensions.get('window').width,
         height:55,
-        color:Colors.descContent,
+        // color:Colors.descContent,
         backgroundColor:Colors.white,
         alignItems:'center',
         justifyContent:'center',

@@ -1,11 +1,12 @@
 import React from 'react';
-import { Text, View,Image, ScrollView,Dimensions} from 'react-native';
+import { Text, View,Image, ScrollView,Dimensions,TouchableOpacity} from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import Header from '../../header/header';
 import styles from '../MyCart/styles';
 let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
+import Modal from "react-native-modal";
 import FeatherIcon from 'react-native-vector-icons/dist/Feather';
 // import {Loader} from '../../Loader/Loader';
 
@@ -16,10 +17,10 @@ export default class productListing extends React.Component {
       isLoading: true,
       product_category_id:0,
       selected:undefined,
-     
+      isModal1Visible:false,
     }
     this.callbackFn=this.callbackFn.bind(this);
-    
+    this._toggleModal1 = this._toggleModal1.bind(this);
   }
 
   componentDidMount(){
@@ -48,7 +49,13 @@ export default class productListing extends React.Component {
 
     });
   }
+  _toggleModal1(){
+    console.log("function called")
+    this.setState({ isModal1Visible: !this.state.isModal1Visible });
+  }
+  onPressDelete=()=>{
 
+  }
   // callbackFnSidebar(response){
   //   this.setState({   
   //     dataSource: responseJson.data,
@@ -75,6 +82,24 @@ export default class productListing extends React.Component {
 
     return (
       <View>
+        <Modal isVisible={this.state.isModal1Visible}
+         onBackdropPress={() => this.setState({ isModal1Visible: false })}>
+          <View style={styles.ModalView}>
+            <Text style={styles.modalRatingText}>Delete this item from cart?</Text>
+            <View style={styles.ModalBtns}>
+              <TouchableOpacity
+                style={styles.modalBtn}
+                onPress={this.rateNow}>
+                <Text style={styles.btnText}>Delete</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.modalBtn}
+                onPress={this.rateNow}>
+                <Text style={styles.btnText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
         <View> 
           {this.props.navigation.getParam('category_id')==1?
           <Header styles={styles.header}   
@@ -110,6 +135,7 @@ export default class productListing extends React.Component {
                 data={this.state.dataSource}
                 disableRightSwipe
                 closeOnRowPress
+                keyExtractor={({item,index}) => ''+index}
                 ItemSeparatorComponent={this.renderSeparator}
                 renderItem = { ({item,index}) => 
 
@@ -140,9 +166,11 @@ export default class productListing extends React.Component {
                      }
                      renderHiddenItem={()=>
                       <View style={styles.backRow}>
-                          <View style={styles.deleteContainer}>
+                          <TouchableOpacity 
+                              onPress={this._toggleModal1}
+                              style={styles.deleteContainer}>
                               <FeatherIcon name="trash" size={25} color="#FFFFFF"/>
-                          </View>
+                          </TouchableOpacity>
                       </View>}
                       // leftOpenValue={-75}
                       rightOpenValue={-75}
