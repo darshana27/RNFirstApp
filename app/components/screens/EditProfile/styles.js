@@ -9,13 +9,17 @@ export default styles=StyleSheet.create({
         // backgroundColor: Colors.red,
         justifyContent:'center',
         alignItems:'center',  
-    },
-    roundedImage:{
-        borderRadius:50,
-        height:100,
-        width:100,
-        top:40,
         borderWidth:1,
+        borderColor:'yellow'
+    },
+
+    roundedImage:{
+        borderRadius:60,
+        height:120.5,
+        width:120.5,
+        right:1,
+        bottom:1,
+        borderWidth:2,
         borderColor:Colors.white
     },
     header:{
@@ -56,10 +60,7 @@ export default styles=StyleSheet.create({
         marginBottom:20,
         backgroundColor:Colors.white,
         borderRadius:5,
-        borderBottomColor:Colors.white,
-        borderTopColor:Colors.white,
-        borderLeftColor:Colors.white,
-        borderRightColor:Colors.white,
+        borderColor:Colors.white,
         borderWidth:1,
     },
     btnText:{
@@ -79,7 +80,7 @@ export default styles=StyleSheet.create({
         borderColor: Colors.white,
         height: 40,
         margin: 10,
-        padding:5,top:10,
+        padding:5,
     },    
     iconStyle: {
         paddingTop: 11.5,

@@ -11,10 +11,12 @@ export default styles=StyleSheet.create({
         alignItems:'center',
     },
     roundedImage:{
-        borderRadius:50,
-        height:100,
-        width:100,
-        top:40
+        borderRadius:60,
+        height:120,
+        width:120,
+        top:30,
+        borderWidth:2,
+        borderColor:'white'
     },
     header:{
         top:0,

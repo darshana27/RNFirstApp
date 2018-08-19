@@ -22,7 +22,7 @@ export default class EditProfile extends Component{
             email:'',
             phone_no:'',
             dob:'',
-            avatarSource:'',
+            avatarSource:null,
             isPicSelected:false
 
         };
@@ -100,12 +100,14 @@ export default class EditProfile extends Component{
               this.setState({
 
                 isPicSelected:true,
-                avatarSource: source
+                avatarSource: source.uri
               });
             }
           });
     }
-    render(){       
+    render(){ 
+        var profile_pic_url = this.state.avatarSource!=null?this.state.avatarSource:'../../../assets/user_placeholder.png';
+      
         console.log(this.state.avatarSource)
          return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>
@@ -118,11 +120,13 @@ export default class EditProfile extends Component{
                 <KeyboardAvoidingView style={styles.viewStyle} behavior={Platform.OS === 'ios' ? 'padding' : null}>
                 <ScrollView>
                 <View style={styles.viewStyle}>
-                <TouchableOpacity onPress={this.onPressPicture}>
+                <TouchableOpacity style={{height:122,width:122,borderWidth:2,borderColor:'white',borderRadius:60,top:20}} onPress={this.onPressPicture}>
                 <Image 
+                
                       style={styles.roundedImage}
-                      source={this.state.avatarSource}/></TouchableOpacity>
-                      <View style={{marginTop:50}}>
+                      source={{uri:profile_pic_url}}/>
+             </TouchableOpacity>
+                      <View style={{marginTop:40,borderWidth:1,borderColor:'cyan'}}>
                         <View style={styles.nestedView}>
 
                             <Icon style={styles.iconStyle} name="user" size={20} color="#FFFFFF"/>
