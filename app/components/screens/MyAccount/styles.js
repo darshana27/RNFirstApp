@@ -12,6 +12,7 @@ export default styles=StyleSheet.create({
     },
     roundedImage:{
         borderRadius:60,
+<<<<<<< HEAD
         height:120.5,
         width:120.5,
         right:1,
@@ -19,6 +20,13 @@ export default styles=StyleSheet.create({
         top:25,
         borderWidth:2,
         borderColor:Colors.white
+=======
+        height:120,
+        width:120,
+        top:30,
+        borderWidth:2,
+        borderColor:'white'
+>>>>>>> 0a9c104d367562cf4b5d4a97c49186119cbe71fc
     },
     header:{
         top:0,
