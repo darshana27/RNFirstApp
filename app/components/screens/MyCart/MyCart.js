@@ -99,7 +99,7 @@ export default class productListing extends React.Component {
   calcCost(selectedValue,product_id){
     console.log("Selected Value : "+selectedValue);
     console.log("Product ID : "+product_id)
-
+    
   }
 
   render() {
