@@ -15,6 +15,7 @@ import ForgotPassword from '../components/screens/ForgotPassword/ForgotPassword'
 import ForgotPwd from '../components/screens/ForgotPwd/ForgotPwd';
 import EditProfile from '../components/screens/EditProfile/EditProfile';
 import StartUp from '../components/screens/StartUp/StartUp';
+import AddAddress from '../components/screens/AddAddress/AddAddress';
 
 /** allowfontscaling is to avoid fontscaling when device fonts are changed */
 Text.defaultProps.allowFontScaling=false;
@@ -120,6 +121,13 @@ const Stack = createStackNavigator({
   productDetails:{
     screen:productDetails,
     title:productDetails,
+    navigationOptions:{
+      header:null
+    }
+  },
+  AddAddress:{
+    screen:AddAddress,
+    title:AddAddress,
     navigationOptions:{
       header:null
     }

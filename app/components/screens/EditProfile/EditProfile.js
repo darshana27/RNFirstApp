@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {KeyboardAvoidingView,ImageBackground,Alert, ScrollView, Text, TextInput, View, TouchableOpacity,AsyncStorage,Platform,Image} from 'react-native';
+import {KeyboardAvoidingView,ImageBackground,Alert, ScrollView, Text, TextInput, View, TouchableOpacity,ActivityIndicator,Platform,Image} from 'react-native';
 import styles from './styles';
 import Header from '../../header/header';
 import Loader from '../../Loader/Loader';
@@ -24,7 +24,8 @@ export default class EditProfile extends Component{
             phone_no:'',
             dob:'',
             avatarSource:null,
-            isPicSelected:false
+            isPicSelected:false,
+            isLoading:false
 
         };
         this._editDetails=this._editDetails.bind(this); 
@@ -73,6 +74,7 @@ export default class EditProfile extends Component{
             } 
     }
     onPressPicture(){
+        this.setState({isLoading:true})
         var options = {
 
             storageOptions: {
@@ -81,15 +83,19 @@ export default class EditProfile extends Component{
             }
           };
         ImagePicker.showImagePicker(options, (response) => {
+            
             console.log('Response = ', response);
             console.log("Image Picker")
             if (response.didCancel) {
+                this.setState({isLoading:false,})
               console.log('User cancelled image picker');
             }
             else if (response.error) {
+                this.setState({isLoading:false,})
               console.log('ImagePicker Error: ', response.error);
             }
             else if (response.customButton) {
+                this.setState({isLoading:false,})
               console.log('User tapped custom button: ', response.customButton);
             }
             else {
@@ -99,9 +105,10 @@ export default class EditProfile extends Component{
               let source = { uri: 'data:image/jpeg;base64,' + response.data };
           
               this.setState({
-
+                
                 isPicSelected:true,
-                avatarSource: source.uri
+                avatarSource: source.uri,
+                isLoading:false,
               });
             }
           });
@@ -130,9 +137,10 @@ export default class EditProfile extends Component{
                 <TouchableOpacity
                 style={{height:122,width:122,borderWidth:2,borderColor:'white',borderRadius:60,top:20}}
                 onPress={this.onPressPicture}>
+                {this.state.isLoading?<ActivityIndicator style={{marginTop:36}} size='large' animating={true}/>:
                     <Image              
                         style={styles.roundedImage}
-                        source={profile_pic_url}/>
+                        source={profile_pic_url}/>}
                 </TouchableOpacity>
                       <View style={{marginTop:40}}>
 

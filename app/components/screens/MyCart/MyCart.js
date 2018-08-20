@@ -16,7 +16,6 @@ export default class productListing extends React.Component {
     this.state ={
       isLoading: true,
       product_category_id:0,
-      selected:undefined,
       qty:1,
       itemId:0
     }
@@ -99,7 +98,6 @@ export default class productListing extends React.Component {
   calcCost(selectedValue,product_id){
     console.log("Selected Value : "+selectedValue);
     console.log("Product ID : "+product_id)
-    
   }
 
   render() {
@@ -209,7 +207,7 @@ export default class productListing extends React.Component {
             <View style={styles.btnView}>
              <TouchableOpacity
                             style={styles.registerButton}
-                            onPress={this._register}>
+                            onPress={()=>this.props.navigation.navigate('AddAddress')}>
                             <Text style={styles.btnText}>ORDER NOW</Text>
                         </TouchableOpacity>
             </View>

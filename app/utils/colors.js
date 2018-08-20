@@ -8,3 +8,4 @@ export const starFilled='#FFBA00';
 export const productDetailsHeading1='#262626';
 export const descHeading='#111111';
 export const descContent='#333333';
+export const addAddressBG='#E6E7E1';
