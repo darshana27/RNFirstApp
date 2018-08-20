@@ -171,7 +171,7 @@ export default class productListing extends React.Component {
                           <View style={styles.dropdownContainer}>
                           <ModalDropdown  
                                         style={styles.modalDropdown}
-                                         defaultValue="Qty"
+                                         defaultValue={item.quantity}
                                          dropdownStyle={{width:46,left:0}}   
                                          options={['1','2','3','4','5','6','7','8']}
                                          renderButtonText={(item)=>dropdownValue=item}
@@ -180,7 +180,7 @@ export default class productListing extends React.Component {
                            </View>
                       </View>
                       <View style={styles.ratingsView}>
-                        <Text style={styles.price}>Rs.{item.product.cost * this.state.qty}</Text>
+                        <Text style={styles.price}>Rs.{item.product.cost * item.quantity}</Text>
                       </View>            
                      </View>
                      </View>
