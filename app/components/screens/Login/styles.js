@@ -38,16 +38,16 @@ export default styles=StyleSheet.create({
         marginTop:'7%',
         backgroundColor:Colors.white,
         borderRadius:5,
-        borderBottomColor:Colors.white,
-        borderTopColor:Colors.white,
-        borderLeftColor:Colors.white,
-        borderRightColor:Colors.white,
+        borderColor:Colors.white,
+        justifyContent:'center',
+        alignItems:'center'
     },
     btnText:{
         textAlign:'center',
         color:Colors.red,
         padding:'3%',
-        fontWeight:'bold',
+        fontWeight:'bold', 
+        
         fontSize:22,
         height:50,
         fontFamily:fontMedium

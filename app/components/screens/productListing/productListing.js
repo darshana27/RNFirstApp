@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, FlatList, Image, ScrollView, TouchableOpacity,ActivityIndicator } from 'react-native';
-
+import Loader from '../../Loader/Loader';
 import Header from '../../header/header';
 import styles from '../productListing/styles';
 import StarRating from 'react-native-star-rating';
@@ -16,7 +16,7 @@ export default class productListing extends React.Component {
       isLoading: true,
       list:[],
       page:1,
-      refreshing:true
+      refreshing:false
     }
     
     this.callback=this.callback.bind(this)
@@ -86,37 +86,41 @@ export default class productListing extends React.Component {
   //         console.log(this.state.offset)
   //   }}
     makeRemoteRequest(){
+    
       console.log("makeremoterequest")
       const category_id = this.props.navigation.getParam('category_id');
-      // console.log(category_id)
-      // this.setState({product_category_id:category_id})
-      // console.log("Set state : "+this.state.product_category_id)
-      // console.log("Page : "+this.state.page)
-      this.setState({isLoading:true,refreshing:true})
+      this.setState({isLoading:true})
       setTimeout(()=>{
         fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+category_id+'&page='+this.state.page+'&limit='+7,'GET',{},null,this.callback)
-      },1000)
-      this.setState({isLoading:true,refreshing:true})
+      },1500)
+      
       
     }
     callback(response){
+      this.setState({isLoading:false})
       if(response.status==200){
       this.setState({
         list:[...this.state.list,...response.data],
         refreshing:false,
         isLoading:false
       })
-    }
-      else{
-        console.log(response)
-      }
       console.log(this.state.list)
     }
-    handleRefresh =() => {
-      this.setState({
-        refreshing:true
-      },() => this.makeRemoteRequest())
+      else{
+        this.setState({
+          isLoading:false,
+          refreshing:false
+        })
+        console.log(response)
+      }
+      
     }
+    // handleRefresh =() => {
+    //   this.setState({
+    //     page:1,
+    //     refreshing:true
+    //   },() => this.makeRemoteRequest())
+    // }
     handleLoadMore = () => {
         this.setState({
           page:this.state.page + 1
@@ -124,15 +128,15 @@ export default class productListing extends React.Component {
         })
        
     }
-    renderFooter = () =>{
-      if(!this.state.refreshing) return null;
-      return(
-        <View
-          style={{paddingVertical:20,borderTopWidth:1,borderColor:'blue'}}>
-        <ActivityIndicator animating size="large"></ActivityIndicator>
-        </View>
-      )
-    }              
+    // renderFooter = () =>{
+    //   if(!this.state.refreshing && !this.state.isLoading) return null;
+    //   return(
+    //     <View
+    //       style={{paddingVertical:20,borderTopWidth:1,borderColor:'blue',backgroundColor:'cyan'}}>
+    //     <Loader/>
+    //     </View>
+    //   )
+    // }              
     renderSeparator = () => (
       <View
         style={{
@@ -179,15 +183,17 @@ export default class productListing extends React.Component {
                   isSearch={true}
                   back={() => {this.props.navigation.goBack()}} />:null}
         </View>
+        
         <View style={styles.container}>
         
         <FlatList
         
                 data={this.state.list}
                 onEndReached={this.handleLoadMore}
-                onEndReachedThreshold={0.7}
+                onEndReachedThreshold={0}
                 ItemSeparatorComponent={this.renderSeparator}
-                refreshing={this.handleRefresh}
+                // refreshing={this.state.refreshing}
+                // onRefresh={this.handleRefresh}
                 keyExtractor={(item,index) => item.name}
                 ListFooterComponent={this.renderFooter}
                 renderItem = { ({item,index}) => 
@@ -221,6 +227,7 @@ export default class productListing extends React.Component {
                      </TouchableOpacity>
                      }
             ></FlatList>
+            {this.state.isLoading?<Loader/>:null}
         </View>
       </View>
     );

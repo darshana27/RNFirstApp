@@ -103,19 +103,67 @@ export default styles=StyleSheet.create({
         flexDirection:'row',
         justifyContent: 'space-between'
     },
-    modalBtn:{
-        margin:10,
-        alignItems:'center',
-        justifyContent:'center',
-        width:100,
-        height:30,
-        borderRadius:5,
-        borderWidth:1,
-        borderColor:Colors.deepRed
-    },
+
     btnText:{
         color:Colors.deepRed,
         fontFamily:fontMedium,
         fontSize:fontSizes.small
-    }
+    },
+    leftContent:{
+        width:Dimensions.get('window').width-180,
+        justifyContent:'center',
+    },
+    rightContent:{
+        width:Dimensions.get('window').width-210,
+        justifyContent:'center',
+        alignItems:'flex-end'
+    },
+    textTotal:{
+        left:20,
+        color:Colors.descContent,
+        fontFamily:fontMedium
+    },
+    textAmount:{
+        right:20,
+        color:Colors.descContent,
+        fontFamily:fontMedium
+
+    },
+    totalView:{
+        height:80,
+        flexDirection:'row',
+        width:Dimensions.get('window').width,
+        borderTopWidth:1,
+        borderTopColor:Colors.descContent,
+        borderBottomWidth:1,
+        borderBottomColor:Colors.descContent
+
+    },
+    btnView:{
+        marginTop:30,
+        width:Dimensions.get('window').width-15,
+        alignContent:'center',
+        alignItems:'center',
+        justifyContent:'center',
+    },
+    registerButton: {
+        height:50,
+        width:300,
+        marginTop:20,
+        marginBottom:20,
+        backgroundColor:Colors.red,
+        borderRadius:5,
+        borderColor:Colors.white,
+        borderWidth:1,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    btnText:{
+        textAlign:'center',
+        color:Colors.white,
+        padding:10,
+        fontWeight:'bold',
+        fontSize:fontSizes.medium,
+        fontFamily:fontMedium
+    }, 
 })

@@ -11,11 +11,12 @@ export default styles=StyleSheet.create({
         alignItems:'center',  
     },
     roundedImage:{
-        borderRadius:50,
-        height:100,
-        width:100,
-        top:40,
-        borderWidth:1,
+        borderRadius:60,
+        height:120.5,
+        width:120.5,
+        right:1,
+        bottom:1,
+        borderWidth:2,
         borderColor:Colors.white
     },
     header:{
@@ -31,10 +32,12 @@ export default styles=StyleSheet.create({
         paddingBottom:11,
         marginTop:17,
     },
-    inputArea: {height: 38, width: '80%', fontSize: 16, color: Colors.white},
+   
     inputBox: {
         height: 45,
         width:'84%',
+        color:Colors.white,
+        fontFamily:fontRegular
         // fontSize:16,
         // color:Colors.white,
         // fontFamily:fontRegular

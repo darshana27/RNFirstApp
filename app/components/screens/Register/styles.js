@@ -46,11 +46,10 @@ export default styles=StyleSheet.create({
         marginBottom:20,
         backgroundColor:Colors.white,
         borderRadius:5,
-        borderBottomColor:Colors.white,
-        borderTopColor:Colors.white,
-        borderLeftColor:Colors.white,
-        borderRightColor:Colors.white,
+        borderColor:Colors.white,
         borderWidth:1,
+        justifyContent:'center',
+        alignItems:'center'
     },
     btnText:{
         textAlign:'center',

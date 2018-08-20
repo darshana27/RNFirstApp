@@ -1,27 +1,20 @@
-import React from 'react';
-import {View} from 'react-native'; 
-import {ActivityIndicator} from 'react-native-elements';
+import React,{Component} from 'react';
+ 
+import {View,ActivityIndicator,Dimensions} from 'react-native';
 
 export default class Loader extends Component{
     constructor(props){
         super(props);
     }
     render(){  
-        if(props.visible == true) {
             return (
+                <View 
+                style={{borderWidth:1,height:Dimensions.get('window').height,width:Dimensions.get('window').width,borderColor:'black',position:'absolute',justifyContent:'center',alignItems:'center'}}>
                 <ActivityIndicator
                     animating = {true}
                     size="large"
-                    style={{flex:1,
-                            justifyContent:'center',
-                            color:'yellow'}}
+                    color="red"
                 />
+                </View>
             );
-        }
-        else{
-            return null;
-        }
-        return(
-            <View></View>
-        )
 }}

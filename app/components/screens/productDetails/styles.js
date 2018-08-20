@@ -178,7 +178,7 @@ export default styles=StyleSheet.create({
     },
     ModalView2:{
         backgroundColor:Colors.white,
-        height:'100%',
+        height:'70%',
         width:'100%',
         borderRadius:10,
         alignItems:'center',
@@ -248,10 +248,7 @@ export default styles=StyleSheet.create({
         borderColor:Colors.lightGray,
         borderWidth:1,
         shadowOpacity: 0.8,
-        shadowRadius: 2,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-      
+
     },
     imageTO:{
         padding:3,

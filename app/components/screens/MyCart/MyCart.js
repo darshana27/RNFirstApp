@@ -17,7 +17,7 @@ export default class productListing extends React.Component {
       isLoading: true,
       product_category_id:0,
       selected:undefined,
-  
+      qty:1,
       itemId:0
     }
     this.callbackFn=this.callbackFn.bind(this);
@@ -96,13 +96,28 @@ export default class productListing extends React.Component {
     />
   );
   
+  calcCost(selectedValue,product_id){
+    console.log("Selected Value : "+selectedValue);
+    console.log("Product ID : "+product_id)
+
+  }
+
   render() {
     const { navigation } = this.props;
     const screen = navigation.getParam('screen');
     console.log(screen)
     console.log(this.state.isLoading)
     console.log(this.state.selected)
-
+    var dropdownValue=1
+    var count=0
+    var total_price=0
+    for (x in this.state.dataSource){     
+      count=count+1
+      console.log("here :" + this.state.dataSource[x].product.cost * this.state.qty)
+      total_price+=(this.state.dataSource[x].product.cost * this.state.qty);
+      console.log(total_price)
+    }
+    console.log(count) 
     return (
       <View>
 
@@ -156,15 +171,18 @@ export default class productListing extends React.Component {
                           <Text style={styles.item}>{item.product.name}</Text>
                           <Text style={styles.producer}>{'('+item.product.product_category+')'}</Text>
                           <View style={styles.dropdownContainer}>
-                          <ModalDropdown style={styles.modalDropdown}
+                          <ModalDropdown  
+                                        style={styles.modalDropdown}
                                          defaultValue="Qty"
                                          dropdownStyle={{width:46,left:0}}   
-                                         options={['1','2','3','4','5','6','7','8']}/>
+                                         options={['1','2','3','4','5','6','7','8']}
+                                         renderButtonText={(item)=>dropdownValue=item}
+                                         onSelect={(value)=>this.calcCost(value,item.id)}/>
                           <FeatherIcon name="chevron-down" size={15}/>
                            </View>
                       </View>
                       <View style={styles.ratingsView}>
-                        <Text style={styles.price}>Rs.{item.product.cost}</Text>
+                        <Text style={styles.price}>Rs.{item.product.cost * this.state.qty}</Text>
                       </View>            
                      </View>
                      </View>
@@ -184,11 +202,19 @@ export default class productListing extends React.Component {
                       rightOpenValue={-75}
                   >
             </SwipeListView>
-            <View style={{height:80,flexDirection:'row',width:Dimensions.get('window').width}}>
-                      <View><Text>TOTAL</Text></View>
-                      <View ><Text>Rs. </Text></View>
+            <View style={styles.totalView}>
+                      <View style={styles.leftContent}><Text style={styles.textTotal}>TOTAL</Text></View>
+                      <View style={styles.rightContent}><Text style={styles.textAmount}>₹{total_price} </Text></View>
+            </View>
+            <View style={styles.btnView}>
+             <TouchableOpacity
+                            style={styles.registerButton}
+                            onPress={this._register}>
+                            <Text style={styles.btnText}>ORDER NOW</Text>
+                        </TouchableOpacity>
             </View>
             </ScrollView>
+            
         </View>
       </View>
     );

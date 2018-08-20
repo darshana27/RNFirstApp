@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {AsyncStorage,ActivityIndicator,Alert} from 'react-native'
 import * as urls from '../../../lib/urls';
+import Loader from '../../Loader/Loader';
 let fetchApi=require('../../../lib/api').fetchApi();
 
 export default class StartUp extends Component {
@@ -59,12 +60,7 @@ export default class StartUp extends Component {
     }
     render() {
         return (
-            <ActivityIndicator style = {
-                {
-                    marginTop: '70%'
-                }
-            }
-            /> 
+            <Loader/>
         );
     }
 }

@@ -79,13 +79,13 @@ export default class Register extends Component{
                 formData.append("confirm_password", this.state.cnfPwd);
                 formData.append("gender", "F");
                 formData.append("phone_no", 7738002842);
-                console.log(formData._parts[0][1]);
-                console.log(formData._parts[1][1]);
-                console.log(formData._parts[2][1]);
-                console.log(formData._parts[3][1]);
-                console.log(formData._parts[4][1]);
-                console.log(formData._parts[5][1]);
-                console.log(formData._parts[6][1]);
+                // console.log(formData._parts[0][1]);
+                // console.log(formData._parts[1][1]);
+                // console.log(formData._parts[2][1]);
+                // console.log(formData._parts[3][1]);
+                // console.log(formData._parts[4][1]);
+                // console.log(formData._parts[5][1]);
+                // console.log(formData._parts[6][1]);
                 fetchApi.fetchData(''+urls.host_url+urls.user_register,'POST',null,formData,this.callbackFn)
                 // fetch('http://staging.php-dev.in:8844/trainingapp/api/users/register', {
                 //         method: 'POST',

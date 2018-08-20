@@ -59,7 +59,7 @@ export default class MyAccount extends Component{
                 <Image 
                       style={styles.roundedImage}
                       source={{uri:profile_pic_url}}/>
-                      <View style={{marginTop:50}}>
+                      <View style={{marginTop:30}}>
                         <View style={styles.nestedView}>
 
                             <Icon style={styles.iconStyle} name="user" size={20} color="#FFFFFF"/>
