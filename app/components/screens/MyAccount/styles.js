@@ -52,7 +52,7 @@ export default styles=StyleSheet.create({
     },
     registerButton: {
         height:50,
-        width:300,
+        width:320,
         marginTop:20,
         marginLeft:13,
         marginBottom:20,

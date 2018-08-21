@@ -194,12 +194,12 @@ export default class productListing extends React.Component {
                 ItemSeparatorComponent={this.renderSeparator}
                 // refreshing={this.state.refreshing}
                 // onRefresh={this.handleRefresh}
-                keyExtractor={(item,index) => item.name}
+                keyExtractor={(item,index) => ''+item.id}
                 ListFooterComponent={this.renderFooter}
                 renderItem = { ({item,index}) => 
                 
                 <TouchableOpacity 
-                key={item}
+               
                 onPress={()=>{this.props.navigation.navigate('productDetails',{product_id:item.id})}}>
                     <View style={styles.itemContainer}>
                       <View style={styles.productImage}>

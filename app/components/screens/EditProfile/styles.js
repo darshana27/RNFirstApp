@@ -9,8 +9,7 @@ export default styles=StyleSheet.create({
         // backgroundColor: Colors.red,
         justifyContent:'center',
         alignItems:'center',  
-        borderWidth:1,
-        borderColor:'yellow'
+ 
     },
 
     roundedImage:{
@@ -56,7 +55,7 @@ export default styles=StyleSheet.create({
     },
     registerButton: {
         height:50,
-        width:300,
+        width:320,
         marginTop:20,
         marginLeft:13,
         marginBottom:20,

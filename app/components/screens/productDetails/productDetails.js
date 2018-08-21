@@ -134,6 +134,7 @@ export default class productDetails extends React.Component {
      
       if(data!=undefined && Object.keys(data).length>0)
         return data.product_images.map((element) => {
+          
           // console.log(element.image)
           // this.setState({currentImg:element.image})
           // console.log("current image :"+this.state.currentImg)

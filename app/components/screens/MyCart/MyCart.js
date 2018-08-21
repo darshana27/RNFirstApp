@@ -58,6 +58,7 @@ export default class productListing extends React.Component {
       'Are you sure you want to delete this item?',
     [{text:'Cancel'},
      {text:'Delete',onPress:()=> {
+       rowMap[rowData.key].closeRow()
       console.log(rowData,rowMap)
       // console.log(rowData.item.product_id)
       var formData=new FormData()
@@ -156,9 +157,9 @@ export default class productListing extends React.Component {
                 closeOnRowPress
                 keyExtractor={(item) => item.product.product_id}
                 ItemSeparatorComponent={this.renderSeparator}
-                renderItem = { ({item,index}) => 
+                renderItem = { ({item,rowMap}) => 
 
-                <View key={index}>
+                <View>
                     <View style={styles.itemContainer}>
                       <View style={styles.productImage}>
                           <Image 
@@ -198,6 +199,7 @@ export default class productListing extends React.Component {
                       </View>}
                       // leftOpenValue={-75}
                       rightOpenValue={-75}
+                
                   >
             </SwipeListView>
             <View style={styles.totalView}>

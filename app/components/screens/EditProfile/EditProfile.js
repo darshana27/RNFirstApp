@@ -15,18 +15,19 @@ export default class EditProfile extends Component{
     
     constructor(props){
         super(props);
+        console.log(this.props.navigation.state.params.data)
         this.state={
             checked:false,
             access_token:'',
-            first_name:'',
-            last_name:'',
-            email:'',
-            phone_no:'',
-            dob:'',
+            first_name:null,
+            last_name:null,
+            email:null,
+            phone_no:null,
+            dob:null,
             avatarSource:null,
             isPicSelected:false,
-            isLoading:false
-
+            isLoading:false,
+            userDet:this.props.navigation.state.params.data
         };
         this._editDetails=this._editDetails.bind(this); 
         this.onPressPicture=this.onPressPicture.bind(this);
@@ -42,12 +43,12 @@ export default class EditProfile extends Component{
     _editDetails(){
         this.state.avatarSource!=""?console.log(this.state.avatarSource):console.log("null")
         let formData=new FormData();
-        formData.append("first_name",this.state.first_name)
-        formData.append("last_name",this.state.last_name)
-        formData.append("profile_pic",this.state.isPicSelected?this.state.avatarSource:null)
-        formData.append("email",this.state.email);
-        formData.append("dob",this.state.dob);
-        formData.append("phone_no",this.state.phone_no);
+        formData.append("first_name",this.state.first_name!=null?this.state.first_name:this.state.userDet.first_name)
+        formData.append("last_name",this.state.last_name!=null?this.state.last_name:this.state.userDet.last_name)
+        formData.append("profile_pic",this.state.isPicSelected?this.state.avatarSource:this.state.userDet.profile_pic)
+        formData.append("email",this.state.email!=null?this.state.email:this.state.userDet.email);
+        formData.append("dob",this.state.dob!=null?this.state.dob:this.state.userDet.dob);
+        formData.append("phone_no",this.state.phone_no!=null?this.state.phone_no:this.state.userDet.phone_no);
         // formData.append("profile_pic",btoa('../../../assets/user_placeholder.png'));
         console.log(formData)
         console.log("editDetails() :"+this.state.access_token);
@@ -116,11 +117,11 @@ export default class EditProfile extends Component{
 
     render(){  
         console.log(this.state.avatarSource)
-        var defaultFile=require('../../../assets/user_placeholder.png')
-        var user_pic={uri:this.state.avatarSource}
+        var defaultFile=this.state.userDet.profile_pic
+        var user_pic=this.state.avatarSource
         var profile_pic_url = this.state.avatarSource!=null?user_pic:defaultFile;
      
-
+        console.log("Profile Pic : "+this.state.userDet.profile_pic)
         console.log(this.state.avatarSource)
          return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>
@@ -133,14 +134,13 @@ export default class EditProfile extends Component{
                 <KeyboardAvoidingView style={styles.viewStyle} behavior={Platform.OS === 'ios' ? 'padding' : null}>
                 <ScrollView>
                 <View style={styles.viewStyle}>
-
                 <TouchableOpacity
                 style={{height:122,width:122,borderWidth:2,borderColor:'white',borderRadius:60,top:20}}
                 onPress={this.onPressPicture}>
                 {this.state.isLoading?<ActivityIndicator style={{marginTop:36}} size='large' animating={true}/>:
                     <Image              
                         style={styles.roundedImage}
-                        source={profile_pic_url}/>}
+                        source={{uri:profile_pic_url}}/>}
                 </TouchableOpacity>
                       <View style={{marginTop:40}}>
 
@@ -149,12 +149,15 @@ export default class EditProfile extends Component{
                             <Icon style={styles.iconStyle} name="user" size={20} color="#FFFFFF"/>
 
                             <TextInput
+                                editable={true}
                                 placeholder="First Name"
                                 multiline={false}
                                 style={styles.inputBox}
                                 underlineColorAndroid="transparent"
                                 placeholderTextColor='#FFFFFF'
+                                
                                 onChangeText={(first_name) => this.setState({first_name})}
+                                value={this.state.first_name==null?this.state.userDet.first_name:this.state.first_name}
                                 // value={this.state.first_name}
                             />
                             
@@ -163,6 +166,7 @@ export default class EditProfile extends Component{
                         <View style={styles.nestedView}>
                             <Icon style={styles.iconStyle} name="user" size={20} color="#FFFFFF"/>
                             <TextInput
+                                editable={true}
                                 style={styles.inputBox}
                                 placeholder="Last Name"
                                 placeholderTextColor='#FFFFFF'
@@ -171,6 +175,7 @@ export default class EditProfile extends Component{
                                 onSubmitEditing={() => {this.Email.focus();} }
                                 blurOnSubmit={false}
                                 underlineColorAndroid='transparent'
+                                value={this.state.last_name==null?this.state.userDet.last_name:this.state.last_name}
                                 onChangeText={(last_name) => this.setState({last_name})}
                                 // value={this.state.last_name}
                             />
@@ -179,6 +184,7 @@ export default class EditProfile extends Component{
                         <View style={styles.nestedView}>
                             <MaterialIcon style={styles.iconStyle} name="email" size={20} color="#FFFFFF"/>
                             <TextInput
+                                editable={true}
                                 ref={(emailID) => {this.Email= emailID}}
                                 style={styles.inputBox}
                                 placeholder="Email"
@@ -187,6 +193,7 @@ export default class EditProfile extends Component{
                                 onSubmitEditing={() => {this.Password.focus();} }
                                 blurOnSubmit={false}
                                 underlineColorAndroid='transparent'
+                                value={this.state.email==null?this.state.userDet.email:this.state.email}
                                 onChangeText={(email) => this.setState({email})}
                                 // value={this.state.email}
                             />
@@ -201,6 +208,7 @@ export default class EditProfile extends Component{
                                 placeholderTextColor='#FFFFFF'
                                 returnKeyType="done"
                                 underlineColorAndroid='transparent'
+                                value={this.state.phone_no==null?this.state.userDet.phone_no:this.state.phone_no}
                                 onChangeText={(phone_no) => this.setState({phone_no})}
                                 // value={this.state.phone_no}
                             />
@@ -213,7 +221,7 @@ export default class EditProfile extends Component{
                                 mode="date"
                                 placeholder="Select date"
                                 format="DD-MM-YYYY"
-                                date={this.state.dob}
+                                date={this.state.dob==null?this.state.userDet.dob:this.state.dob}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 customStyles={{

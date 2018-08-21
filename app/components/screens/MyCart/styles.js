@@ -81,7 +81,7 @@ export default styles=StyleSheet.create({
         height:45,width:45,backgroundColor:'red',borderRadius:50,alignItems:'center',justifyContent:'center',right:10
     },
     modalDropdown:{
-        width:30,height:30,alignItems:'flex-start',justifyContent:'center'
+        width:30,height:30,alignItems:'center',justifyContent:'center'
     },
     dropdownContainer:{
         flexDirection:'row',backgroundColor:'#EDEDED',width:50,alignItems:'center',justifyContent:'center',borderRadius:5,padding:3
