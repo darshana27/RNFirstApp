@@ -6,6 +6,8 @@ import Header from '../../header/header';
 import styles from '../MyCart/styles';
 let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
+
+
 import Modal from "react-native-modal";
 import FeatherIcon from 'react-native-vector-icons/dist/Feather';
 // import {Loader} from '../../Loader/Loader';
@@ -37,28 +39,42 @@ export default class productListing extends React.Component {
   callbackFn(response){
     console.log("TOTAL : "+response.total)
     console.log("Callback called")
+    if(response.status==200){
+      alert(response.message)
     this.setState({ 
       dataSource: response.data,
       totalAmt: response.total
     }, function(){
 
-    });
+    });}
+    else{
+      alert(response.message)
+    }
   }
 
   onPressDelete(rowData,rowMap){
-    
+    console.log(rowMap[rowData])
     // console.log(rowData.item.product_id)
     Alert.alert(
       'Delete Confirmation',
       'Are you sure you want to delete this item?',
     [{text:'Cancel'},
      {text:'Delete',onPress:()=> {
-       rowMap[rowData.key].closeRow()
+
       console.log(rowData,rowMap)
       // console.log(rowData.item.product_id)
       var formData=new FormData()
       formData.append('product_id',rowData)
-      fetchApi.fetchData(''+urls.host_url+urls.delete_cart,'POST',{},formData,this.callback)
+      fetchApi.fetchData(''+urls.host_url+urls.delete_cart,'POST',{},formData,(response => {
+        if(response.status==200){
+          fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callbackFn)
+          rowMap[rowData].closeRow()
+          console.log("Success")
+        }
+        else{
+          console.log("Unsuccessful")
+        }
+      }))
      }}],{cancelable: true}
   )
     // rowMap[rowData].closeRow()
@@ -158,11 +174,11 @@ export default class productListing extends React.Component {
         <View style={styles.container}>
         <ScrollView>
         <SwipeListView
-                useFlatList
+                useFlatList={true}
                 data={this.state.dataSource}
                 disableRightSwipe
-                closeOnRowPress
-                keyExtractor={(item) => item.product.product_id}
+          
+                keyExtractor={(item,index) => ''+item.product_id}
                 ItemSeparatorComponent={this.renderSeparator}
                 renderItem = { ({item,rowMap}) => 
 
@@ -179,7 +195,7 @@ export default class productListing extends React.Component {
                           <View style={styles.dropdownContainer}>
                           <ModalDropdown  
                                         style={styles.modalDropdown}
-                                         defaultValue={item.quantity}
+                                         defaultValue={''+item.quantity}
                                          dropdownStyle={{width:46,left:0}}   
                                          options={[1,2,3,4,5,6,7,8]}
                                          renderButtonText={(value)=>this.calcCost(value,item.id)}
@@ -205,8 +221,7 @@ export default class productListing extends React.Component {
                           
                       </View>}
                       // leftOpenValue={-75}
-                      rightOpenValue={-75}
-                
+                      rightOpenValue={-75}   
                   >
             </SwipeListView>
             <View style={styles.totalView}>

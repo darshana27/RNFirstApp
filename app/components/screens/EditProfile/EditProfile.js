@@ -27,7 +27,8 @@ export default class EditProfile extends Component{
             avatarSource:null,
             isPicSelected:false,
             isLoading:false,
-            userDet:this.props.navigation.state.params.data
+            userDet:this.props.navigation.state.params.data,
+
         };
         this._editDetails=this._editDetails.bind(this); 
         this.onPressPicture=this.onPressPicture.bind(this);
@@ -41,6 +42,7 @@ export default class EditProfile extends Component{
 
     }
     _editDetails(){
+        
         this.state.avatarSource!=""?console.log(this.state.avatarSource):console.log("null")
         let formData=new FormData();
         formData.append("first_name",this.state.first_name!=null?this.state.first_name:this.state.userDet.first_name)
@@ -65,12 +67,15 @@ export default class EditProfile extends Component{
         // })
     }
     callbackFn(response){
+        
         console.log(response)
             
             if(response.status==200){
+
                 Alert.alert(response.user_msg)
             }
             else{
+
                 Alert.alert(response.user_msg)
             } 
     }
@@ -131,6 +136,7 @@ export default class EditProfile extends Component{
                     <Header styles={styles.header} title={'Edit Profile'}
                             back={() => {this.props.navigation.goBack()}} />
                 </View>
+                {this.state.isupdating?<Loader/>:null}
                 <KeyboardAvoidingView style={styles.viewStyle} behavior={Platform.OS === 'ios' ? 'padding' : null}>
                 <ScrollView>
                 <View style={styles.viewStyle}>

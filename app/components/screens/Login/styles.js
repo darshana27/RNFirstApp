@@ -40,18 +40,17 @@ export default styles=StyleSheet.create({
         borderRadius:5,
         borderColor:Colors.white,
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        alignContent:'center'
     },
     btnText:{
+        paddingTop:17,
         textAlign:'center',
         color:Colors.red,
-        padding:'3%',
         fontWeight:'bold', 
-        
         fontSize:22,
         height:50,
         fontFamily:fontMedium
-
     },
     textLink:{
         fontSize:19,

@@ -11,6 +11,8 @@ export default styles=StyleSheet.create({
         backgroundColor:Colors.addAddressBG,
     },
     textArea:{
+        alignItems:'flex-start',
+        justifyContent:'flex-start',
         marginTop:-10,
         height:100,
         width:Dimensions.get('window').width-35,
@@ -25,6 +27,7 @@ export default styles=StyleSheet.create({
     },
     smallInput:{
         margin:5,
+        marginTop:-10,
         height:40,
         backgroundColor:Colors.white,
         width:Dimensions.get('window').width-210,
@@ -33,20 +36,20 @@ export default styles=StyleSheet.create({
     },
     text:{
         // top:10,
-        marginTop:10,
+        marginTop:15,
         height:40,
-        backgroundColor:Colors.addAddressBG,
+        // backgroundColor:Colors.addAddressBG,
         color:Colors.descContent,
         fontFamily:fontRegular,
         fontSize:fontSize.large
     },
     rowView:{
         flexDirection:'row',
-        backgroundColor:Colors.addAddressBG
+        // backgroundColor:Colors.addAddressBG
     },
     colView:{
         flexDirection:'column',
-        backgroundColor:'#DBDCD5'
+        // backgroundColor:'#DBDCD5'
     },
     btnAddAddress:{
         borderRadius:5,

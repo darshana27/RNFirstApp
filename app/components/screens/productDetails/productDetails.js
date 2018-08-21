@@ -9,6 +9,7 @@ import * as Colors from '../../../utils/colors';
 import * as fontSize from '../../../utils/fontSizes';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Modal from "react-native-modal";
+
 // import Share, {ShareSheet, Button} from 'react-native-share';
 let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
@@ -105,8 +106,11 @@ export default class productDetails extends React.Component {
       
     }
     callbackRating(response){
-      console.log(response)
+ 
       if(response.status==200){
+        console.log(response)
+      }
+      else{
         alert(response.message)
       }
     }
@@ -167,10 +171,10 @@ export default class productDetails extends React.Component {
     console.log("Add to cart")
     console.log(response)
       if(response.status==200){
-        alert(response.message)
+        console.log(response)
       }
       else{
-        alert(response.message)
+        console.log(response)
       }
   }
   // multipleImages(){

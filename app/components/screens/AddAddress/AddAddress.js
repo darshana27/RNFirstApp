@@ -24,6 +24,7 @@ export default class AddAddress extends React.Component {
     }
 
     componentDidMount(){
+        console.log(this.state.address,this.state.city)
         
     }
 
