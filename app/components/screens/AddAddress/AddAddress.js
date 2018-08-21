@@ -44,6 +44,7 @@ export default class AddAddress extends React.Component {
                 <Text style={styles.text}>ADDRESS</Text>
 
                 <TextInput
+                    placeholder="ADDRESS"
                     style={styles.textArea}
                     underlineColorAndroid="transparent" 
                     multiline={true}
@@ -53,6 +54,7 @@ export default class AddAddress extends React.Component {
                 <Text style={styles.text}>CITY</Text>
 
                 <TextInput 
+                    placeholder="CITY"
                     underlineColorAndroid="transparent"
                     style={styles.cityInput}/>
 
@@ -61,20 +63,24 @@ export default class AddAddress extends React.Component {
                     <View style={styles.colView}>
                         <Text style={styles.text}>CITY</Text>
                         <TextInput 
+                            placeholder="CITY"
                             underlineColorAndroid="transparent"
                             style={styles.smallInput}></TextInput>
                         <Text style={styles.text}>ZIP CODE</Text>
                         <TextInput 
+                            placeholder="ZIP CODE"
                             underlineColorAndroid="transparent"
                             style={styles.smallInput}></TextInput>
                     </View>
                     <View style={styles.colView}>
                         <Text style={styles.text}>STATE</Text>
                         <TextInput 
+                            placeholder="STATE"
                             underlineColorAndroid="transparent"
                             style={styles.smallInput}></TextInput>
                         <Text style={styles.text}>COUNTRY</Text>
                         <TextInput 
+                            placeholder="COUNTRY"
                             underlineColorAndroid="transparent"
                             style={styles.smallInput}></TextInput>
                     </View>

@@ -17,7 +17,9 @@ export default class productListing extends React.Component {
       isLoading: true,
       product_category_id:0,
       qty:1,
-      itemId:0
+      itemId:0,
+      totalAmt:0,
+      sub_total:0,
     }
     this.callbackFn=this.callbackFn.bind(this);
     this.onPressDelete=this.onPressDelete.bind(this)
@@ -27,24 +29,17 @@ export default class productListing extends React.Component {
     console.log("ComponentDidMount")
     const category_id = this.props.navigation.getParam('category_id');
     console.log("category_id", category_id)
-    // this.setState({product_category_id:category_id})
-    // console.log("sidebar_category", sidebar_category);
-    // {category_id!==null?
     category_id!==null?
     fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callbackFn)
     :console.log("Null")
-    // fetch(`http://staging.php-dev.in:8844/trainingapp/api/products/getList?product_category_id=`+category_id,
-    //       {method:'GET'}
-    //     )
-    //     .then(response => response.json())
-    //     .then(responseJson => {   
   }
   
   callbackFn(response){
-    console.log(response)
+    console.log("TOTAL : "+response.total)
     console.log("Callback called")
     this.setState({ 
       dataSource: response.data,
+      totalAmt: response.total
     }, function(){
 
     });
@@ -79,13 +74,7 @@ export default class productListing extends React.Component {
       console.log("Unsuccessful")
     }
   }
-  // callbackFnSidebar(response){
-  //   this.setState({   
-  //     dataSource: responseJson.data,
-  //   }, function(){
 
-  //   });
-  // }
   renderSeparator = () => (
     <View
       style={{
@@ -99,6 +88,24 @@ export default class productListing extends React.Component {
   calcCost(selectedValue,product_id){
     console.log("Selected Value : "+selectedValue);
     console.log("Product ID : "+product_id)
+    console.log(this.state.dataSource)
+    var arr=this.state.dataSource
+    var idx=arr.findIndex(item=>item.id==product_id)
+    console.log(idx)
+    var pid=arr[idx].product.id
+    var formData=new FormData();
+    formData.append("product_id",pid)
+    formData.append("quantity",selectedValue)
+    fetchApi.fetchData(''+urls.host_url+urls.edit_cart,'POST',{},formData,(response)=>{
+      if(response.status==200){
+        console.log(arr[idx])
+        fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callbackFn)
+        console.log("Success")
+      }
+      else{
+        console.log("Unsuccessful")
+      }
+    })  
   }
 
   render() {
@@ -106,17 +113,17 @@ export default class productListing extends React.Component {
     const screen = navigation.getParam('screen');
     console.log(screen)
     console.log(this.state.isLoading)
-    console.log(this.state.selected)
+
     var dropdownValue=1
     var count=0
     var total_price=0
-    for (x in this.state.dataSource){     
-      count=count+1
-      console.log("here :" + this.state.dataSource[x].product.cost * this.state.qty)
-      total_price+=(this.state.dataSource[x].product.cost * this.state.qty);
-      console.log(total_price)
-    }
-    console.log(count) 
+    // for (x in this.state.dataSource){     
+    //   count=count+1
+    //   console.log("here :" + this.state.dataSource[x].product.cost * this.state.qty)
+    //   total_price+=(this.state.dataSource[x].product.cost * this.state.qty);
+    //   console.log(total_price)
+    // }
+    // console.log(count) 
     return (
       <View>
 
@@ -174,14 +181,14 @@ export default class productListing extends React.Component {
                                         style={styles.modalDropdown}
                                          defaultValue={item.quantity}
                                          dropdownStyle={{width:46,left:0}}   
-                                         options={['1','2','3','4','5','6','7','8']}
-                                         renderButtonText={(item)=>dropdownValue=item}
-                                         onSelect={(value)=>this.calcCost(value,item.id)}/>
+                                         options={[1,2,3,4,5,6,7,8]}
+                                         renderButtonText={(value)=>this.calcCost(value,item.id)}
+                                      />
                           <FeatherIcon name="chevron-down" size={15}/>
                            </View>
                       </View>
                       <View style={styles.ratingsView}>
-                        <Text style={styles.price}>Rs.{item.product.cost * item.quantity}</Text>
+                        <Text style={styles.price}>Rs.{item.product.sub_total}</Text>
                       </View>            
                      </View>
                      </View>
@@ -204,7 +211,7 @@ export default class productListing extends React.Component {
             </SwipeListView>
             <View style={styles.totalView}>
                       <View style={styles.leftContent}><Text style={styles.textTotal}>TOTAL</Text></View>
-                      <View style={styles.rightContent}><Text style={styles.textAmount}>₹{total_price} </Text></View>
+                      <View style={styles.rightContent}><Text style={styles.textAmount}>₹{this.state.totalAmt}</Text></View>
             </View>
             <View style={styles.btnView}>
              <TouchableOpacity

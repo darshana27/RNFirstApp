@@ -104,7 +104,7 @@ export default class EditProfile extends Component{
           
               // You can also display the image using data:
               let source = { uri: 'data:image/jpeg;base64,' + response.data };
-          
+                
               this.setState({
                 
                 isPicSelected:true,

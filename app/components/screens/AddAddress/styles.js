@@ -24,8 +24,7 @@ export default styles=StyleSheet.create({
         backgroundColor:Colors.white,
     },
     smallInput:{
-        margin:3,
-        marginTop:-10,
+        margin:5,
         height:40,
         backgroundColor:Colors.white,
         width:Dimensions.get('window').width-210,
@@ -33,6 +32,7 @@ export default styles=StyleSheet.create({
         color:Colors.descContent,
     },
     text:{
+        // top:10,
         marginTop:10,
         height:40,
         backgroundColor:Colors.addAddressBG,
