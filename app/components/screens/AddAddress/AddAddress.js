@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View,Image, ScrollView,Dimensions,TouchableOpacity,Alert,TextInput} from 'react-native';
+import { Text, View,Image, ScrollView,Dimensions,TouchableOpacity,AsyncStorage,TextInput} from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import Header from '../../header/header';

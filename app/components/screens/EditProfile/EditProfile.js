@@ -74,7 +74,6 @@ export default class EditProfile extends Component{
     onPressPicture(){
         this.setState({isLoading:true})
         var options = {
-
             storageOptions: {
               skipBackup: true,
               path: 'images'
@@ -115,7 +114,13 @@ export default class EditProfile extends Component{
         var defaultFile=this.state.userDet.profile_pic
         var user_pic=this.state.avatarSource
         var profile_pic_url = this.state.avatarSource!=null?user_pic:defaultFile;
-     
+
+        var valueFname=this.state.first_name==null?this.state.userDet.first_name:this.state.first_name;
+        var valueLname=this.state.last_name==null?this.state.userDet.last_name:this.state.last_name;
+        var valueEmail=this.state.email==null?this.state.userDet.email:this.state.email;
+        var valuePhone=this.state.phone_no==null?this.state.userDet.phone_no:this.state.phone_no
+        var valueDob=this.state.dob==null?this.state.userDet.dob:this.state.dob
+
         console.log("Profile Pic : "+this.state.userDet.profile_pic)
         console.log(this.state.avatarSource)
          return (
@@ -155,7 +160,7 @@ export default class EditProfile extends Component{
                                 placeholderTextColor='#FFFFFF'
                                 
                                 onChangeText={(first_name) => this.setState({first_name})}
-                                value={this.state.first_name==null?this.state.userDet.first_name:this.state.first_name}
+                                value={valueFname}
                                 // value={this.state.first_name}
                             />
                             
@@ -173,7 +178,7 @@ export default class EditProfile extends Component{
                                 onSubmitEditing={() => {this.Email.focus();} }
                                 blurOnSubmit={false}
                                 underlineColorAndroid='transparent'
-                                value={this.state.last_name==null?this.state.userDet.last_name:this.state.last_name}
+                                value={valueLname}
                                 onChangeText={(last_name) => this.setState({last_name})}
                                 // value={this.state.last_name}
                             />
@@ -191,7 +196,7 @@ export default class EditProfile extends Component{
                                 onSubmitEditing={() => {this.Password.focus();} }
                                 blurOnSubmit={false}
                                 underlineColorAndroid='transparent'
-                                value={this.state.email==null?this.state.userDet.email:this.state.email}
+                                value={valueEmail}
                                 onChangeText={(email) => this.setState({email})}
                                 // value={this.state.email}
                             />
@@ -206,7 +211,7 @@ export default class EditProfile extends Component{
                                 placeholderTextColor='#FFFFFF'
                                 returnKeyType="done"
                                 underlineColorAndroid='transparent'
-                                value={this.state.phone_no==null?this.state.userDet.phone_no:this.state.phone_no}
+                                value={valuePhone}
                                 onChangeText={(phone_no) => this.setState({phone_no})}
                                 // value={this.state.phone_no}
                             />
@@ -219,7 +224,7 @@ export default class EditProfile extends Component{
                                 mode="date"
                                 placeholder="Select date"
                                 format="DD-MM-YYYY"
-                                date={this.state.dob==null?this.state.userDet.dob:this.state.dob}
+                                date={valueDob}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 customStyles={{

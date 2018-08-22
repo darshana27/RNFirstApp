@@ -49,7 +49,7 @@ export default class Sidebar extends Component {
             <View style={styles.mainView}>
             <ScrollView>
             <TouchableOpacity 
-                
+                onPress={()=>this.props.navigation.navigate('MyAccount')}
                 style={styles.header}>
                 <Image 
                 style={styles.roundedImage}
