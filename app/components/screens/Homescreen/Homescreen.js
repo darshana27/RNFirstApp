@@ -77,7 +77,6 @@ export default class Homescreen extends Component{
                     heightAdjust={-10}
                     ref={(ref) => this.searchBar = ref}
                     onBlur={()=>this.searchBar.hide()}
-               
                 />
                 <View style={styles.viewSwiper}>
                 <Swiper style={styles.wrapper} 

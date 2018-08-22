@@ -6,7 +6,8 @@ import styles from '../productListing/styles';
 import StarRating from 'react-native-star-rating';
 let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import SearchBar from 'react-native-searchbar';
+
 // import {Loader} from '../../Loader/Loader';
 
 export default class productListing extends React.Component {
@@ -152,8 +153,7 @@ export default class productListing extends React.Component {
     const screen = navigation.getParam('screen');
     // console.log(screen)
     // console.log(this.state.isLoading)
-
-   
+  
     return (
       <View>
         <View> 
@@ -161,31 +161,42 @@ export default class productListing extends React.Component {
           <Header styles={styles.header}   
                   title="Tables"
                   isSearch={true}
-                  back={() => {this.props.navigation.goBack()}} />:null}
+                  back={() => {this.props.navigation.goBack()}} 
+                  search={() => {this.searchBar.show()}}/>:null}
           {this.props.navigation.getParam('category_id')==2?
           <Header styles={styles.header}   
                   title="Chairs"
                   isSearch={true}
-                  back={() => {this.props.navigation.goBack()}} />:null}
+                  back={() => {this.props.navigation.goBack()}} 
+                  search={() => {this.searchBar.show()}}/>:null}
           {this.props.navigation.getParam('category_id')==3?
           <Header styles={styles.header}   
                   title="Sofas"
                   isSearch={true}
-                  back={() => {this.props.navigation.goBack()}} />:null}
+                  back={() => {this.props.navigation.goBack()}} 
+                  search={() => {this.searchBar.show()}}/>:null}
           {this.props.navigation.getParam('category_id')==4?
           <Header styles={styles.header}   
                   title="Cupboards"
                   isSearch={true}
-                  back={() => {this.props.navigation.goBack()}} />:null}
+                  back={() => {this.props.navigation.goBack()}} 
+                  search={() => {this.searchBar.show()}}/>:null}
           {this.props.navigation.getParam('category_id')==null?
           <Header styles={styles.header}   
                   title={screen}
                   isSearch={true}
-                  back={() => {this.props.navigation.goBack()}} />:null}
+                  back={() => {this.props.navigation.goBack()}} 
+                  search={() => {this.searchBar.show()}}/>:null}
         </View>
         
         <View style={styles.container}>
-        
+        <SearchBar
+                    backgroundColor='#9e0100'
+                    iconColor='#ffffff'
+                    heightAdjust={-10}
+                    ref={(ref) => this.searchBar = ref}
+                    onBlur={()=>this.searchBar.hide()}
+                />
         <FlatList
         
                 data={this.state.list}
