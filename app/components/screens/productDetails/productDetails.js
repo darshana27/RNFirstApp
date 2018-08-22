@@ -13,6 +13,7 @@ import Modal from "react-native-modal";
 // import Share, {ShareSheet, Button} from 'react-native-share';
 let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
+import Loader from '../../Loader/Loader';
 
 
 export default class productDetails extends React.Component {
@@ -27,7 +28,7 @@ export default class productDetails extends React.Component {
       currentImg:'',
       isShareVisible:false,
       product_quantity:0,
-     
+     isLoading:true
     }
       this._toggleModal1 = this._toggleModal1.bind(this);
       this._toggleModal2 = this._toggleModal2.bind(this);
@@ -64,12 +65,17 @@ export default class productDetails extends React.Component {
     // const product_id=this.props.navigation.getParam('product_id')
   }
   callbackFn(response){
+    if(response.status==200){
+      this.setState({isLoading:false})
     console.log("Product Details Callback called")
     console.log(response.data)
     this.setState({productDet:response.data})
     this.setState({currentImg:this.state.productDet.product_images[0].image})
     // console.log("ComponentDidMount currimg:"+this.state.currentImg)
-    console.log(this.state.productDet.product_images[0].image)
+    console.log(this.state.productDet.product_images[0].image)}
+    else{
+      console.log(response)
+    }
   }
   onClick() {
     Share.share({
@@ -206,8 +212,6 @@ export default class productDetails extends React.Component {
     return (
 
       <View style={styles.container}>
-
-
         <Modal isVisible={this.state.isModal1Visible}
         onBackdropPress={() => this.setState({ isModal1Visible: false })}>
           <View style={styles.ModalView}>
@@ -215,7 +219,6 @@ export default class productDetails extends React.Component {
             <Image style={styles.modalRatingImage} source={{uri:this.state.currentImg}}></Image>
             <View style={styles.starRating}>
             <StarRating
-              
               disabled={false}
               starSize={40}
               maxStars={5}
@@ -260,7 +263,7 @@ export default class productDetails extends React.Component {
           title={this.state.productDet.name}
           isSearch={true}
           back={() => {this.props.navigation.goBack()}} />
-    
+         
         <ScrollView>
           <View style={styles.itemDetails}>
             <View style={styles.leftContent}>
@@ -286,7 +289,7 @@ export default class productDetails extends React.Component {
                   <MaterialIcon style={styles.iconStyle} name="share" size={fontSize.xxLarge}/></TouchableOpacity>
                 </View>
                 <View style={styles.mainImg}>
-                { 
+                {  this.state.isLoading?<Loader/>:
                   this.state.currentImg?
                   <Image style={styles.imgBig} source={{uri:this.state.currentImg}}/>
                   :null
@@ -310,6 +313,7 @@ export default class productDetails extends React.Component {
                 // })  : null
                   }
                 </ScrollView>
+               
                 
                 {/* <View style={styles.productImgs}>
           

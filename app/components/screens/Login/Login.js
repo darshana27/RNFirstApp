@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { KeyboardAvoidingView, ImageBackground, Text, TextInput, View, TouchableOpacity, Alert,AsyncStorage } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import {user_data,serviceProvider} from '../../../lib/serviceProvider';
 import FeatherIcon from 'react-native-vector-icons/dist/Feather';
 let validators=require('../../../utils/validators').validators();
 // import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -69,13 +69,15 @@ export default class Login extends Component{
                 Alert.alert(response.user_msg)
             }
             else{
+                serviceProvider.setData['user_access_token',response.data.access_token]
                 var accessToken=response.data.access_token
                 console.log(accessToken)
+
                 AsyncStorage.setItem('user_access_token',accessToken);
-                console.log(AsyncStorage.getItem('user_access_token'))
-                console.log("From AsyncStorage : "+JSON.stringify(accessToken))
-                        console.log("After Login : "+response.data.access_token)
-                        console.log("After Login Parsed: "+JSON.stringify(response.data.access_token))
+                // console.log(AsyncStorage.getItem('user_access_token'))
+                // console.log("From AsyncStorage : "+JSON.stringify(accessToken))
+                // console.log("After Login : "+response.data.access_token)
+            //         console.log("After Login Parsed: "+JSON.stringify(response.data.access_token))
                         fetchApi.fetchData(''+urls.host_url+urls.user_fetch_details,'GET',{},null,this.callbackFnFetch)
                         // fetch(`http://staging.php-dev.in:8844/trainingapp/api/users/getUserData`,{
                         //     method:'GET',
@@ -94,6 +96,9 @@ export default class Login extends Component{
                 // AsyncStorage.setItem('screen','Login')
             }
             else{
+                serviceProvider.setData('total_carts',response.data.total_carts)
+                serviceProvider.setData('user_details',response)
+                console.log(user_data.user_details.data.user_data.first_name)
                 console.log("RESPONSE 200")
                 this.props.navigation.replace('Homescreen',{
                     'data':response

@@ -6,7 +6,7 @@ import styles from './styles';
 import Header from '../../header/header';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/dist/MaterialIcons';
-
+import {serviceProvider,user_data} from '../../../lib/serviceProvider';
 let validators=require('../../../utils/validators').validators();
 
 export default class MyAccount extends Component{
@@ -16,10 +16,12 @@ export default class MyAccount extends Component{
         this.state={
             checked:false,
             access_token:'',
-            userDet:this.props.navigation.state.params.data.data.user_data    
+            // userDet:this.props.navigation.state.params.data.data.user_data    
+            userDet:user_data.user_details.data.user_data
         }
         this._edit=this._edit.bind(this);
         this._reset=this._reset.bind(this);
+        this.refresh=this.refresh.bind(this);
       
     }
     getInitialState(){
@@ -28,6 +30,7 @@ export default class MyAccount extends Component{
         }
       }
       async componentDidMount(){
+          this.refresh()
         this.state.userDet.profile_pic!=""? console.log(this.state.userDet.profile_pic):console.log("Null")
         // var data=await AsyncStorage.getItem('user_access_token')
         // var pdata=JSON.parse(data)
@@ -36,14 +39,21 @@ export default class MyAccount extends Component{
     }
 
     _edit(){
-      this.props.navigation.navigate('EditProfile',{'data':this.state.userDet})
+    //   this.props.navigation.navigate('EditProfile',{'data':this.state.userDet})
+    this.props.navigation.navigate('EditProfile')
+    }
+    refresh(){
+        console.log(this.state.userDet)
     }
     _reset(){
-        this.props.navigation.navigate('ForgotPassword',{'data':this.state.userDet})
+        // this.props.navigation.navigate('ForgotPassword',{'data':this.state.userDet})
+        this.props.navigation.navigate('ForgotPassword')
     }
     render(){
-        console.log(this.state.userDet.profile_pic)
-        var profile_pic_url = this.state.userDet.profile_pic!=null?this.state.userDet.profile_pic:'../../../assets/user_placeholder.png';
+        console.log(user_data.user_details.data.user_data.profile_pic)
+        var defaultPic=require('../../../assets/user_placeholder.png')
+        var currPic={uri:this.state.userDet.profile_pic}
+        var profile_pic_url = this.state.userDet.profile_pic!=null?currPic:defaultPic;
         console.log(profile_pic_url)
         return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>
@@ -58,7 +68,7 @@ export default class MyAccount extends Component{
                 <View  style={styles.viewStyle}>
                 <Image 
                       style={styles.roundedImage}
-                      source={{uri:profile_pic_url}}/>
+                      source={profile_pic_url}/>
                       <View style={{marginTop:30}}>
                         <View style={styles.nestedView}>
 

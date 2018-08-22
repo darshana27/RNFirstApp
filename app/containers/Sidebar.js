@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import {Text, View, Image, FlatList, TouchableOpacity,AsyncStorage} from 'react-native';
+import {Text, View, Image, FlatList, TouchableOpacity,AsyncStorage,ScrollView} from 'react-native';
 import styles from './styles';
 import {Badge} from 'react-native-elements';
 import { StackActions, NavigationActions } from 'react-navigation';
+import {user_data,serviceProvider} from '../lib/serviceProvider';
 
-const resetAction = StackActions.reset({
-  index: 0,
-  actions: [NavigationActions.navigate({ routeName: 'Login' })],
-});
+// const resetAction = StackActions.reset({
+//   index: 0,
+//   actions: [NavigationActions.navigate({ routeName: 'Login' })],
+// });
 
 
 export default class Sidebar extends Component {
@@ -41,16 +42,21 @@ export default class Sidebar extends Component {
         />
       );
     render(){
-
+        var defaultPic=require('../assets/user_placeholder.png');
+        var userPic={uri:user_data.user_details.data.user_data.profile_pic}
+        var profile_pic=user_data.user_details.data.user_data.profile_pic!=null?userPic:defaultPic
    return(
             <View style={styles.mainView}>
-            <View style={styles.header}>
+            <ScrollView>
+            <TouchableOpacity 
+                
+                style={styles.header}>
                 <Image 
                 style={styles.roundedImage}
-                source={require('../assets/user_placeholder.png')}/>
-                <Text style={styles.Username}>Kinjal Jain</Text>
-                <Text style={styles.UserEmail}>kinjal.jain@wwindia.com</Text>
-            </View>
+                source={profile_pic}/>
+                <Text style={styles.Username}>{user_data.user_details.data.user_data.first_name+' '+user_data.user_details.data.user_data.last_name}</Text>
+                <Text style={styles.UserEmail}>{user_data.user_details.data.user_data.email}</Text>
+            </TouchableOpacity>
             <FlatList
                 data={[
                     // {img:require('../assets/images/Chair.png'),key:'Homescreen'},
@@ -76,10 +82,11 @@ export default class Sidebar extends Component {
                             style={styles.icon}
                             source={item.img}/>
                         <Text style={styles.item}>{item.key}</Text>
-                        {(item.key==='My Cart')? <Badge style={styles.badge} containerStyle={{ backgroundColor: 'red'}} value={2} textStyle={{ color: 'white' }}/>: null}
+                        {(item.key==='My Cart')? <Badge style={styles.badge} containerStyle={{ backgroundColor: 'red'}} value={user_data['total_carts']} textStyle={{ color: 'white' }}/>: null}
                          
                      </TouchableOpacity> }
             ></FlatList>
+            </ScrollView>
             </View>
         );
     }

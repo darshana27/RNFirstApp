@@ -37,10 +37,11 @@ export default class productListing extends React.Component {
   }
   
   callbackFn(response){
+    console.log(response)
     console.log("TOTAL : "+response.total)
     console.log("Callback called")
     if(response.status==200){
-      alert(response.message)
+
     this.setState({ 
       dataSource: response.data,
       totalAmt: response.total
@@ -67,7 +68,7 @@ export default class productListing extends React.Component {
       formData.append('product_id',rowData)
       fetchApi.fetchData(''+urls.host_url+urls.delete_cart,'POST',{},formData,(response => {
         if(response.status==200){
-          fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callbackFn)
+          fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callback)
           rowMap[rowData].closeRow()
           console.log("Success")
         }
@@ -84,6 +85,7 @@ export default class productListing extends React.Component {
 
   callback(response){
     if(response.status==200){
+      alert(response.message)
       console.log("Success")
     }
     else{

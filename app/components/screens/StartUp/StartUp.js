@@ -3,6 +3,7 @@ import {AsyncStorage,ActivityIndicator,Alert} from 'react-native'
 import * as urls from '../../../lib/urls';
 import Loader from '../../Loader/Loader';
 let fetchApi=require('../../../lib/api').fetchApi();
+import {user_data,serviceProvider} from '../../../lib/serviceProvider';
 
 export default class StartUp extends Component {
     constructor(props) {
@@ -18,9 +19,6 @@ export default class StartUp extends Component {
             .then((value) => {
                 console.log(value);
                 if (value != null) {
-                    // const data=JSON.parse(value);
-                    // this.setState({user_access_token:data})
-                    // console.log(this.state.user_access_token)
                     console.log(value);
                     try{
                     fetchApi.fetchData(''+urls.host_url+urls.user_fetch_details,'GET',{},null,this.callbackFnFetch)
@@ -44,7 +42,7 @@ export default class StartUp extends Component {
             })
     }
     callbackFnFetch(response){
-        console.log(response)
+        console.log('COUNT : '+response.data.total_carts)
         if (response.status != 200) {
             // throw Error(response.message)
             AsyncStorage.removeItem('user_access_token')
@@ -52,9 +50,9 @@ export default class StartUp extends Component {
             this.props.navigation.replace('Login')
             // AsyncStorage.setItem('screen','Login')
         } else {
-            this.props.navigation.replace('Homescreen', {
-                'data': response
-            })
+            serviceProvider.setData('user_details',response)
+            serviceProvider.setData('total_carts',response.data.total_carts)
+            this.props.navigation.replace('Homescreen')
             console.log(response.data.product_categories)
         }
     }

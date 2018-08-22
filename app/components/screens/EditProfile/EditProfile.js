@@ -10,12 +10,14 @@ let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
 var ImagePicker = require('react-native-image-picker');
 let validators=require('../../../utils/validators').validators();
+import {user_data,serviceProvider} from '../../../lib/serviceProvider';
+
 
 export default class EditProfile extends Component{
     
     constructor(props){
         super(props);
-        console.log(this.props.navigation.state.params.data)
+       
         this.state={
             checked:false,
             access_token:'',
@@ -27,8 +29,8 @@ export default class EditProfile extends Component{
             avatarSource:null,
             isPicSelected:false,
             isLoading:false,
-            userDet:this.props.navigation.state.params.data,
-
+            // userDet:this.props.navigation.state.params.data,
+            userDet:user_data.user_details.data.user_data
         };
         this._editDetails=this._editDetails.bind(this); 
         this.onPressPicture=this.onPressPicture.bind(this);
@@ -51,20 +53,10 @@ export default class EditProfile extends Component{
         formData.append("email",this.state.email!=null?this.state.email:this.state.userDet.email);
         formData.append("dob",this.state.dob!=null?this.state.dob:this.state.userDet.dob);
         formData.append("phone_no",this.state.phone_no!=null?this.state.phone_no:this.state.userDet.phone_no);
-        // formData.append("profile_pic",btoa('../../../assets/user_placeholder.png'));
         console.log(formData)
         console.log("editDetails() :"+this.state.access_token);
         var access=this.props.navigation.getParam('data')
         fetchApi.fetchData(''+urls.host_url+urls.user_update_details,'POST',{},formData,this.callbackFn)
-        // fetch('http://staging.php-dev.in:8844/trainingapp/api/users/update',{
-        //     method:'POST',
-        //     headers:{
-        //         'access_token':this.state.access_token    
-        //     },
-        //     body:formData })
-        //     .then(response => response.json())
-        //     .then(response =>{
-        // })
     }
     callbackFn(response){
         
@@ -106,8 +98,6 @@ export default class EditProfile extends Component{
             }
             else {
             //   let source = { uri: response.uri };
-          
-              // You can also display the image using data:
               let source = { uri: 'data:image/jpeg;base64,' + response.data };
                 
               this.setState({
@@ -134,7 +124,9 @@ export default class EditProfile extends Component{
             <View style={styles.viewStyle}>
                 <View> 
                     <Header styles={styles.header} title={'Edit Profile'}
-                            back={() => {this.props.navigation.goBack()}} />
+                            back={() => {
+                                this.props.navigation.navigate('MyAccount')
+                                }} />
                 </View>
                 {this.state.isupdating?<Loader/>:null}
                 <KeyboardAvoidingView style={styles.viewStyle} behavior={Platform.OS === 'ios' ? 'padding' : null}>

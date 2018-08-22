@@ -5,16 +5,16 @@ import Header from '../../header/header';
 import Swiper from 'react-native-swiper';
 import { DrawerActions } from 'react-navigation';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import {user_data,serviceProvider} from '../../../lib/serviceProvider';
 
 export default class Homescreen extends Component{
     constructor(props){
-        super(props);
-        console.log(this.props.navigation.state.params.data)
+        super(props); 
         this.state={
             isLoading:true,
             category_id:'',
-            imageArray:this.props.navigation.state.params.data.data.product_categories
-
+            // imageArray:this.props.navigation.state.params.data.data.product_categories
+            imageArray:user_data.user_details.data.product_categories
         }
         this._TableBtnPressed = this._TableBtnPressed.bind(this);
         this._ChairBtnPressed = this._ChairBtnPressed.bind(this);

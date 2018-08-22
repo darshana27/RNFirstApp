@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import * as Colors from '../utils/colors';
-
+import * as fontSize from '../utils/fontSizes';
 export default styles=StyleSheet.create({
     mainView:{
         height:'100%',
@@ -30,11 +30,11 @@ export default styles=StyleSheet.create({
     Username:{
         marginTop:7,
         color:Colors.white,
-        fontSize:25,
+        fontSize:fontSize.medium,
     },
     UserEmail:{
         color:Colors.white,
-        fontSize:16
+        fontSize:fontSize.small
     },
     icon:{
         marginLeft:10,

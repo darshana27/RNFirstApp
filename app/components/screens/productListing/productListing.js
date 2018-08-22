@@ -92,7 +92,7 @@ export default class productListing extends React.Component {
       this.setState({isLoading:true})
       setTimeout(()=>{
         fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+category_id+'&page='+this.state.page+'&limit='+7,'GET',{},null,this.callback)
-      },1500)
+      },200)
       
       
     }
@@ -190,7 +190,7 @@ export default class productListing extends React.Component {
         
                 data={this.state.list}
                 onEndReached={this.handleLoadMore}
-                onEndReachedThreshold={0}
+                onEndReachedThreshold={0.1}
                 ItemSeparatorComponent={this.renderSeparator}
                 // refreshing={this.state.refreshing}
                 // onRefresh={this.handleRefresh}

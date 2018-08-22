@@ -52,10 +52,10 @@ const Drawer=createDrawerNavigator({
     screen:MyAccount,
     title:MyAccount,
   },
-  EditProfile:{
-    screen:EditProfile,
-    title:EditProfile,
-  },
+  // EditProfile:{
+  //   screen:EditProfile,
+  //   title:EditProfile,
+  // },
   StoreLocator:{
     screen:StoreLocator,
     title:StoreLocator,
@@ -114,6 +114,13 @@ const Stack = createStackNavigator({
   Homescreen: {
     screen:Drawer,
     title: Homescreen,
+    navigationOptions:{
+      header:null
+    }
+  },
+  EditProfile:{
+    screen:EditProfile,
+    title:EditProfile,
     navigationOptions:{
       header:null
     }
