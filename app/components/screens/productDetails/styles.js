@@ -259,5 +259,18 @@ export default styles=StyleSheet.create({
         marginLeft:10,
         alignItems:'center',
         justifyContent:'center'
+    },
+    modalBtnTxt:{
+        color:Colors.white,
+    },
+    closeBtn:{
+        height:30,
+        width:'100%',
+        alignContent:'flex-end',
+        alignItems:'flex-end',
+       
+    },
+    closeStyle:{
+        right:10
     }
 })

@@ -53,7 +53,7 @@ export default class MyAccount extends Component{
         console.log(user_data.user_details.data.user_data.profile_pic)
         var defaultPic=require('../../../assets/user_placeholder.png')
         var currPic={uri:this.state.userDet.profile_pic}
-        var profile_pic_url = this.state.userDet.profile_pic!=null?currPic:defaultPic;
+        var profile_pic_url = this.state.userDet.profile_pic!=null || this.state.userDet.profile_pic!=''?currPic:defaultPic;
         console.log(profile_pic_url)
         return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>

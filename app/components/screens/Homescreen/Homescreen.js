@@ -6,6 +6,7 @@ import Swiper from 'react-native-swiper';
 import { DrawerActions } from 'react-navigation';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {user_data,serviceProvider} from '../../../lib/serviceProvider';
+import SearchBar from 'react-native-searchbar';
 
 export default class Homescreen extends Component{
     constructor(props){
@@ -60,14 +61,24 @@ export default class Homescreen extends Component{
     }
     render(){    
         return (
+            
             <View style={{flex: 1}}>
                 <View> 
                     <Header styles={styles.header} 
                         title={'NeoSTORE'}
                         isDrawer={true}
                         isSearch={true}
-                            back={() => {this.props.navigation.dispatch(DrawerActions.openDrawer())}} />
+                            back={() => {this.props.navigation.dispatch(DrawerActions.openDrawer())}} 
+                            search={() => {this.searchBar.show()}}/>
                 </View>
+                <SearchBar
+                    backgroundColor='#9e0100'
+                    iconColor='#ffffff'
+                    heightAdjust={-10}
+                    ref={(ref) => this.searchBar = ref}
+                    onBlur={()=>this.searchBar.hide()}
+               
+                />
                 <View style={styles.viewSwiper}>
                 <Swiper style={styles.wrapper} 
                 showsButtons={false}

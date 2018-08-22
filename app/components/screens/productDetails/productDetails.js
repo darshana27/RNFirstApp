@@ -4,12 +4,10 @@ import { View,StyleSheet, Text,Alert,Image,ScrollView,Dimensions,TouchableOpacit
 import Header from '../../header/header';
 import StarRating from 'react-native-star-rating';
 import styles from './styles';
-import {furniture} from './images';
 import * as Colors from '../../../utils/colors';
 import * as fontSize from '../../../utils/fontSizes';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Modal from "react-native-modal";
-
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 // import Share, {ShareSheet, Button} from 'react-native-share';
 let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
@@ -215,6 +213,11 @@ export default class productDetails extends React.Component {
         <Modal isVisible={this.state.isModal1Visible}
         onBackdropPress={() => this.setState({ isModal1Visible: false })}>
           <View style={styles.ModalView}>
+          <View style={styles.closeBtn}>
+          <TouchableOpacity onPress={()=>this.setState({ isModal1Visible: false })} style={styles.closeStyle}>
+            <MaterialIcon name="close" size={20}/>
+            </TouchableOpacity>
+          </View>
             <Text style={styles.modalRatingName}>{this.state.productDet.name}</Text>
             <Image style={styles.modalRatingImage} source={{uri:this.state.currentImg}}></Image>
             <View style={styles.starRating}>
@@ -233,7 +236,7 @@ export default class productDetails extends React.Component {
             <TouchableOpacity
               style={styles.modalBtn}
               onPress={this.rateNow}>
-              <Text>RATE NOW</Text>
+              <Text style={styles.modalBtnTxt}>RATE NOW</Text>
             </TouchableOpacity>
           </View>
         </Modal>
@@ -241,6 +244,11 @@ export default class productDetails extends React.Component {
         <Modal isVisible={this.state.isModal2Visible}
          onBackdropPress={() => this.setState({ isModal2Visible: false })}>
           <View style={styles.ModalView2}>
+          <View style={styles.closeBtn}>
+          <TouchableOpacity onPress={()=>this.setState({ isModal2Visible: false })} style={styles.closeStyle}>
+            <MaterialIcon name="close" size={20}/>
+            </TouchableOpacity>
+          </View>
             <Text style={styles.modalRatingName}>{this.state.productDet.name}</Text>
             <View style={styles.modalImageView}>
               <Image style={styles.modalQtyImage} source={{uri:this.state.currentImg}}></Image>
@@ -253,7 +261,7 @@ export default class productDetails extends React.Component {
             <TouchableOpacity
               style={styles.modalQtyBtn}
               onPress={this.onSubmit}>
-              <Text>SUBMIT</Text>
+              <Text style={styles.modalBtnTxt}>SUBMIT</Text>
             </TouchableOpacity>
           </View>
         </Modal>

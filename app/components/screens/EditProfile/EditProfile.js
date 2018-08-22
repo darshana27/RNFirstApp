@@ -29,6 +29,7 @@ export default class EditProfile extends Component{
             avatarSource:null,
             isPicSelected:false,
             isLoading:false,
+            isfetching:false,
             // userDet:this.props.navigation.state.params.data,
             userDet:user_data.user_details.data.user_data
         };
@@ -44,7 +45,7 @@ export default class EditProfile extends Component{
 
     }
     _editDetails(){
-        
+        this.setState({isfetching:true})
         this.state.avatarSource!=""?console.log(this.state.avatarSource):console.log("null")
         let formData=new FormData();
         formData.append("first_name",this.state.first_name!=null?this.state.first_name:this.state.userDet.first_name)
@@ -54,20 +55,18 @@ export default class EditProfile extends Component{
         formData.append("dob",this.state.dob!=null?this.state.dob:this.state.userDet.dob);
         formData.append("phone_no",this.state.phone_no!=null?this.state.phone_no:this.state.userDet.phone_no);
         console.log(formData)
-        console.log("editDetails() :"+this.state.access_token);
-        var access=this.props.navigation.getParam('data')
+        console.log("editDetails() :"+this.state.access_token);      
         fetchApi.fetchData(''+urls.host_url+urls.user_update_details,'POST',{},formData,this.callbackFn)
     }
-    callbackFn(response){
-        
+    callbackFn(response){   
         console.log(response)
-            
             if(response.status==200){
-
+               
+                serviceProvider.setData('user_updated_details',response.data)
                 Alert.alert(response.user_msg)
             }
             else{
-
+              
                 Alert.alert(response.user_msg)
             } 
     }

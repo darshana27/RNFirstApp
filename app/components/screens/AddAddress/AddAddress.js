@@ -22,17 +22,22 @@ export default class AddAddress extends React.Component {
         };
         this.addAddress=this.addAddress.bind(this); 
     }
-
     componentDidMount(){
-        console.log(this.state.address,this.state.city)
-        
+        AsyncStorage.getItem('complete_address')
+   
     }
 
     addAddress(){
-        console.log(this.state.address)
-        var formData=new FormData();
-    
-        
+        console.log('add Address'+this.state.address,this.state.city,this.state.landmark,this.state.state,this.state.zipcode,this.state.country)
+        if(this.state.address=='' || this.state.city=='' || this.state.landmark=='' || this.state.state=='' || this.state.zipcode=='' || this.state.country=='' ){
+            alert("All fields are mandatory")
+        }
+        else{
+            var completeAddress=[this.state.address,this.state.city,this.state.landmark,this.state.state,this.state.zipcode,this.state.country]
+            console.log(completeAddress)
+            AsyncStorage.setItem('complete_address',JSON.stringify(completeAddress))
+        console.log("Added")
+        }
     }
 
     render(){
@@ -57,33 +62,38 @@ export default class AddAddress extends React.Component {
                 <TextInput 
                     placeholder="CITY"
                     underlineColorAndroid="transparent"
-                    style={styles.cityInput}/>
+                    style={styles.cityInput}
+                    onChangeText={(city) => this.setState({city})}/>
 
                 <View style={styles.rowView}>
                     
                     <View style={styles.colView}>
                         <Text style={styles.text}>CITY</Text>
                         <TextInput 
-                            placeholder="CITY"
+                            placeholder="Landmark"
                             underlineColorAndroid="transparent"
-                            style={styles.smallInput}></TextInput>
+                            style={styles.smallInput}
+                            onChangeText={(landmark) => this.setState({landmark})}></TextInput>
                         <Text style={styles.text}>ZIP CODE</Text>
                         <TextInput 
                             placeholder="ZIP CODE"
                             underlineColorAndroid="transparent"
-                            style={styles.smallInput}></TextInput>
+                            style={styles.smallInput}
+                            onChangeText={(zipcode) => this.setState({zipcode})}></TextInput>
                     </View>
                     <View style={styles.colView}>
                         <Text style={styles.text}>STATE</Text>
                         <TextInput 
                             placeholder="STATE"
                             underlineColorAndroid="transparent"
-                            style={styles.smallInput}></TextInput>
+                            style={styles.smallInput}
+                            onChangeText={(state) => this.setState({state})}></TextInput>
                         <Text style={styles.text}>COUNTRY</Text>
                         <TextInput 
                             placeholder="COUNTRY"
                             underlineColorAndroid="transparent"
-                            style={styles.smallInput}></TextInput>
+                            style={styles.smallInput}
+                            onChangeText={(country) => this.setState({country})}></TextInput>
                     </View>
 
                 </View>
