@@ -6,7 +6,7 @@ import { Col } from 'native-base';
 
 export default styles=StyleSheet.create({
     viewStyle:{
-        height:Dimensions.get('window').height,
+        height:Dimensions.get('window').height-80,
         padding:15,
         backgroundColor:Colors.addAddressBG,
     },

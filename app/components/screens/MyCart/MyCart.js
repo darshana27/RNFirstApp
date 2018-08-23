@@ -233,7 +233,7 @@ export default class productListing extends React.Component {
             <View style={styles.btnView}>
              <TouchableOpacity
                             style={styles.registerButton}
-                            onPress={()=>this.props.navigation.navigate('AddAddress')}>
+                            onPress={()=>this.props.navigation.navigate('AddressListing')}>
                             <Text style={styles.btnText}>ORDER NOW</Text>
                         </TouchableOpacity>
             </View>

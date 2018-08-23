@@ -24,6 +24,7 @@ export default class Header extends Component{
                 <TouchableOpacity style={styles.rightContainer}
                     onPress={this.props.search}>
                                 {this.props.isSearch ? <FeatherIcon name="search" size={26} style={styles.menuIcon} color="#fff" /> : null}
+         
                 </TouchableOpacity>
                 {/* </View> */}
             </View>

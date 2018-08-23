@@ -4,6 +4,7 @@ import * as urls from '../../../lib/urls';
 import Loader from '../../Loader/Loader';
 let fetchApi=require('../../../lib/api').fetchApi();
 import {user_data,serviceProvider} from '../../../lib/serviceProvider';
+// import SplashScreen from 'react-native-splash-screen'
 
 export default class StartUp extends Component {
     constructor(props) {
@@ -15,6 +16,7 @@ export default class StartUp extends Component {
     }
 
     componentDidMount() {
+        // SplashScreen.hide();
         AsyncStorage.getItem('user_access_token')
             .then((value) => {
                 console.log(value);
