@@ -1,5 +1,7 @@
-package com.firstapp;
 
+package com.firstapp;
+import android.os.Bundle;
+import org.devio.rn.splashscreen.SplashScreen; // here 
 import com.facebook.react.ReactActivity;
 
 public class MainActivity extends ReactActivity {
@@ -10,7 +12,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        // SplashScreen.show(this);
+        SplashScreen.show(this);
         return "FirstApp";
     }
 }

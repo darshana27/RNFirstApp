@@ -7,6 +7,7 @@ import { DrawerActions } from 'react-navigation';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {user_data,serviceProvider} from '../../../lib/serviceProvider';
 import SearchBar from 'react-native-searchbar';
+import SplashScreen from 'react-native-splash-screen'
 
 export default class Homescreen extends Component{
     constructor(props){
@@ -23,6 +24,9 @@ export default class Homescreen extends Component{
         this._CupboardBtnPressed = this._CupboardBtnPressed.bind(this);
     }
 
+    componentDidMount(){
+        SplashScreen.hide()
+    }
 
     SwiperImages(){
         console.log('swiperimages')

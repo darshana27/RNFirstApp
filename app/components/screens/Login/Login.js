@@ -8,6 +8,8 @@ let validators=require('../../../utils/validators').validators();
 import styles from './styles';
 import * as urls from '../../../lib/urls';
 let fetchApi=require('../../../lib/api').fetchApi();
+import SplashScreen from 'react-native-splash-screen'
+
 
 export default class Login extends Component{
     constructor(props){
@@ -19,8 +21,9 @@ export default class Login extends Component{
         this.callbackFnFetch=this.callbackFnFetch.bind(this);
     }
 
-    componentWillMount(){
-       
+    componentDidMount(){
+        SplashScreen.hide();
+
     }
     // componentDidMount(){
     //     return fetch('https://staging.php-dev.in:8844/trainingapp/api/users/login', {

@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-import {AsyncStorage,ActivityIndicator,Alert} from 'react-native'
+import {AsyncStorage,View,Alert} from 'react-native'
 import * as urls from '../../../lib/urls';
 import Loader from '../../Loader/Loader';
 let fetchApi=require('../../../lib/api').fetchApi();
 import {user_data,serviceProvider} from '../../../lib/serviceProvider';
-// import SplashScreen from 'react-native-splash-screen'
+import SplashScreen from 'react-native-splash-screen'
 
 export default class StartUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true
+           
         }
         this.callbackFnFetch=this.callbackFnFetch.bind(this);
     }
@@ -60,7 +60,9 @@ export default class StartUp extends Component {
     }
     render() {
         return (
+         
             <Loader/>
+           
         );
     }
 }
