@@ -16,7 +16,7 @@ export default class MyAccount extends Component{
         this.state={
             checked:false,
             access_token:'',
-            
+            rerender:0,
             // userDet:this.props.navigation.state.params.data.data.user_data    
             userDet:user_data.user_details.data.user_data
         }
@@ -31,7 +31,7 @@ export default class MyAccount extends Component{
         }
       }
       async componentDidMount(){
-          this.refresh()
+        this.setState({rerender:0})
         this.state.userDet.profile_pic!=""? console.log(this.state.userDet.profile_pic):console.log("Null")
         // var data=await AsyncStorage.getItem('user_access_token')
         // var pdata=JSON.parse(data)

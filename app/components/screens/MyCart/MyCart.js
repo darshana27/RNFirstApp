@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View,Image, ScrollView,Dimensions,TouchableOpacity,Alert} from 'react-native';
+import { Text, View,Image, ScrollView,AsyncStorage,TouchableOpacity,Alert} from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import Header from '../../header/header';
@@ -26,6 +26,7 @@ export default class productListing extends React.Component {
     }
     this.callbackFn=this.callbackFn.bind(this);
     this.onPressDelete=this.onPressDelete.bind(this)
+    this.orderNow=this.orderNow.bind(this)
   }
 
   componentDidMount(){
@@ -54,6 +55,22 @@ export default class productListing extends React.Component {
       this.setState({isLoading:false})
     }
   }
+
+  orderNow(){
+    var address=AsyncStorage.getItem('complete_address')
+      address.then(value=>{var x=JSON.parse(value); 
+        console.log(x) 
+        if(x.length==0 || x==null || x==undefined){
+          this.props.navigation.navigate('AddAddress')
+        }
+        else{
+          this.props.navigation.navigate('AddressListing')
+        }
+      }
+    )
+    }  
+
+  
 
   onPressDelete(rowData,rowMap){
     console.log(rowMap[rowData])
@@ -86,9 +103,11 @@ export default class productListing extends React.Component {
   }
 
   callback(response){
+    console.log(response)
     if(response.status==200){
-      alert(response.message)
+      serviceProvider.setData('total_carts',response.count)
       console.log("Success")
+
     }
     else{
       console.log("Unsuccessful")
@@ -236,7 +255,7 @@ export default class productListing extends React.Component {
             <View style={styles.btnView}>
              <TouchableOpacity
                             style={styles.registerButton}
-                            onPress={()=>this.props.navigation.navigate('AddressListing')}>
+                            onPress={()=>this.orderNow()}>
                             <Text style={styles.btnText}>ORDER NOW</Text>
                         </TouchableOpacity>
             </View>

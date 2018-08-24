@@ -9,3 +9,5 @@ export const productDetailsHeading1='#262626';
 export const descHeading='#111111';
 export const descContent='#333333';
 export const addAddressBG='#EEEEEA';
+export const addressListRadioOuter='#BFBFBF';
+export const addressListRadioInner='#8E8E8E'

@@ -19,28 +19,52 @@ export default class AddAddress extends React.Component {
             state:'',
             zipcode:'',
             country:'',
-            
+            // list:[]
         };
         this.addAddress=this.addAddress.bind(this); 
     }
-    componentDidMount(){
-        var add=AsyncStorage.getItem('complete_address')
-       
-            add.then(res=>{var x=JSON.parse(res);console.log(x[0])})
-        
-    }
+
     addAddress(){
-        console.log('add Address'+this.state.address,this.state.city,this.state.landmark,this.state.state,this.state.zipcode,this.state.country)
+                // console.log('add Address'+this.state.address,this.state.city,this.state.landmark,this.state.state,this.state.zipcode,this.state.country)
         if(this.state.address=='' || this.state.city=='' || this.state.landmark=='' || this.state.state=='' || this.state.zipcode=='' || this.state.country=='' ){
             alert("All fields are mandatory")
         }
         else{
-            var completeAddress=[{address:this.state.address,city:this.state.city,landmark:this.state.landmark,state:this.state.state,zipcode:this.state.zipcode,country:this.state.country}]
-            console.log(completeAddress)
-            console.log(JSON.stringify(completeAddress))
-            AsyncStorage.setItem('complete_address',JSON.stringify(completeAddress))
-            console.log("Added")
+        var list=[];
+        var completeAddress={address:this.state.address,city:this.state.city,landmark:this.state.landmark,state:this.state.state,zipcode:this.state.zipcode,country:this.state.country}
+        var address=AsyncStorage.getItem('complete_address')
+        if(address==null || address==undefined){
+            list.push(completeAddress)
+            console.log(list)
+            AsyncStorage.setItem('complete_address',JSON.stringify(list))
         }
+        else{
+            address.then((value) => {var x=JSON.parse(value);
+                if(x.length==0){
+                    list.push(completeAddress)
+                    console.log(list)
+                    AsyncStorage.setItem('complete_address',JSON.stringify(list))
+                }
+                else{
+                    x.push(completeAddress)
+                    console.log(x)
+                    AsyncStorage.setItem('complete_address',JSON.stringify(x))
+                }
+            
+            })
+        }}
+        // console.log('add Address'+this.state.address,this.state.city,this.state.landmark,this.state.state,this.state.zipcode,this.state.country)
+        // if(this.state.address=='' || this.state.city=='' || this.state.landmark=='' || this.state.state=='' || this.state.zipcode=='' || this.state.country=='' ){
+        //     alert("All fields are mandatory")
+        // }
+        // else{  
+        //     var completeAddress={address:this.state.address,city:this.state.city,landmark:this.state.landmark,state:this.state.state,zipcode:this.state.zipcode,country:this.state.country}
+        //     this.setState({list:[...this.state.list,completeAddress]})
+        //     console.log(this.state.list)
+        //     console.log(JSON.stringify(this.state.list))
+        //     AsyncStorage.setItem('complete_address',JSON.stringify(this.state.list))
+        //     console.log("Added")
+        // }
     }
 
     render(){

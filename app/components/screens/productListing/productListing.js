@@ -23,69 +23,13 @@ export default class productListing extends React.Component {
     this.callback=this.callback.bind(this)
     // this.callbackFn=this.callbackFn.bind(this);
   }
+    componentDidMount(){
 
+      console.log("componentdidmount")
+      this.makeRemoteRequest()
 
-  // componentWillMount(){
-  //   setTimeout(() => {
-  //     this.setState({
-  //       isLoading:false
-  //     })
-  //   },
-  //   1500)
-  // }
-                  componentDidMount(){
+    }
 
-                    console.log("componentdidmount")
-                    this.makeRemoteRequest()
-                  //   console.log("ComponentDidMount")
-                  //   const category_id = this.props.navigation.getParam('category_id');
-                  //   console.log("category_id", category_id)
-                  //   category_id!==null?
-                  //   fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+category_id,'GET',{},null,this.callbackFn)
-                  //   :console.log("Null") 
-                  // }
-                  // callbackFn(response){
-                  //   console.log(response)
-                  //   console.log("Callback called")
-                  //   this.setState({ 
-                  //     dataSource: response.data,
-                  //   });
-                  }
-  // callbackFnSidebar(response){
-  //   this.setState({   
-  //     dataSource: responseJson.data,
-  //   }, function(){
-
-  //   });
-  // }
-  // fetchResult = ()=>{
-  //   // const limit=6
-  //   // const page=1
-  //   console.log("ComponentDidMount")
-  //   const category_id = this.props.navigation.getParam('category_id');
-  //   console.log("category_id", category_id)
-  //   category_id!==null?
-  //   fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+category_id+'&limit=100','GET',{},null,this.callbackFnLazy)
-  //   :console.log("Null") 
-  //   };
-  
-  //   callbackFnLazy = (response) =>{
-  //     console.log(response)
-  //     this.setState({dataSource: response.data})
-  //     console.log(this.state.dataSource.length)
-  //     const { offset ,limit, list} = this.state;
-  //     this.setState({maxlimit:this.state.dataSource.length})
-      
-  //       if(response.data!=null){
-  //         this.setState({ 
-  //           list: list.concat(this.state.dataSource.slice(offset,offset+6<limit?limit:offset+6)),
-  //           offset: offset + 6,
-  //           limit: limit+6
-  //         })
-  //         console.log(this.state.list)
-  //         console.log(this.state.limit)
-  //         console.log(this.state.offset)
-  //   }}
     makeRemoteRequest(){
     
       console.log("makeremoterequest")
@@ -94,9 +38,8 @@ export default class productListing extends React.Component {
       setTimeout(()=>{
         fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+category_id+'&page='+this.state.page+'&limit='+7,'GET',{},null,this.callback)
       },200)
-      
-      
     }
+    
     callback(response){
       this.setState({isLoading:false})
       if(response.status==200){
@@ -106,7 +49,8 @@ export default class productListing extends React.Component {
         isLoading:false
       })
       console.log(this.state.list)
-    }
+    } 
+
       else{
         this.setState({
           isLoading:false,

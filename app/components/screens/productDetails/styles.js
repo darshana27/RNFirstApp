@@ -170,7 +170,7 @@ export default styles=StyleSheet.create({
     },
     ModalView:{
         backgroundColor:Colors.white,
-        height:'80%',
+        height:'85%',
         width:'100%',
         borderRadius:10,
         alignItems:'center',
@@ -178,7 +178,7 @@ export default styles=StyleSheet.create({
     },
     ModalView2:{
         backgroundColor:Colors.white,
-        height:'90%',
+        height:'95%',
         width:'100%',
         borderRadius:10,
         alignItems:'center',
