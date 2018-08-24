@@ -34,7 +34,7 @@ export default styles=StyleSheet.create({
     },
     loginButton: {
         height:45,
-        width:'80%',
+        width:300,
         marginTop:'7%',
         backgroundColor:Colors.white,
         borderRadius:5,
@@ -44,12 +44,11 @@ export default styles=StyleSheet.create({
         alignContent:'center'
     },
     btnText:{
-        paddingTop:17,
+        top:9,
         textAlign:'center',
         color:Colors.red,
         fontWeight:'bold', 
         fontSize:22,
-        height:50,
         fontFamily:fontMedium
     },
     textLink:{

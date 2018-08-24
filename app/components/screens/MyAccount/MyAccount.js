@@ -16,6 +16,7 @@ export default class MyAccount extends Component{
         this.state={
             checked:false,
             access_token:'',
+            
             // userDet:this.props.navigation.state.params.data.data.user_data    
             userDet:user_data.user_details.data.user_data
         }

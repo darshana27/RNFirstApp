@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { KeyboardAvoidingView, ImageBackground, Text, TextInput, View, TouchableOpacity, Alert,AsyncStorage } from 'react-native';
+import { KeyboardAvoidingView, ImageBackground, Text, TextInput, View, TouchableOpacity, Alert,AsyncStorage,Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {user_data,serviceProvider} from '../../../lib/serviceProvider';
 import FeatherIcon from 'react-native-vector-icons/dist/Feather';
@@ -9,21 +9,28 @@ import styles from './styles';
 import * as urls from '../../../lib/urls';
 let fetchApi=require('../../../lib/api').fetchApi();
 import SplashScreen from 'react-native-splash-screen'
+import Loader from '../../Loader/Loader';
+import Modal from "react-native-modal";
 
 
 export default class Login extends Component{
     constructor(props){
         super(props);
-        this.state={uname:'darshana27997@gmail.com',pwd:'Darshana27997',toggle:false};
+        this.state={uname:'darshana27997@gmail.com',
+                    pwd:'Darshana27997',
+                    isModal1Visible:false,
+                    toggle:false,
+                    // isLoading:false,
+                isDisabled:false};
         this._onPress = this._onPress.bind(this);
         this._onRegister = this._onRegister.bind(this);
         this.callbackFn=this.callbackFn.bind(this);
         this.callbackFnFetch=this.callbackFnFetch.bind(this);
+        this._toggleModal1 = this._toggleModal1.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount(){   
         SplashScreen.hide();
-
     }
     // componentDidMount(){
     //     return fetch('https://staging.php-dev.in:8844/trainingapp/api/users/login', {
@@ -46,6 +53,10 @@ export default class Login extends Component{
         this.props.navigation.navigate('Register');
     }
      _onPress(){
+         this._toggleModal1()
+        console.log('Disabled : '+this.state.isDisabled)
+        this.setState({isDisabled:true})
+         console.log('Disabled : '+this.state.isDisabled)
         if(this.state.uname===null || this.state.uname==="" && this.state.pwd===null || this.state.pwd===""){
             alert("Email and password cannot be empty")
         }
@@ -69,9 +80,11 @@ export default class Login extends Component{
             console.log("Callback function called")
             {console.log(response)}
             if( response.status != 200){
+                
                 Alert.alert(response.user_msg)
             }
             else{
+                
                 serviceProvider.setData['user_access_token',response.data.access_token]
                 var accessToken=response.data.access_token
                 console.log(accessToken)
@@ -81,7 +94,7 @@ export default class Login extends Component{
                 // console.log("From AsyncStorage : "+JSON.stringify(accessToken))
                 // console.log("After Login : "+response.data.access_token)
             //         console.log("After Login Parsed: "+JSON.stringify(response.data.access_token))
-                        fetchApi.fetchData(''+urls.host_url+urls.user_fetch_details,'GET',{},null,this.callbackFnFetch)
+                fetchApi.fetchData(''+urls.host_url+urls.user_fetch_details,'GET',{},null,this.callbackFnFetch)
                         // fetch(`http://staging.php-dev.in:8844/trainingapp/api/users/getUserData`,{
                         //     method:'GET',
                         //     headers:{
@@ -94,11 +107,13 @@ export default class Login extends Component{
         } 
         callbackFnFetch(response){
             if(response.status!=200){
+              
                 AsyncStorage.removeItem('user_access_token')
                 this.props.navigation.replace('Login')
                 // AsyncStorage.setItem('screen','Login')
             }
             else{
+              
                 serviceProvider.setData('total_carts',response.data.total_carts)
                 serviceProvider.setData('user_details',response)
                 console.log(user_data.user_details.data.user_data.first_name)
@@ -111,12 +126,20 @@ export default class Login extends Component{
             // console.log("After Login : "+response.data.access_token)
             }  
         
-    
+        _toggleModal1(){
+            console.log("function called")
+            this.setState({ isModal1Visible: !this.state.isModal1Visible });
+            }
+
     render(){
         return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>
-
-            <KeyboardAvoidingView style={styles.viewStyle} behavior={'padding'}>
+            {/* {this.state.isLoading?<Loader/>:null}*/}
+            <Modal style={{width:Dimensions.get('window').width,height:Dimensions.get('window').height}} isVisible={this.state.isModal1Visible}>
+                <Loader/>
+            </Modal>
+            <KeyboardAvoidingView pointerEvents={this.state.isDisabled?'none':'auto'} style={styles.viewStyle} behavior={'padding'}>
+           
                 <Text style={styles.headingText}>NeoSTORE</Text>
                 <View style={styles.nestedView}>
                     <Icon style={styles.iconStyle} name="user" size={22} color="#FFFFFF"/>
@@ -166,8 +189,9 @@ export default class Login extends Component{
                     </View>
                     {/* </View> */}
                 </View>
-          
+
             </KeyboardAvoidingView>
+   
             </ImageBackground>
         )
     }

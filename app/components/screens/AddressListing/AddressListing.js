@@ -18,15 +18,14 @@ export default class AddressListing extends React.Component{
     render(){
             return(
             <View>
-                    <Header 
-                        styles={styles.header} 
-                        title={'Address Listing'}
-                        back={() => {this.props.navigation.goBack()}}/>
+                <Header 
+                    styles={styles.header} 
+                    title={'Address Listing'}
+                    back={() => {this.props.navigation.goBack()}}/>
                     
-                    <View>
-                        
-
-                    </View>
+                <View>
+                    
+                </View>
             </View>
         )
     }

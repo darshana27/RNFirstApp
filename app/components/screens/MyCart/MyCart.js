@@ -10,6 +10,7 @@ import * as urls from '../../../lib/urls';
 
 import Modal from "react-native-modal";
 import FeatherIcon from 'react-native-vector-icons/dist/Feather';
+import Loader from '../../Loader/Loader';
 // import {Loader} from '../../Loader/Loader';
 
 export default class productListing extends React.Component {
@@ -43,13 +44,14 @@ export default class productListing extends React.Component {
     if(response.status==200){
 
     this.setState({ 
+      isLoading:false,
       dataSource: response.data,
       totalAmt: response.total
     }, function(){
-
     });}
     else{
       alert(response.message)
+      this.setState({isLoading:false})
     }
   }
 
@@ -174,6 +176,7 @@ export default class productListing extends React.Component {
         </View>
         
         <View style={styles.container}>
+        {this.state.isLoading?<Loader/>:
         <ScrollView>
         <SwipeListView
                 useFlatList={true}
@@ -237,7 +240,7 @@ export default class productListing extends React.Component {
                             <Text style={styles.btnText}>ORDER NOW</Text>
                         </TouchableOpacity>
             </View>
-            </ScrollView>
+            </ScrollView>}
             
         </View>
       </View>

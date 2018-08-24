@@ -13,12 +13,12 @@ export default styles=StyleSheet.create({
         color:Colors.white,
         fontWeight:'bold',
         fontSize:43,
-        paddingBottom:'8%',
+        paddingBottom:'3%',
         fontFamily:'Gotham'
     },
     inputBox: {
         height:45,
-        width:'70%',
+        width:'85%',
         color:Colors.white,
         fontSize:20,
         fontFamily:fontRegular
@@ -34,32 +34,23 @@ export default styles=StyleSheet.create({
     },
     loginButton: {
         height:45,
-        width:'80%',
+        width:200,
         marginTop:'7%',
         backgroundColor:Colors.white,
         borderRadius:5,
-        borderBottomColor:Colors.white,
-        borderTopColor:Colors.white,
-        borderLeftColor:Colors.white,
-        borderRightColor:Colors.white,
+        borderColor:Colors.white,
+        alignItems:'center',
+        justifyContent:'center',
     },
+
     btnText:{
-        textAlign:'center',
         color:Colors.red,
-        padding:'3%',
         fontWeight:'bold',
         fontSize:22,
-        height:50,
-        fontFamily:fontMedium
-
+        top:8,
+        fontFamily:fontMedium,
     },
-    textLink:{
-        fontSize:19,
-        color:Colors.white,
-        marginTop:10,
-        fontWeight:'bold',
-        fontFamily:fontBold
-    }, 
+
     nestedView: {
         flexDirection: 'row',
         // backgroundColor: '#fff',

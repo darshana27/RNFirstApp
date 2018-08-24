@@ -3,6 +3,7 @@ import { KeyboardAvoidingView, ImageBackground, Text, TextInput, View, Touchable
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FeatherIcon from 'react-native-vector-icons/dist/Feather';
 let validators=require('../../../utils/validators').validators();
+import Header from '../../header/header';
 // import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
 let fetchApi=require('../../../lib/api').fetchApi();
@@ -75,8 +76,12 @@ export default class ForgotPwd extends Component{
     render(){
         return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>
-
-            <KeyboardAvoidingView style={styles.viewStyle} behavior={'padding'}>
+             <KeyboardAvoidingView style={styles.viewStyle} behavior={'padding'}>
+            <View> 
+                    <Header styles={styles.header} title={'Forgot Password'}
+                            back={() => {this.props.navigation.goBack()}} />
+            </View>
+            <View style={styles.viewStyle}>
                 <Text style={styles.headingText}>NeoSTORE</Text>
                 <View style={styles.nestedView}>
                     <Icon style={styles.iconStyle} name="user" size={22} color="#FFFFFF"/>
@@ -110,7 +115,7 @@ export default class ForgotPwd extends Component{
                     </View>
                     {/* </View> */}
                 </View>
-          
+            </View>
             </KeyboardAvoidingView>
             </ImageBackground>
         )

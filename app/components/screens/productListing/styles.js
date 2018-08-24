@@ -53,7 +53,8 @@ export default styles=StyleSheet.create({
         fontFamily:fontRegular
     },
     ratingsView:{
-        marginRight:10,
+        right:5,
+        // marginRight:10,
         height:'100%',
         width:'16%',
         justifyContent:'flex-end',

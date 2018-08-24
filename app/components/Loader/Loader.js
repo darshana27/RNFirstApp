@@ -9,7 +9,7 @@ export default class Loader extends Component{
     render(){  
             return (
                 <View 
-                style={{borderWidth:1,height:Dimensions.get('window').height,width:Dimensions.get('window').width,borderColor:'black',position:'absolute',justifyContent:'center',alignItems:'center'}}>
+                style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,borderColor:'black',position:'absolute',justifyContent:'center',alignItems:'center'}}>
                 <ActivityIndicator
                     animating = {true}
                     size="large"
