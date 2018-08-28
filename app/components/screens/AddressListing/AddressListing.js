@@ -4,6 +4,8 @@ import { Text, View,FlatList, ScrollView,Dimensions,TouchableOpacity,AsyncStorag
 import ModalDropdown from 'react-native-modal-dropdown';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Header from '../../header/header';
+import * as Colors from '../../../utils/colors';
+
 import {serviceProvider,user_data} from '../../../lib/serviceProvider';
 
 
@@ -14,10 +16,14 @@ export default class AddressListing extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            data:[]
+            data:[],
+            radioBG:Colors.white,
+            selected:0,
         };
         this.fetchAddress=this.fetchAddress.bind(this)
         this.deleteAdd=this.deleteAdd.bind(this)
+        this.onRadioSelected=this.onRadioSelected.bind(this)
+
     }
 
     async componentDidMount(){
@@ -51,8 +57,9 @@ export default class AddressListing extends React.Component{
                     return(
                         <View style={styles.itemRow}>
                             <View style={styles.radioView}>
-                                <View style={styles.radioButton}>
-                                </View>
+                                <TouchableOpacity style={[styles.radioButton,{backgroundColor:this.state.selected==idx?this.state.radioBG:null}]}
+                                onPress={()=>this.setState({selected:idx})}>
+                                </TouchableOpacity>
                             </View>
                             <View style={styles.addressView}>
                                 <View style={styles.closeView}><TouchableOpacity onPress={()=>this.deleteAdd(idx)}><MaterialIcon name='close' size={14} color='#333333'/></TouchableOpacity></View>
@@ -63,7 +70,11 @@ export default class AddressListing extends React.Component{
                     )
                 })
             }
+    onRadioSelected(idx){
+        console.log("Radio functions")
+        this.setState({radioBG:Colors.addressListRadioInner})
 
+    }        
 
     render(){
             return(

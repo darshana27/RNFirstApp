@@ -11,12 +11,14 @@
 #import <React/RCTRootView.h>
 #import "RNSplashScreen.h"
 
+@import GoogleMaps;
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  NSURL *jsCodeLocation;
+  [GMSServices provideAPIKey:@"AIzaSyCPXhNSCfYL9hK-jU8vt7Nr44Cl0B8nANo"];
 
+  NSURL *jsCodeLocation;
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation

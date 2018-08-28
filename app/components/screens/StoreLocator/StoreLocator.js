@@ -1,5 +1,10 @@
 import React from 'react';
-import { View,StyleSheet, Text } from 'react-native';
+import { View,StyleSheet, Text,TouchableOpacity} from 'react-native';
+import styles from '../StoreLocator/styles';
+import Header from '../../header/header';
+import MapView from 'react-native-maps';
+
+import * as Colors from '../../../utils/colors';
 
 export default class StoreLocator extends React.Component {
   static navigationOptions = {
@@ -8,20 +13,26 @@ export default class StoreLocator extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Store Locator</Text>
+        <Header 
+                    styles={styles.header} 
+                    title={'Store Locator'}
+                    isSearch={true}
+                    isAdd={false}
+                    back={() => {this.props.navigation.goBack()}}
+                    />
+        <View style={styles.mainView}>
+          <View style={styles.mapView}>
+          <MapView style={styles.map}
+            initialRegion={{
+              latitude: 37.78825,
+              longitude: -122.4324,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          />
+          </View>
+          </View>            
       </View>
     );
   }
 }
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    text:{
-        fontSize:30,
-        fontWeight:'bold',
-    }
-  });
