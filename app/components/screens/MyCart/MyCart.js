@@ -58,14 +58,23 @@ export default class productListing extends React.Component {
 
   orderNow(){
     var address=AsyncStorage.getItem('complete_address')
+    console.log(address)
       address.then(value=>{var x=JSON.parse(value); 
-        console.log(x) 
-        if(x.length==0 || x==null || x==undefined){
+        console.log(x)
+        if(x!=null){
+          if(x.length!=0){
+            this.props.navigation.navigate('AddressListing')
+          }
+        } 
+        else{
           this.props.navigation.navigate('AddAddress')
         }
-        else{
-          this.props.navigation.navigate('AddressListing')
-        }
+        // if(x.length==0 || x==null || x==undefined){
+        //   this.props.navigation.navigate('AddAddress')
+        // }
+        // else{
+        //   this.props.navigation.navigate('AddressListing')
+        // }
       }
     )
     }  

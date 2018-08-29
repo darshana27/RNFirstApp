@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View,Image, ScrollView,KeyboardAvoidingView,TouchableOpacity,AsyncStorage,TextInput} from 'react-native';
+import { Text, View,Alert, ScrollView,KeyboardAvoidingView,TouchableOpacity,AsyncStorage,TextInput} from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import Header from '../../header/header';
@@ -40,19 +40,27 @@ export default class AddAddress extends React.Component {
         }
         else{
             address.then((value) => {var x=JSON.parse(value);
-                if(x.length==0){
-                    list.push(completeAddress)
-                    console.log(list)
-                    AsyncStorage.setItem('complete_address',JSON.stringify(list))
+                if(x!=null){
+                    if(x.length==0){
+                        list.push(completeAddress)
+                        console.log(list)
+                        AsyncStorage.setItem('complete_address',JSON.stringify(list))
+                    }
+                    else{
+                        x.push(completeAddress)
+                        console.log(x)
+                        AsyncStorage.setItem('complete_address',JSON.stringify(x))
+                    }
                 }
                 else{
+                    x=[]
                     x.push(completeAddress)
-                    console.log(x)
                     AsyncStorage.setItem('complete_address',JSON.stringify(x))
                 }
-            
             })
-        }}
+        }
+        Alert.alert('Address added successfully')
+    }
         // console.log('add Address'+this.state.address,this.state.city,this.state.landmark,this.state.state,this.state.zipcode,this.state.country)
         // if(this.state.address=='' || this.state.city=='' || this.state.landmark=='' || this.state.state=='' || this.state.zipcode=='' || this.state.country=='' ){
         //     alert("All fields are mandatory")

@@ -17,13 +17,13 @@ export default styles=StyleSheet.create({
         color:Colors.descContent
     },
     itemRow:{
-        margin:5,
+        margin:7,
         top:15,
         flexDirection:'row',
         height:100,
     },
     radioView:{
-        width:50,
+        width:43,
         justifyContent:'center',
         alignItems:'center'
     },
@@ -41,9 +41,9 @@ export default styles=StyleSheet.create({
     },
     addressView:{
         padding:5,
-        width:300,
+        width:297,
         borderWidth:1,
-        borderColor:Colors.addressListRadioInner,
+        borderColor:Colors.addressListRadioOuter,
         borderRadius:5
     },
     addressText:{

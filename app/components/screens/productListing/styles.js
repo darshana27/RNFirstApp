@@ -20,7 +20,6 @@ export default styles=StyleSheet.create({
         width:'14%',
         alignContent:'center',
         justifyContent:'center',
-
     },
     productDetails:{
         height:'100%',

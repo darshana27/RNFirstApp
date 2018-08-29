@@ -1,5 +1,7 @@
 import React from 'react';
 import { View,StyleSheet, Text } from 'react-native';
+import Header from '../../header/header';
+import styles from '../MyOrders/styles';
 
 export default class MyOrders extends React.Component {
   static navigationOptions = {
@@ -8,20 +10,13 @@ export default class MyOrders extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>My Orders</Text>
+        <Header 
+            styles={styles.header} 
+            title={'My Orders'}
+            isSearch={true}
+            isAdd={false}
+            back={() => {this.props.navigation.goBack()}}/>
       </View>
     );
   }
 }
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    text:{
-        fontSize:30,
-        fontWeight:'bold',
-    }
-  });

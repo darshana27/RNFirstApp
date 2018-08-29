@@ -1,35 +1,72 @@
 import React from 'react';
-import { View,StyleSheet, Text,TouchableOpacity} from 'react-native';
+import { View,FlatList, Text,ScrollView} from 'react-native';
 import styles from '../StoreLocator/styles';
 import Header from '../../header/header';
-import {MapView,Marker} from 'react-native-maps';
-
+import MapView from 'react-native-maps';
+import { Marker } from 'react-native-maps';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import * as Colors from '../../../utils/colors';
 
 export default class StoreLocator extends React.Component {
-  static navigationOptions = {
-    drawerLabel:'Store Locator',
-  }
-
+  renderSeparator = () => (
+    <View
+      style={{
+        backgroundColor: '#4f4f4f',
+        height: 1,
+        opacity:0.7
+      }}
+    />
+  );
   render() {
     this.address=[{
-      storeName:'Neostore',
-      add:'4th Floor, The Ruby, 29, Senapati Bapat Marg, Dadar West, Mumbai - 400028',
+      storeName:'NeoSOFT Technologies',
+      add:'The Ruby,Senapati Bapat Marg,Dadar(W),Mumbai,India',
       latlng:{
         latitude:19.019360,
         longitude:72.842651
       }
     },
     {
-      storeName:'Neostore',
-      add:'Unit No 501, Sigma IT Park, Plot No R-203,204, Midc TTC Industrial Area. Rabale, Navi Mumbai, Maharashtra 400701',
-      latlong:{
+      storeName:'NeoSOFT Technologies',
+      add:'Sigma IT Park,Rabale,Navi Mumbai,Maharashtra,India',
+      latlng:{
         latitude:19.145220,
         longitude:73.011880
       }
-    }
+    },
+    {
+      storeName:'NeoSOFT Technologies',
+      add:'IT6,Rajiv Gandhi-Infotech Park,Hinjewadi,Pune,India',
+      latlng:{
+        latitude:18.642090,
+        longitude:73.721220
+      }
+    },
+    {
+      storeName:'NeoSOFT Technologies',
+      add:'124 Unique Industrial Estate,Prabhadevi,Mumbai,INDIA',
+      latlng:{
+        latitude:19.178540,
+        longitude:72.951630
+      }
+    },
+    {
+      storeName:'NeoSOFT Technologies',
+      add:'Sigma IT Park,Rabale,Navi Mumbai,Maharashtra,India',
+      latlng:{
+        latitude:19.145220,
+        longitude:73.011880
+      }
+    },
+    {
+      storeName:'NeoSOFT Technologies',
+      add:'124 Unique Industrial Estate,Prabhadevi,Mumbai,INDIA',
+      latlng:{
+        latitude:19.178540,
+        longitude:72.951630
+      }
+    },
   ]
-  console.log(this.address[0].latlong)
     return (
       <View style={styles.container}>
         <Header 
@@ -45,8 +82,8 @@ export default class StoreLocator extends React.Component {
             initialRegion={{
               latitude: 19.019360,
               longitude: 72.842651,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
+              latitudeDelta: 0.1022,
+              longitudeDelta: 0.900921,
             }}
           >
           {this.address.map(marker => (
@@ -58,10 +95,29 @@ export default class StoreLocator extends React.Component {
           ))}
           </MapView>
           </View>
-          <View style={styles.addressView}>
-
-          </View>
-          </View>            
+        </View> 
+        <View style={styles.addressView}>
+          <ScrollView>
+            <FlatList     
+            data={this.address}
+            ItemSeparatorComponent={this.renderSeparator}
+            keyExtractor={(item,index) => ''+item.id}
+            ListFooterComponent={this.renderFooter}
+            renderItem = { ({item,index}) => 
+                <View style={styles.itemContainer}>
+                  <View style={styles.productImage}>  
+                    <MaterialIcon name="pin-drop" size={25} color='#4f4f4f'></MaterialIcon>
+                  </View>
+                      <View style={styles.productDetails}>
+                        <Text style={styles.item}>{item.storeName}</Text>
+                        <Text style={styles.producer}>{item.add}</Text>
+                      </View>          
+                </View> 
+        
+              }>
+              </FlatList>
+              </ScrollView>
+        </View>           
       </View>
     );
   }
