@@ -8,9 +8,55 @@ export default styles=StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-      },
-      text:{
+    },
+    text:{
           fontSize:30,
           fontWeight:'bold',
-      }
+    },
+    itemContainer : {  
+        width:'100%',
+        flexDirection:'row',
+        padding:5,
+        height:80,
+        // paddingLeft:6,
+        backgroundColor:'#ffffff',
+        // borderColor:'yellow',
+        // borderWidth:1
+    },
+    productDetails:{
+        height:'100%',
+        width:'71.5%',
+        paddingLeft:14,
+        alignContent:'flex-start',
+        justifyContent:'center',
+    },
+    ratingsView:{
+        right:5,
+        // marginRight:10,
+        height:'100%',
+        width:'25%',
+        justifyContent:'center',
+        alignItems:'center'
+        // borderWidth:1,
+        // borderColor:'black'
+    },
+    item:{
+        fontSize:fontSize.xLarge,
+        color:Colors.orderID,
+        // fontWeight:'bold',
+        // borderColor:'blue',
+        // borderWidth:1,
+        fontFamily:fontRegular
+    },
+    producer:{
+        marginTop:5,
+        fontSize:fontSize.medium,
+        color:Colors.productHeading1,
+        fontFamily:fontRegular
+    },
+    price:{
+        fontSize:fontSize.xxLarge,
+        color:Colors.descContent,
+        fontFamily:fontRegular
+    }
 })

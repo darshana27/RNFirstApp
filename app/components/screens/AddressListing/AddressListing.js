@@ -1,10 +1,12 @@
 import React from 'react';
 import styles from '../AddressListing/styles';
-import { Text, View,FlatList, ScrollView,Dimensions,TouchableOpacity,AsyncStorage,TextInput} from 'react-native';
+import { Text, View,FlatList, ScrollView,Alert,TouchableOpacity,AsyncStorage,TextInput} from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Header from '../../header/header';
 import * as Colors from '../../../utils/colors';
+import * as urls from '../../../lib/urls';
+
 import {serviceProvider,user_data} from '../../../lib/serviceProvider';
 
 
@@ -73,6 +75,18 @@ export default class AddressListing extends React.Component{
         var full_address=this.state.data[idx]
         var address=''+full_address.address+', '+full_address.city+', '+full_address.landmark+', '+full_address.state+', '+full_address.zipcode+', '+full_address.country
         console.log(address)
+        let formData=new FormData();
+        formData.append('address',address)
+        fetchApi.fetchData(''+urls.host_url+urls.order,'POST',{},formData,this.callbackFn)
+    }
+    callbackFn(response){
+        console.log(response)
+        if(response.status==200){
+            Alert.alert('Order Placed Successfully')
+        }
+        else{
+            Alert.alert('Something went wrong. Try again later.')
+        }
     }
     render(){
             return(

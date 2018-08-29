@@ -10,4 +10,5 @@ export const descHeading='#111111';
 export const descContent='#333333';
 export const addAddressBG='#EEEEEA';
 export const addressListRadioOuter='#BFBFBF';
-export const addressListRadioInner='#8E8E8E'
+export const addressListRadioInner='#8E8E8E';
+export const orderID='#1C1C1C';

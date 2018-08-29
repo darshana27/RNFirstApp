@@ -17,6 +17,7 @@ import EditProfile from '../components/screens/EditProfile/EditProfile';
 import StartUp from '../components/screens/StartUp/StartUp';
 import AddAddress from '../components/screens/AddAddress/AddAddress';
 import AddressListing from '../components/screens/AddressListing/AddressListing';
+import OrderDetails from '../components/screens/OrderDetails/OrderDetails';
 
 
 /** allowfontscaling is to avoid fontscaling when device fonts are changed */
@@ -144,6 +145,13 @@ const Stack = createStackNavigator({
   AddressListing:{
     screen:AddressListing,
     title:AddressListing,
+    navigationOptions:{
+      header:null
+    }
+  },
+  OrderDetails:{
+    screen:OrderDetails,
+    title:OrderDetails,
     navigationOptions:{
       header:null
     }
