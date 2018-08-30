@@ -1,15 +1,16 @@
 import React from 'react';
-import { View,FlatList, Text,ScrollView,TouchableOpacity } from 'react-native';
+import { View,FlatList, Text,ScrollView,TouchableOpacity,Image } from 'react-native';
 import Header from '../../header/header';
-import styles from '../MyOrders/styles';
+import styles from '../OrderDetails/styles';
 let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
+import Loader from '../../Loader/Loader';
 
 export default class OrderDetails extends React.Component {
     constructor(props){
         super(props);
         this.state ={
-      
+            isLoading:true,
         }
         this.callbackFn=this.callbackFn.bind(this);
     }
@@ -17,14 +18,13 @@ export default class OrderDetails extends React.Component {
     componentDidMount(){
         var orderId=this.props.navigation.getParam('orderID');
         console.log(orderId)
-        let formData=new FormData();
-        formData.append('order_id',orderId)
-        fetchApi.fetchData(''+urls.host_url+urls.order_details+'?product_id='+product_id,'GET',{},null,this.callbackFn)
+        fetchApi.fetchData(''+urls.host_url+urls.order_details+'?order_id='+orderId,'GET',{},null,this.callbackFn)
 
     }
     callbackFn(response){
         if(response.status==200){
-            this.setState({dataSource:response.data})
+            this.setState({dataSource:response.data.order_details,
+            cost:response.data.cost,isLoading:false})
         }
     }
     renderSeparator = () => (
@@ -45,15 +45,15 @@ export default class OrderDetails extends React.Component {
                     isSearch={true}
                     isAdd={false}
                     back={() => {this.props.navigation.goBack()}}/>
+                    {this.state.isLoading?<Loader/>:
                     <ScrollView>
                      <FlatList     
                         data={this.state.dataSource}
                         keyExtractor={(item,index) => ''+item.id}
+                        ItemSeparatorComponent={this.renderSeparator}
                         renderItem = { ({item,index}) => 
                         
-                        <TouchableOpacity 
-                    
-                        onPress={()=>{this.props.navigation.navigate('productDetails',{product_id:item.id})}}>
+                        <TouchableOpacity>
                             <View style={styles.itemContainer}>
                             <View style={styles.productImage}>
                                 <Image 
@@ -61,18 +61,22 @@ export default class OrderDetails extends React.Component {
                                     source={{uri:item.prod_image}}/>
                             </View>
                             <View style={styles.productDetails}>
-                                <Text style={styles.item}>{item.order_details.prod_name}</Text>
-                                <Text style={styles.producer}>{item.order_details.prod_cat_name}</Text>
-                                <Text style={styles.price}>QTY : {item.order_details.quantity}</Text>
+                                <Text style={styles.item}>{item.prod_name}</Text>
+                                <Text style={styles.producer}>({item.prod_cat_name})</Text>
+                                <Text style={styles.qty}>QTY : {item.quantity}</Text>
                             </View>
-                            <View style={styles.ratingsView}>
-                                    <Text style={styles.cost}>₹{item.order_details.cost}</Text>
+                            <View style={styles.itemCost}>
+                                    <Text style={styles.cost}>₹{item.total}</Text>
                             </View>            
                             </View> 
                             </TouchableOpacity>
                             }
                         ></FlatList>
-                    </ScrollView>
+                         <View style={styles.totalView}>
+                                <View style={styles.leftContent}><Text style={styles.textTotal}>TOTAL</Text></View>
+                                <View style={styles.rightContent}><Text style={styles.textAmount}>₹{this.state.cost}</Text></View>
+                        </View>
+                    </ScrollView>}
             </View>
         )
     }

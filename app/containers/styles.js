@@ -52,5 +52,8 @@ export default styles=StyleSheet.create({
         marginLeft:60,
         fontSize:20
     },
+    badgeView:{
+        left:110,
+    }
 
 })

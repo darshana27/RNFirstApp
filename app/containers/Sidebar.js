@@ -82,8 +82,9 @@ export default class Sidebar extends Component {
                             style={styles.icon}
                             source={item.img}/>
                         <Text style={styles.item}>{item.key}</Text>
-                        {(item.key==='My Cart')? <Badge style={styles.badge} containerStyle={{ backgroundColor: 'red'}} value={user_data['total_carts']} textStyle={{ color: 'white' }}/>: null}
-                         
+                        <View style={styles.badgeView}>
+                            {(item.key==='My Cart')? <Badge style={styles.badge} containerStyle={{ backgroundColor: 'red'}} value={user_data['total_carts']} textStyle={{ color: 'white' }}/>: null}
+                        </View>
                      </TouchableOpacity> }
             ></FlatList>
             </ScrollView>

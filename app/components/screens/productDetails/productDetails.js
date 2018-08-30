@@ -110,9 +110,9 @@ export default class productDetails extends React.Component {
       
     }
     callbackRating(response){
- 
       if(response.status==200){
         console.log(response)
+        alert(response.message)
       }
       else{
         alert(response.message)
@@ -176,9 +176,11 @@ export default class productDetails extends React.Component {
     console.log(response)
       if(response.status==200){
         console.log(response)
+        alert('Product added to cart')
       }
       else{
         console.log(response)
+        alert('Something went wrong. Try again.')
       }
   }
   // multipleImages(){

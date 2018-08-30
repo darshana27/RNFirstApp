@@ -28,7 +28,7 @@ export default class StoreLocator extends React.Component {
     },
     {
       storeName:'NeoSOFT Technologies',
-      add:'Sigma IT Park,Rabale,Navi Mumbai,Maharashtra,India',
+      add:'Sigma IT Park,Rabale,Mumbai,Maharashtra,India',
       latlng:{
         latitude:19.145220,
         longitude:73.011880
@@ -52,7 +52,7 @@ export default class StoreLocator extends React.Component {
     },
     {
       storeName:'NeoSOFT Technologies',
-      add:'Sigma IT Park,Rabale,Navi Mumbai,Maharashtra,India',
+      add:'Sigma IT Park,Rabale,Mumbai,Maharashtra,India',
       latlng:{
         latitude:19.145220,
         longitude:73.011880
