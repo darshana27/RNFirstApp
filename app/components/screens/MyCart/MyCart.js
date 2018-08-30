@@ -6,6 +6,7 @@ import Header from '../../header/header';
 import styles from '../MyCart/styles';
 let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
+import {serviceProvider,user_data} from '../../../lib/serviceProvider';
 
 
 import Modal from "react-native-modal";
@@ -69,17 +70,9 @@ export default class productListing extends React.Component {
         else{
           this.props.navigation.navigate('AddAddress')
         }
-        // if(x.length==0 || x==null || x==undefined){
-        //   this.props.navigation.navigate('AddAddress')
-        // }
-        // else{
-        //   this.props.navigation.navigate('AddressListing')
-        // }
       }
     )
     }  
-
-  
 
   onPressDelete(rowData,rowMap){
     console.log(rowMap[rowData])
@@ -116,7 +109,6 @@ export default class productListing extends React.Component {
     if(response.status==200){
       serviceProvider.setData('total_carts',response.count)
       console.log("Success")
-
     }
     else{
       console.log("Unsuccessful")

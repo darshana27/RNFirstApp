@@ -30,23 +30,25 @@ export default class EditProfile extends Component{
             isPicSelected:false,
             isLoading:false,
             isfetching:false,
+            editing:true,
             // userDet:this.props.navigation.state.params.data,
-            userDet:user_data.user_details.data.user_data
+            userDet:user_data.user_data
         };
         this._editDetails=this._editDetails.bind(this); 
         this.onPressPicture=this.onPressPicture.bind(this);
+        this.callbackFn=this.callbackFn.bind(this)
     }
     getInitialState(){
         return {
           value: 0,
         }
       }
-      async componentDidMount(){
-
+      componentDidMount(){
+        
     }
     _editDetails(){
         this.setState({isfetching:true})
-        this.state.avatarSource!=""?console.log(this.state.avatarSource):console.log("null")
+        // this.state.avatarSource!=""?console.log(this.state.avatarSource):console.log("null")
         let formData=new FormData();
         formData.append("first_name",this.state.first_name!=null?this.state.first_name:this.state.userDet.first_name)
         formData.append("last_name",this.state.last_name!=null?this.state.last_name:this.state.userDet.last_name)
@@ -58,15 +60,18 @@ export default class EditProfile extends Component{
         console.log("editDetails() :"+this.state.access_token);      
         fetchApi.fetchData(''+urls.host_url+urls.user_update_details,'POST',{},formData,this.callbackFn)
     }
-    callbackFn(response){   
+    callbackFn(response){  
+        this.setState({editing:false}) 
+        console.log(this.state.userDet)
         console.log(response)
             if(response.status==200){
-               
-                serviceProvider.setData('user_updated_details',response.data)
+                serviceProvider.setData('user_data',response.data)
+                console.log("After set data")
+                console.log(user_data)
+                // serviceProvider.setData('user_details',response.data)
                 Alert.alert(response.user_msg)
             }
             else{
-              
                 Alert.alert(response.user_msg)
             } 
     }
@@ -109,7 +114,7 @@ export default class EditProfile extends Component{
     }
 
     render(){  
-        console.log(this.state.avatarSource)
+        console.log(this.state.userDet.profile_pic)
         var defaultFile=this.state.userDet.profile_pic
         var user_pic=this.state.avatarSource
         var profile_pic_url = this.state.avatarSource!=null?user_pic:defaultFile;
@@ -120,8 +125,8 @@ export default class EditProfile extends Component{
         var valuePhone=this.state.phone_no==null?this.state.userDet.phone_no:this.state.phone_no
         var valueDob=this.state.dob==null?this.state.userDet.dob:this.state.dob
 
-        console.log("Profile Pic : "+this.state.userDet.profile_pic)
-        console.log(this.state.avatarSource)
+        // console.log("Profile Pic : "+this.state.userDet.profile_pic)
+        // console.log(this.state.avatarSource)
          return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>
 
@@ -133,6 +138,7 @@ export default class EditProfile extends Component{
                                 }} />
                 </View>
                 {this.state.isupdating?<Loader/>:null}
+                {this.state.editing?<Loader/>:null}
                 <KeyboardAvoidingView style={styles.viewStyle} behavior={Platform.OS === 'ios' ? 'padding' : null}>
                 <ScrollView>
                 <View style={styles.viewStyle}>
@@ -204,6 +210,7 @@ export default class EditProfile extends Component{
                         <View style={styles.nestedView}>
                             <Icon style={styles.iconStyle} name="mobile" size={25} color="#FFFFFF"/>
                             <TextInput
+                            keyboardType='numeric'
                                 ref={(phoneNo) => {this.Phone= phoneNo}}
                                 style={styles.inputBox}
                                 placeholder="Phone Number"

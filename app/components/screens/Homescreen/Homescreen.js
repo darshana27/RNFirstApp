@@ -12,11 +12,12 @@ import SplashScreen from 'react-native-splash-screen'
 export default class Homescreen extends Component{
     constructor(props){
         super(props); 
+        console.log(user_data)
         this.state={
             isLoading:true,
             category_id:'',
             // imageArray:this.props.navigation.state.params.data.data.product_categories
-            imageArray:user_data.user_details.data.product_categories
+            imageArray:user_data.product_categories
         }
         this._TableBtnPressed = this._TableBtnPressed.bind(this);
         this._ChairBtnPressed = this._ChairBtnPressed.bind(this);
@@ -29,18 +30,18 @@ export default class Homescreen extends Component{
     }
 
     SwiperImages(){
-        console.log('swiperimages')
+        console.log()
+        // console.log('swiperimages')
         console.log(this.state.imageArray.length)
         var filteredArray=[]
         for(var i=0;i<=3;i++){
             filteredArray.push(this.state.imageArray[i])  
-            console.log(filteredArray[0].icon_image)    
+            // console.log(filteredArray[0].icon_image)    
         }
-        console.log(filteredArray[0])
+        // console.log(filteredArray[0])
         if(filteredArray!=undefined && filteredArray.length>0)
           return filteredArray.map((element) => {
            return (
-  
                 <View key={element} style={styles.slides}>
                     <Image 
                         style={styles.slideImages}

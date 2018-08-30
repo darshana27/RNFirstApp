@@ -84,8 +84,7 @@ export default class Login extends Component{
                 Alert.alert(response.user_msg)
             }
             else{
-                
-                serviceProvider.setData['user_access_token',response.data.access_token]
+                serviceProvider.setUsrData['access_token',response.data.access_token]
                 var accessToken=response.data.access_token
                 console.log(accessToken)
 
@@ -113,10 +112,9 @@ export default class Login extends Component{
                 // AsyncStorage.setItem('screen','Login')
             }
             else{
-              
-                serviceProvider.setData('total_carts',response.data.total_carts)
-                serviceProvider.setData('user_details',response)
-                console.log(user_data.user_details.data.user_data.first_name)
+
+                serviceProvider.setUsrData(response.data)
+                // console.log(user_data.user_details.data.user_data.first_name)
                 console.log("RESPONSE 200")
                 this.props.navigation.replace('Homescreen',{
                     'data':response

@@ -12,6 +12,19 @@ import {user_data,serviceProvider} from '../lib/serviceProvider';
 
 
 export default class Sidebar extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            qty:user_data.total_carts
+        }
+    }
+    componentDidMount(){
+        this.navigationEvent=this.props.navigation.addListener('willFocus',
+    ()=>{
+        console.log('Sidebar     ',user_data)
+        this.setState({qty:user_data.total_carts})
+    })
+    }
     isLogout=(item) =>{
         // debugger;
         console.log(this.props)
@@ -43,8 +56,8 @@ export default class Sidebar extends Component {
       );
     render(){
         var defaultPic=require('../assets/user_placeholder.png');
-        var userPic={uri:user_data.user_details.data.user_data.profile_pic}
-        var profile_pic=user_data.user_details.data.user_data.profile_pic!=null?userPic:defaultPic
+        var userPic={uri:user_data.user_data.profile_pic}
+        var profile_pic=user_data.user_data.profile_pic!=null?userPic:defaultPic
    return(
             <View style={styles.mainView}>
             <ScrollView>
@@ -54,8 +67,8 @@ export default class Sidebar extends Component {
                 <Image 
                 style={styles.roundedImage}
                 source={profile_pic}/>
-                <Text style={styles.Username}>{user_data.user_details.data.user_data.first_name+' '+user_data.user_details.data.user_data.last_name}</Text>
-                <Text style={styles.UserEmail}>{user_data.user_details.data.user_data.email}</Text>
+                <Text style={styles.Username}>{user_data.user_data.first_name+' '+user_data.user_data.last_name}</Text>
+                <Text style={styles.UserEmail}>{user_data.user_data.email}</Text>
             </TouchableOpacity>
             <FlatList
                 data={[
@@ -69,7 +82,6 @@ export default class Sidebar extends Component {
                     {img:require('../assets/storeLocator.png'),key:'Store Locator',screenName:'StoreLocator',value:6},
                     {img:require('../assets/myOrders.png'),key:'My Orders',screenName:'MyOrders',value:7},
                     {img:require('../assets/logout.png'),key:'Logout',screenName:'Login',value:8},
-                    {img:require('../assets/logout.png'),key:'Reset Password',screenName:'ForgotPassword',value:8},
                 ]}
                 keyExtractor={(item,index) => ''+index}
                 ItemSeparatorComponent={this.renderSeparator}

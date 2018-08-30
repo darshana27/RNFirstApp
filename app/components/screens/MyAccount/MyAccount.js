@@ -18,11 +18,9 @@ export default class MyAccount extends Component{
             access_token:'',
             rerender:0,
             // userDet:this.props.navigation.state.params.data.data.user_data    
-            userDet:user_data.user_details.data.user_data
         }
         this._edit=this._edit.bind(this);
         this._reset=this._reset.bind(this);
-        this.refresh=this.refresh.bind(this);
       
     }
     getInitialState(){
@@ -30,32 +28,35 @@ export default class MyAccount extends Component{
           value: 0,
         }
       }
-      async componentDidMount(){
-        this.setState({rerender:0})
-        this.state.userDet.profile_pic!=""? console.log(this.state.userDet.profile_pic):console.log("Null")
-        // var data=await AsyncStorage.getItem('user_access_token')
-        // var pdata=JSON.parse(data)
-        // console.log(pdata.access_token)
-        // this.setState(pdata)
+      componentDidMount(){
+          console.log(user_data)
+        //   console.log(user_data.user_data)
+       this.NavigationListener=this.props.navigation.addListener('willFocus',()=>{
+           alert('willfocus')
+            this.setState({rerender:this.state.rerender+1})
+        });
+        // user_data.user_data.profile_pic!=""? console.log(user_data.user_data.profile_pic):console.log("Null")
     }
-
+    componentWillUnmount(){
+        this.NavigationListener.remove()
+    }
     _edit(){
-    //   this.props.navigation.navigate('EditProfile',{'data':this.state.userDet})
+    //   this.props.navigation.navigate('EditProfile',{'data':user_data.user_data})
     this.props.navigation.navigate('EditProfile')
     }
-    refresh(){
-        console.log(this.state.userDet)
-    }
     _reset(){
-        // this.props.navigation.navigate('ForgotPassword',{'data':this.state.userDet})
+        // this.props.navigation.navigate('ForgotPassword',{'data':user_data.user_data})
         this.props.navigation.navigate('ForgotPassword')
     }
     render(){
-        console.log(user_data.user_details.data.user_data.profile_pic)
+        console.log('render')
+        console.log(user_data.user_data.first_name)
+        console.log('Profile Pic it is '+user_data.user_data.profile_pic)
+
         var defaultPic=require('../../../assets/user_placeholder.png')
-        var currPic={uri:this.state.userDet.profile_pic}
-        var profile_pic_url = this.state.userDet.profile_pic!=null || this.state.userDet.profile_pic!=''?currPic:defaultPic;
-        console.log(profile_pic_url)
+        var currPic={uri:user_data.user_data.profile_pic}
+        var profile_pic_url = user_data.user_data.profile_pic!=null || user_data.user_data.profile_pic!=''?currPic:defaultPic;
+        // console.log(profile_pic_url)
         return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>
 
@@ -72,9 +73,7 @@ export default class MyAccount extends Component{
                       source={profile_pic_url}/>
                       <View style={{marginTop:30}}>
                         <View style={styles.nestedView}>
-
                             <Icon style={styles.iconStyle} name="user" size={20} color="#FFFFFF"/>
-
                             <TextInput
                                 placeholder="First Name"
                                 multiline={false}
@@ -82,10 +81,9 @@ export default class MyAccount extends Component{
                                 underlineColorAndroid="transparent"
                                 placeholderTextColor='#FFFFFF'
                                 // onChangeText={(fname) => this.setState({fname})}
-                                value={this.state.userDet.first_name}
+                                value={user_data.user_data.first_name}
                                 editable={false}
                             />
-                            
                         </View>
 
                         <View style={styles.nestedView}>
@@ -100,7 +98,7 @@ export default class MyAccount extends Component{
                                 blurOnSubmit={false}
                                 underlineColorAndroid='transparent'
                                 // onChangeText={(lname) => this.setState({lname})}
-                                value={this.state.userDet.last_name}
+                                value={user_data.user_data.last_name}
                                 editable={false}
                             />
                         </View>
@@ -117,7 +115,7 @@ export default class MyAccount extends Component{
                                 blurOnSubmit={false}
                                 underlineColorAndroid='transparent'
                                 // onChangeText={(email) => this.setState({email})}
-                                value={this.state.userDet.email}
+                                value={user_data.user_data.email}
                                 editable={false}
                             />
                         </View>
@@ -132,7 +130,7 @@ export default class MyAccount extends Component{
                                 returnKeyType="done"
                                 underlineColorAndroid='transparent'
                                 // onChangeText={(phone) => this.setState({phone})}
-                                value={this.state.userDet.phone_no}
+                                value={user_data.user_data.phone_no}
                                 editable={false}
                             />
                         </View>
@@ -146,7 +144,7 @@ export default class MyAccount extends Component{
                                 returnKeyType="done"
                                 underlineColorAndroid='transparent'
                                 // onChangeText={(phone) => this.setState({phone})}
-                                value={this.state.userDet.dob}
+                                value={user_data.user_data.dob}
                                 editable={false}
                             />
                         </View>

@@ -12,6 +12,8 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
 import Loader from '../../Loader/Loader';
+import {user_data,serviceProvider} from '../../../lib/serviceProvider';
+
 
 
 export default class productDetails extends React.Component {
@@ -177,6 +179,9 @@ export default class productDetails extends React.Component {
       if(response.status==200){
         console.log(response)
         alert('Product added to cart')
+        console.log(user_data.total_carts)
+        serviceProvider.setData('total_carts',user_data.total_carts+1)
+        console.log(user_data.total_carts)
       }
       else{
         console.log(response)

@@ -19,9 +19,9 @@ export default class StartUp extends Component {
         // SplashScreen.hide();
         AsyncStorage.getItem('user_access_token')
             .then((value) => {
-                console.log(value);
+                // console.log(value);
                 if (value != null) {
-                    console.log(value);
+                    // console.log(value);
                     try{
                     fetchApi.fetchData(''+urls.host_url+urls.user_fetch_details,'GET',{},null,this.callbackFnFetch)
                     }catch(err){
@@ -44,7 +44,8 @@ export default class StartUp extends Component {
             })
     }
     callbackFnFetch(response){
-        console.log('COUNT : '+response.data.total_carts)
+
+        // console.log('COUNT : '+response.data.total_carts)
         if (response.status != 200) {
             // throw Error(response.message)
             AsyncStorage.removeItem('user_access_token')
@@ -52,10 +53,10 @@ export default class StartUp extends Component {
             this.props.navigation.replace('Login')
             // AsyncStorage.setItem('screen','Login')
         } else {
-            serviceProvider.setData('user_details',response)
-            serviceProvider.setData('total_carts',response.data.total_carts)
+            console.log(response)
+            serviceProvider.setUsrData(response.data)
             this.props.navigation.replace('Homescreen')
-            console.log(response.data.product_categories)
+            // console.log(response.data.product_categories)
         }
     }
     render() {

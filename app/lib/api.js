@@ -20,7 +20,8 @@ exports.fetchApi = function() {
         try{
             fetch(url,options)
             .then(response => response.json())
-            .then(response => {console.log(response)  
+            .then(response => {
+                // console.log(response)  
                 callbackFn!=null?callbackFn(response):response.data})
             .catch(err => alert(err))
         }

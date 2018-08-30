@@ -20,14 +20,20 @@ export default class AddressListing extends React.Component{
             data:[],
             radioBG:Colors.white,
             selected:0,
+            rerender:0
         };
         this.fetchAddress=this.fetchAddress.bind(this)
         this.deleteAdd=this.deleteAdd.bind(this)
-        this.onRadioSelected=this.onRadioSelected.bind(this) 
-          
+        this.onRadioSelected=this.onRadioSelected.bind(this)  
     }
 
-    async componentDidMount(){
+     componentDidMount(){
+        this.NavigationListener=this.props.navigation.addListener('willFocus',()=>{
+           this.setState({rerender:this.state.rerender+1})
+           this.fetchItems()
+    });
+    }
+    async fetchItems(){
         var val=await AsyncStorage.getItem('complete_address')
         console.log(val)
         if(val!=null){
@@ -59,7 +65,7 @@ export default class AddressListing extends React.Component{
                 </View>
                 <View style={styles.addressView}>
                     <View style={styles.closeView}><TouchableOpacity onPress={()=>this.deleteAdd(idx)}><MaterialIcon name='close' size={14} color='#333333'/></TouchableOpacity></View>
-                    <Text style={styles.userName}>{user_data.user_details.data.user_data.first_name+' '+user_data.user_details.data.user_data.last_name}</Text>
+                    <Text style={styles.userName}>{user_data.user_data.first_name+' '+user_data.user_data.last_name}</Text>
                     <Text style={styles.addressText}>{element.address +','+element.city +','+element.landmark+','+element.state+','+element.zipcode+','+element.country}</Text>
                 </View>
             </TouchableOpacity>
