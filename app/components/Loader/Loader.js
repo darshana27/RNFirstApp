@@ -9,11 +9,11 @@ export default class Loader extends Component{
     render(){  
             return (
                 <View 
-                style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,borderColor:'black',position:'absolute',justifyContent:'center',alignItems:'center'}}>
+                style={{zIndex:1,height:Dimensions.get('window').height,width:Dimensions.get('window').width,borderColor:'black',position:'absolute',justifyContent:'center',alignItems:'center'}}>
                 <ActivityIndicator
                     animating = {true}
                     size="large"
-                    color="red"
+                    color="black"
                 />
                 </View>
             );

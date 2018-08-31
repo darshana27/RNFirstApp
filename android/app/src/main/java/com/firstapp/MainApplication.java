@@ -3,12 +3,11 @@ package com.firstapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.imagepicker.ImagePickerPackage;
 import cl.json.RNSharePackage;
-import fr.snapp.imagebase64.RNImgToBase64Package;
-import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -28,14 +27,13 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new VectorIconsPackage(),
             new MapsPackage(),
             new SplashScreenReactPackage(),
 
 
             new ImagePickerPackage(),
-            new RNSharePackage(),
-            new RNImgToBase64Package(),
-            new VectorIconsPackage()
+            new RNSharePackage()
       );
     }
 

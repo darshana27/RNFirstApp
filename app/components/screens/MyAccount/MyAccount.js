@@ -32,7 +32,6 @@ export default class MyAccount extends Component{
           console.log(user_data)
         //   console.log(user_data.user_data)
        this.NavigationListener=this.props.navigation.addListener('willFocus',()=>{
-           alert('willfocus')
             this.setState({rerender:this.state.rerender+1})
         });
         // user_data.user_data.profile_pic!=""? console.log(user_data.user_data.profile_pic):console.log("Null")

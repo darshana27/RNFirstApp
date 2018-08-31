@@ -30,7 +30,7 @@ export default class EditProfile extends Component{
             isPicSelected:false,
             isLoading:false,
             isfetching:false,
-            editing:true,
+            
             // userDet:this.props.navigation.state.params.data,
             userDet:user_data.user_data
         };
@@ -61,7 +61,7 @@ export default class EditProfile extends Component{
         fetchApi.fetchData(''+urls.host_url+urls.user_update_details,'POST',{},formData,this.callbackFn)
     }
     callbackFn(response){  
-        this.setState({editing:false}) 
+        this.setState({isfetching:false}) 
         console.log(this.state.userDet)
         console.log(response)
             if(response.status==200){
@@ -104,7 +104,6 @@ export default class EditProfile extends Component{
               let source = { uri: 'data:image/jpeg;base64,' + response.data };
                 
               this.setState({
-                
                 isPicSelected:true,
                 avatarSource: source.uri,
                 isLoading:false,
@@ -138,7 +137,7 @@ export default class EditProfile extends Component{
                                 }} />
                 </View>
                 {this.state.isupdating?<Loader/>:null}
-                {this.state.editing?<Loader/>:null}
+                {this.state.isfetching?<Loader/>:null}
                 <KeyboardAvoidingView style={styles.viewStyle} behavior={Platform.OS === 'ios' ? 'padding' : null}>
                 <ScrollView>
                 <View style={styles.viewStyle}>

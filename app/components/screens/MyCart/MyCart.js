@@ -7,8 +7,7 @@ import styles from '../MyCart/styles';
 let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
 import {serviceProvider,user_data} from '../../../lib/serviceProvider';
-
-
+import Icon from '../../../utils/icon'
 import Modal from "react-native-modal";
 import FeatherIcon from 'react-native-vector-icons/dist/Feather';
 import Loader from '../../Loader/Loader';

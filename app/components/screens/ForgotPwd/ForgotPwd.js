@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { KeyboardAvoidingView, ImageBackground, Text, TextInput, View, TouchableOpacity, Alert } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+// import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from '../../../utils/icon'
 import FeatherIcon from 'react-native-vector-icons/dist/Feather';
 let validators=require('../../../utils/validators').validators();
 import Header from '../../header/header';
@@ -105,7 +106,10 @@ export default class ForgotPwd extends Component{
                     <Text style={styles.btnText}>Submit</Text>
                 </TouchableOpacity>
                 
-                <View style={styles.footer}>
+
+            </View>
+            </KeyboardAvoidingView>
+            <View style={styles.footer}>
                     <Text
                         style={styles.endText}>DON'T HAVE AN ACCOUNT?
                     </Text>
@@ -115,8 +119,6 @@ export default class ForgotPwd extends Component{
                     </View>
                     {/* </View> */}
                 </View>
-            </View>
-            </KeyboardAvoidingView>
             </ImageBackground>
         )
     }

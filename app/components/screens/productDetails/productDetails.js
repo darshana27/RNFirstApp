@@ -7,6 +7,7 @@ import styles from './styles';
 import * as Colors from '../../../utils/colors';
 import * as fontSize from '../../../utils/fontSizes';
 import Modal from "react-native-modal";
+import Icon from '../../../utils/icon'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 // import Share, {ShareSheet, Button} from 'react-native-share';
 let fetchApi=require('../../../lib/api').fetchApi();
@@ -222,7 +223,7 @@ export default class productDetails extends React.Component {
           <View style={styles.ModalView}>
           <View style={styles.closeBtn}>
           <TouchableOpacity onPress={()=>this.setState({ isModal1Visible: false })} style={styles.closeStyle}>
-            <MaterialIcon name="close" size={20}/>
+            <Icon name="close" size={20}/>
             </TouchableOpacity>
           </View>
             <Text style={styles.modalRatingName}>{this.state.productDet.name}</Text>
@@ -253,7 +254,7 @@ export default class productDetails extends React.Component {
           <View style={styles.ModalView2}>
           <View style={styles.closeBtn}>
           <TouchableOpacity onPress={()=>this.setState({ isModal2Visible: false })} style={styles.closeStyle}>
-            <MaterialIcon name="close" size={20}/>
+            <Icon name="close" size={20}/>
             </TouchableOpacity>
           </View>
             <Text style={styles.modalRatingName}>{this.state.productDet.name}</Text>

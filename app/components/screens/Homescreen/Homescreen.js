@@ -7,7 +7,8 @@ import { DrawerActions } from 'react-navigation';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {user_data,serviceProvider} from '../../../lib/serviceProvider';
 import SearchBar from 'react-native-searchbar';
-import SplashScreen from 'react-native-splash-screen'
+import SplashScreen from 'react-native-splash-screen';
+import Icon from '../../../utils/icon'
 
 export default class Homescreen extends Component{
     constructor(props){
@@ -98,23 +99,23 @@ export default class Homescreen extends Component{
                         <TouchableOpacity 
                         onPress={this._TableBtnPressed} style={styles.cardTable}>
                             <Text style={styles.tablesTxt}>Tables</Text>
-                            <MaterialIcon style={styles.tableImg} name="event-seat" size={80}/>
+                            <Icon style={styles.tableImg} name="table" size={80}/>
                             {/* <Image 
                                 style={styles.tableImg}
                                 source={require('../../../assets/images/Tables.png')}/> */}
                         </TouchableOpacity>
                         <TouchableOpacity onPress={this._SofaBtnPressed} style={styles.cardSofa}>
-                        <MaterialIcon style={styles.sofaImg} name="airline-seat-recline-extra" size={80}/>
+                        <Icon style={styles.sofaImg} name="sofa" size={80}/>
                                 <Text style={styles.SofaTxt}>Sofas</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.cardRow}>
                         <TouchableOpacity onPress={this._ChairBtnPressed} style={styles.cardChair}>
                         <Text style={styles.chairTxt}>Chairs</Text>
-                        <MaterialIcon style={styles.chairImg} name="airline-seat-individual-suite" size={80}/>
+                        <Icon style={styles.chairImg} name="chair" size={80}/>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={this._CupboardBtnPressed} style={styles.cardCupboard}>
-                        <MaterialIcon style={styles.cupboardImg} name="storage" size={80}/>
+                        <Icon style={styles.cupboardImg} name="cupboard" size={80}/>
                                 <Text style={styles.cupboardTxt}>Cupboards</Text>
                         </TouchableOpacity>
                     </View>

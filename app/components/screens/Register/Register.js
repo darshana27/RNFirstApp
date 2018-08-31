@@ -4,7 +4,8 @@ import RadioForm from 'react-native-simple-radio-button';
 import { CheckBox } from 'react-native-elements';
 import styles from './styles';
 import Header from '../../header/header';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from '../../../utils/icon'
+// import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/dist/MaterialIcons';
 import * as urls from '../../../lib/urls';
 let fetchApi=require('../../../lib/api').fetchApi();
@@ -133,7 +134,7 @@ export default class Register extends Component{
                     <Text style={styles.headingText}>NeoSTORE</Text>
                         <View style={styles.nestedView}>
 
-                            <Icon style={styles.iconStyle} name="user" size={20} color="#FFFFFF"/>
+                            <Icon style={styles.iconStyle} name="user" size={18} color="#FFFFFF"/>
 
                             <TextInput
                                 placeholder="First Name"
@@ -147,7 +148,7 @@ export default class Register extends Component{
                         </View>
 
                         <View style={styles.nestedView}>
-                            <Icon style={styles.iconStyle} name="user" size={20} color="#FFFFFF"/>
+                            <Icon style={styles.iconStyle} name="user" size={18} color="#FFFFFF"/>
                             <TextInput
                                 style={styles.inputBox}
                                 placeholder="Last Name"
@@ -162,7 +163,7 @@ export default class Register extends Component{
                         </View>
 
                         <View style={styles.nestedView}>
-                            <MaterialIcon style={styles.iconStyle} name="email" size={20} color="#FFFFFF"/>
+                            <Icon style={styles.iconStyle} name="message" size={18} color="#FFFFFF"/>
                             <TextInput
                                 ref={(emailID) => {this.Email= emailID}}
                                 style={styles.inputBox}
@@ -177,7 +178,7 @@ export default class Register extends Component{
                         </View>
 
                         <View style={styles.nestedView}>
-                            <Icon style={styles.iconStyle} name="lock" size={20} color="#FFFFFF"/>
+                            <Icon style={styles.iconStyle} name="lock" size={18} color="#FFFFFF"/>
                             <TextInput
                                 ref={(password) => {this.Password= password}}
                                 style={styles.inputBox}
@@ -193,7 +194,7 @@ export default class Register extends Component{
                         </View>
 
                         <View style={styles.nestedView}>
-                            <Icon style={styles.iconStyle} name="lock" size={20} color="#FFFFFF"/>
+                            <Icon style={styles.iconStyle} name="lock" size={18} color="#FFFFFF"/>
                             <TextInput
                                 ref={(cpassword) => {this.Cpassword= cpassword}}
                                 style={styles.inputBox}
@@ -229,7 +230,7 @@ export default class Register extends Component{
                         </View>
 
                         <View style={styles.nestedView}>
-                            <Icon style={styles.iconStyle} name="mobile" size={25} color="#FFFFFF"/>
+                            <Icon style={styles.iconStyle} name="mobile" size={21} color="#FFFFFF"/>
                             <TextInput
                                 ref={(phoneNo) => {this.Phone= phoneNo}}
                                 style={styles.inputBox}

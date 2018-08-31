@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import FeatherIcon from 'react-native-vector-icons/dist/Feather';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
+import Icon from '../../utils/icon'
 
 export default class Header extends Component{
     constructor(props){
@@ -23,8 +24,8 @@ export default class Header extends Component{
                 {/* <View style={styles.rightContainer}> */}
                 <TouchableOpacity style={styles.rightContainer}
                     onPress={this.props.search}>
-                                {this.props.isSearch ? <FeatherIcon name="search" size={26} style={styles.menuIcon} color="#fff" /> : null}
-                                {this.props.isAdd ? <FeatherIcon name="plus" size={26} style={styles.menuIcon} color="#fff" /> : null}
+                                {this.props.isSearch ? <Icon name="search" size={26} style={styles.menuIcon} color="#fff" /> : null}
+                                {this.props.isAdd ? <Icon name="plus" size={21} style={styles.menuIcon} color="#fff" /> : null}
                 </TouchableOpacity>
                 {/* </View> */}
             </View>

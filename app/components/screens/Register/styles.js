@@ -1,7 +1,9 @@
 import { StyleSheet } from 'react-native';
 import * as Colors from '../../../utils/colors';
+import * as fontSize from '../../../utils/fontSizes';
 // import * as appStyles from '../../../styles/appStyles';
 import {fontMedium,fontBold,fontRegular} from '../../../styles/appStyles';
+
 export default styles=StyleSheet.create({
     viewStyle:{
         flex:1,
@@ -18,6 +20,7 @@ export default styles=StyleSheet.create({
         color:Colors.white,
         fontWeight:'bold',
         fontSize:38,
+        fontFamily:fontMedium,
         letterSpacing:1,
         paddingBottom:11,
         marginTop:17,
@@ -56,7 +59,7 @@ export default styles=StyleSheet.create({
         color:Colors.red,
         padding:10,
         fontWeight:'bold',
-        fontSize:22,
+        fontSize:fontSize.xxLarge,
         fontFamily:fontMedium
     }, 
     nestedView: {

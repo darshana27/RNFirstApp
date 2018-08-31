@@ -74,12 +74,11 @@ export default styles=StyleSheet.create({
         marginTop:60,
         position:'absolute',
         bottom:3,
-        left:5,
-        width:'90%',
+        left:0,
+        width:'100%',
         flexDirection:'row',
         alignSelf:'baseline',
-        // borderWidth:1,
-        // borderColor:'yellow'
+
     },
     endText:{
         color:Colors.white,
@@ -89,7 +88,7 @@ export default styles=StyleSheet.create({
         fontFamily:fontMedium,
         // borderColor:'green',
         // borderWidth:1,
-        width:'90%'
+        width:'82.5%'
     },
     registerView:{
         width:'8%',
@@ -122,5 +121,6 @@ export default styles=StyleSheet.create({
         height:null,
         width:null,
         // resizeMode: 'cover'
-    }
+    },
+
 });

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { KeyboardAvoidingView, AppRegistry, Text, TextInput, View,ScrollView, TouchableOpacity, Alert,AsyncStorage } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+// import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from '../../../utils/icon'
 import FeatherIcon from 'react-native-vector-icons/dist/Feather';
 import styles from './styles';
 import Header from '../../header/header';

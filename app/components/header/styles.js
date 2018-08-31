@@ -30,7 +30,7 @@ export default styles=StyleSheet.create({
     rightContainer: {
         width:'15%',
         alignItems:'center',
-        paddingTop: 17,
+        paddingTop: 20,
         // borderColor:'white',
         // borderWidth:1
     },
