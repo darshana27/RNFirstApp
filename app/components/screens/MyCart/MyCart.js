@@ -240,7 +240,7 @@ export default class productListing extends React.Component {
                           <TouchableOpacity 
                               onPress={()=>this.onPressDelete(rowData.item.product_id,rowMap)}
                               style={styles.deleteContainer}>
-                              <FeatherIcon name="trash" size={25} color="#FFFFFF"/>
+                              <Icon name="trash" size={23} color="#FFFFFF"/>
                           </TouchableOpacity>
                           
                       </View>}

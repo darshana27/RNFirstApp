@@ -4,6 +4,7 @@ import styles from './styles';
 import {Badge} from 'react-native-elements';
 import { StackActions, NavigationActions } from 'react-navigation';
 import {user_data,serviceProvider} from '../lib/serviceProvider';
+import Icon from '../utils/icon'
 
 // const resetAction = StackActions.reset({
 //   index: 0,
@@ -73,15 +74,15 @@ export default class Sidebar extends Component {
             <FlatList
                 data={[
                     // {img:require('../assets/images/Chair.png'),key:'Homescreen'},
-                    {img:require('../assets/cart.png'),key:'My Cart',screenName:'MyCart',value:0},
-                    {img:require('../assets/tables.png'),key:'Tables',screenName:'productListing',value:1,category:1},
-                    {img:require('../assets/sofa.png'),key:'Sofa',screenName:'productListing',value:2,category:3},
-                    {img:require('../assets/chairs.png'),key:'Chairs',screenName:'productListing',value:3,category:2},
-                    {img:require('../assets/cupboards.png'),key:'Cupboards',screenName:'productListing',value:4,category:4},
-                    {img:require('../assets/userAccount.png'),key:'My Account',screenName:'MyAccount',value:5},
-                    {img:require('../assets/storeLocator.png'),key:'Store Locator',screenName:'StoreLocator',value:6},
-                    {img:require('../assets/myOrders.png'),key:'My Orders',screenName:'MyOrders',value:7},
-                    {img:require('../assets/logout.png'),key:'Logout',screenName:'Login',value:8},
+                    {icon:"cart",key:'My Cart',screenName:'MyCart',value:0},
+                    {icon:"table",key:'Tables',screenName:'productListing',value:1,category:1},
+                    {icon:"sofa",key:'Sofa',screenName:'productListing',value:2,category:3},
+                    {icon:"chair",key:'Chairs',screenName:'productListing',value:3,category:2},
+                    {icon:"cupboard",key:'Cupboards',screenName:'productListing',value:4,category:4},
+                    {icon:"user",key:'My Account',screenName:'MyAccount',value:5},
+                    {icon:"location",key:'Store Locator',screenName:'StoreLocator',value:6},
+                    {icon:"location",key:'My Orders',screenName:'MyOrders',value:7},
+                    {icon:"logout",key:'Logout',screenName:'Login',value:8},
                 ]}
                 keyExtractor={(item,index) => ''+index}
                 ItemSeparatorComponent={this.renderSeparator}
@@ -90,7 +91,10 @@ export default class Sidebar extends Component {
                     
                     style={styles.container}
                     onPress={this.isLogout.bind(this,item)}>
-                        <Image 
+                        <Icon 
+                            color='#FFFFFF'
+                            size={20}
+                            name={item.icon}
                             style={styles.icon}
                             source={item.img}/>
                         <Text style={styles.item}>{item.key}</Text>

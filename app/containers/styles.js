@@ -38,8 +38,7 @@ export default styles=StyleSheet.create({
     },
     icon:{
         marginLeft:10,
-        height:20,
-        width:20,
+
     },
     item:{
         marginLeft:10,

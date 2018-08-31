@@ -4,7 +4,9 @@ import styles from '../StoreLocator/styles';
 import Header from '../../header/header';
 import MapView from 'react-native-maps';
 import { Marker } from 'react-native-maps';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '../../../utils/icon'
+
+// import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import * as Colors from '../../../utils/colors';
 
 export default class StoreLocator extends React.Component {
@@ -106,7 +108,7 @@ export default class StoreLocator extends React.Component {
             renderItem = { ({item,index}) => 
                 <View style={styles.itemContainer}>
                   <View style={styles.productImage}>  
-                    <MaterialIcon name="pin-drop" size={25} color='#4f4f4f'></MaterialIcon>
+                    <Icon name="location" size={23} color='#4f4f4f'></Icon>
                   </View>
                       <View style={styles.productDetails}>
                         <Text style={styles.item}>{item.storeName}</Text>

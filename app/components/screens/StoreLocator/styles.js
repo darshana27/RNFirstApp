@@ -31,7 +31,7 @@ export default styles=StyleSheet.create({
         // borderWidth:1
       },
       productImage:{
-        paddingLeft:3,
+        paddingLeft:6,
         height:'100%',
         width:'10%',
         alignContent:'center',
