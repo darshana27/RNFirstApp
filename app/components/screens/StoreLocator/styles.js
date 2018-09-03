@@ -57,7 +57,7 @@ export default styles=StyleSheet.create({
     price:{
         marginTop:5,
         color:Colors.productPrice,
-        fontSize:18,
+        fontSize:fontSize.xLarge,
         fontFamily:fontRegular
     },
     addressView:{

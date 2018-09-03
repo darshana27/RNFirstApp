@@ -97,6 +97,7 @@ export default class productListing extends React.Component {
     const screen = navigation.getParam('screen');
     // console.log(screen)
     // console.log(this.state.isLoading)
+    console.log(this.state.list.length)
   
     return (
       <View>
@@ -132,8 +133,6 @@ export default class productListing extends React.Component {
                   back={() => {this.props.navigation.goBack()}} 
                   search={() => {this.searchBar.show()}}/>:null}
         </View>
-        
-        <View style={styles.container}>
         <SearchBar
                     backgroundColor='#9e0100'
                     iconColor='#ffffff'
@@ -141,6 +140,8 @@ export default class productListing extends React.Component {
                     ref={(ref) => this.searchBar = ref}
                     onBlur={()=>this.searchBar.hide()}
                 />
+        <View style={styles.container}>
+
         <FlatList
         
                 data={this.state.list}
@@ -184,6 +185,7 @@ export default class productListing extends React.Component {
             ></FlatList>
             {this.state.isLoading?<Loader/>:null}
         </View>
+        <View style={styles.indicatorView}><Text style={{color:'#FFF'}}>Showing {this.state.list.length} out of {this.state.list.length}</Text></View>
       </View>
     );
   }

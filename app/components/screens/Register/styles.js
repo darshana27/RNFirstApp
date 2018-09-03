@@ -6,7 +6,7 @@ import {fontMedium,fontBold,fontRegular} from '../../../styles/appStyles';
 
 export default styles=StyleSheet.create({
     viewStyle:{
-        flex:1,
+            // flex:1,
         // backgroundColor: Colors.red,
         justifyContent:'center',
         alignItems:'center'
@@ -29,7 +29,7 @@ export default styles=StyleSheet.create({
     inputBox: {
         height: 45,
         width:'80%',
-        fontSize:16,
+        fontSize:fontSize.small,
         color:Colors.white,
         fontFamily:fontRegular
         // borderBottomColor:Colors.white,
@@ -86,7 +86,7 @@ export default styles=StyleSheet.create({
         marginTop:5,
     },
     text:{
-        fontSize:18,
+        fontSize:fontSize.xLarge,
         color:Colors.white,
         marginRight:20,
         fontFamily:fontMedium

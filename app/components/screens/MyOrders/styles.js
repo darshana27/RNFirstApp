@@ -41,12 +41,13 @@ export default styles=StyleSheet.create({
         // borderColor:'black'
     },
     item:{
-        fontSize:fontSize.xLarge,
+        fontSize:fontSize.large,
         color:Colors.orderID,
         // fontWeight:'bold',
         // borderColor:'blue',
+        fontWeight:'200',
         // borderWidth:1,
-        fontFamily:fontRegular
+        fontFamily:fontMedium
     },
     producer:{
         marginTop:5,

@@ -81,7 +81,7 @@ export default class Sidebar extends Component {
                     {icon:"cupboard",key:'Cupboards',screenName:'productListing',value:4,category:4},
                     {icon:"user",key:'My Account',screenName:'MyAccount',value:5},
                     {icon:"location",key:'Store Locator',screenName:'StoreLocator',value:6},
-                    {icon:"location",key:'My Orders',screenName:'MyOrders',value:7},
+                    {icon:"order-list",key:'My Orders',screenName:'MyOrders',value:7},
                     {icon:"logout",key:'Logout',screenName:'Login',value:8},
                 ]}
                 keyExtractor={(item,index) => ''+index}

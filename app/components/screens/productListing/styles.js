@@ -75,5 +75,14 @@ export default styles=StyleSheet.create({
         // width:Dimensions.get('window').width,
         backgroundColor:Colors.lightGray,
         marginTop:30
+    },
+    indicatorView:{
+        width:Dimensions.get('window').width,
+        bottom:0,position:'absolute',
+        height:30,
+        opacity:0.8,
+        backgroundColor:Colors.orderID,
+        alignItems:'center',
+        justifyContent:'center'
     }
 })

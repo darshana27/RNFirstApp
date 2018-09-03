@@ -81,12 +81,7 @@ export default class Register extends Component{
                 formData.append("gender", "F");
                 formData.append("phone_no", 7738002842);
                 // console.log(formData._parts[0][1]);
-                // console.log(formData._parts[1][1]);
-                // console.log(formData._parts[2][1]);
-                // console.log(formData._parts[3][1]);
-                // console.log(formData._parts[4][1]);
-                // console.log(formData._parts[5][1]);
-                // console.log(formData._parts[6][1]);
+  
                 fetchApi.fetchData(''+urls.host_url+urls.user_register,'POST',null,formData,this.callbackFn)
                 // fetch('http://staging.php-dev.in:8844/trainingapp/api/users/register', {
                 //         method: 'POST',
@@ -123,12 +118,12 @@ export default class Register extends Component{
          return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>
 
-            <View style={styles.viewStyle}>
+            <View style={{flex:1}}>
                 <View> 
                     <Header styles={styles.header} title={'Register'}
                             back={() => {this.props.navigation.goBack()}} />
                 </View>
-                <KeyboardAvoidingView style={styles.viewStyle} behavior={Platform.OS === 'ios' ? 'padding' : null}>
+                <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS === 'ios' ? 'padding' : null}>
                 <ScrollView>
                 <View  style={styles.viewStyle}>
                     <Text style={styles.headingText}>NeoSTORE</Text>

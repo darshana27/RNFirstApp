@@ -40,7 +40,7 @@ export default styles=StyleSheet.create({
         color:Colors.descContent
     },
     addressView:{
-        padding:5,
+        padding:4,
         width:297,
         borderWidth:1,
         borderColor:Colors.addressListRadioOuter,
@@ -81,6 +81,7 @@ export default styles=StyleSheet.create({
         height:50,
         borderBottomWidth:1,
         borderBottomColor:Colors.addressListRadioInner
-    }
+    },
+
 }
 )

@@ -69,7 +69,7 @@ export default styles=StyleSheet.create({
         color:Colors.red,
         padding:10,
         fontWeight:'bold',
-        fontSize:22,
+        fontSize:fontSize.xxLarge,
         fontFamily:fontMedium
     }, 
     nestedView: {
@@ -96,7 +96,7 @@ export default styles=StyleSheet.create({
         marginTop:5,
     },
     text:{
-        fontSize:18,
+        fontSize:fontSize.xLarge,
         color:Colors.white,
         marginRight:20,
         fontFamily:fontMedium

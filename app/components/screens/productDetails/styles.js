@@ -178,7 +178,7 @@ export default styles=StyleSheet.create({
     },
     ModalView2:{
         backgroundColor:Colors.white,
-        height:'95%',
+        height:'90%',
         width:'100%',
         borderRadius:10,
         alignItems:'center',

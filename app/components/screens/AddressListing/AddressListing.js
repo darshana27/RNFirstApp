@@ -47,28 +47,30 @@ export default class AddressListing extends React.Component{
     deleteAdd(idx){
         var arr=this.state.data
         arr.splice(idx,1)
+        if(arr.length==0){alert('No address. Add your address first');this.props.navigation.navigate('AddAddress')}
+        else{
         this.setState({data:arr})
         AsyncStorage.removeItem('complete_address')
-        AsyncStorage.setItem('complete_address',JSON.stringify(this.state.data))
+        AsyncStorage.setItem('complete_address',JSON.stringify(this.state.data))}
     }
     fetchAddress(){
         return this.state.data.map((element,idx)=>{
         console.log(element)
         return(
-            <TouchableOpacity style={styles.itemRow} onPress={()=>{
+            <View style={styles.itemRow} >
+                <TouchableOpacity style={styles.radioView} onPress={()=>{
                 console.log(idx,this.state.selected)
                 this.setState({selected:idx})
                 console.log(this.state.selected)}}>
-                <View style={styles.radioView}>
                     <TouchableOpacity style={[styles.radioButton,{backgroundColor:this.state.selected==idx?'#8E8E8E':'#fff'}]}>
                     </TouchableOpacity>
-                </View>
+                </TouchableOpacity>
                 <View style={styles.addressView}>
-                    <View style={styles.closeView}><TouchableOpacity onPress={()=>this.deleteAdd(idx)}><MaterialIcon name='close' size={14} color='#333333'/></TouchableOpacity></View>
+                    <View style={styles.closeView}><TouchableOpacity onPress={()=>this.deleteAdd(idx)}><MaterialIcon style={styles.close} name='close' size={15} color='#333333'/></TouchableOpacity></View>
                     <Text style={styles.userName}>{user_data.user_data.first_name+' '+user_data.user_data.last_name}</Text>
                     <Text style={styles.addressText}>{element.address +','+element.city +','+element.landmark+','+element.state+','+element.zipcode+','+element.country}</Text>
                 </View>
-            </TouchableOpacity>
+            </View>
         )
     })
     }

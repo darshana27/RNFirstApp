@@ -166,4 +166,13 @@ export default styles=StyleSheet.create({
         fontSize:fontSizes.medium,
         fontFamily:fontMedium
     }, 
+    noItemsView:{
+        flex:1,
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    noItemsText:{
+        fontSize:fontSizes.large,
+        fontFamily:fontRegular
+    }
 })

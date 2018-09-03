@@ -67,6 +67,7 @@ export default class MyAccount extends Component{
                 <KeyboardAvoidingView style={styles.viewStyle} behavior={Platform.OS === 'ios' ? 'padding' : null}>
                 <ScrollView>
                 <View  style={styles.viewStyle}>
+                
                 <Image 
                       style={styles.roundedImage}
                       source={profile_pic_url}/>

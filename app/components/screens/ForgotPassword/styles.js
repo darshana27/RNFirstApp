@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 import * as Colors from '../../../utils/colors';
+import {fontMedium,fontBold,fontRegular} from '../../../styles/appStyles';
+import * as fontSize from '../../../utils/fontSizes';
 
 export default styles=StyleSheet.create({
     viewStyle:{
@@ -13,6 +15,7 @@ export default styles=StyleSheet.create({
         right:0,
     },
     headingText: {
+        fontFamily:fontMedium,
         color:Colors.white,
         fontWeight:'bold',
         fontSize:38,
@@ -23,8 +26,9 @@ export default styles=StyleSheet.create({
     inputBox: {
         height:45,
         width:'80%',
-        fontSize:16,
+        fontSize:fontSize.large,
         color:Colors.white,
+        fontFamily:fontRegular
         // borderBottomColor:Colors.white,
         // borderTopColor:Colors.white,
         // borderLeftColor:Colors.white,
@@ -70,6 +74,7 @@ export default styles=StyleSheet.create({
         color:Colors.red,
         padding:10,
         fontWeight:'bold',
-        fontSize:22,
+        fontSize:fontSize.xxLarge,
+        fontFamily:fontMedium
     },
 })

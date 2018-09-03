@@ -61,8 +61,12 @@ export default class productListing extends React.Component {
       address.then(value=>{var x=JSON.parse(value); 
         console.log(x)
         if(x!=null){
+          console.log(x.length)
           if(x.length!=0){
             this.props.navigation.navigate('AddressListing')
+          }
+          if(x.length==0){
+            this.props.navigation.navigate('AddAddress')
           }
         } 
         else{
@@ -195,6 +199,7 @@ export default class productListing extends React.Component {
         
         <View style={styles.container}>
         {this.state.isLoading?<Loader/>:
+        this.state.dataSource==null?<View style={styles.noItemsView}><Text style={styles.noItemsText}>No items in your cart</Text></View>:
         <ScrollView>
         <SwipeListView
                 useFlatList={true}
@@ -219,7 +224,8 @@ export default class productListing extends React.Component {
                           <ModalDropdown  
                                         style={styles.modalDropdown}
                                          defaultValue={''+item.quantity}
-                                         dropdownStyle={{width:46,left:0}}   
+                                         dropdownStyle={{width:46,left:0}}  
+                                         dropdownTextStyle={{fontSize:15}} 
                                          options={[1,2,3,4,5,6,7,8]}
                                          renderButtonText={(value)=>this.calcCost(value,item.id)}
                                       />
