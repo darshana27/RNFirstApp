@@ -65,9 +65,16 @@ export default class Sidebar extends Component {
             <TouchableOpacity 
                 onPress={()=>this.props.navigation.navigate('MyAccount')}
                 style={styles.header}>
-                <Image 
+                {user_data.user_data.profile_pic==''||user_data.user_data.profile_pic==null?
+                    <Image source={require('../assets/user_placeholder.png') }
+                        style={styles.roundedImage}/>:
+                        <Image 
+                        style={styles.roundedImage}
+                        source={{uri:user_data.user_data.profile_pic}}/>
+                }
+                {/* <Image 
                 style={styles.roundedImage}
-                source={profile_pic}/>
+                source={profile_pic}/> */}
                 <Text style={styles.Username}>{user_data.user_data.first_name+' '+user_data.user_data.last_name}</Text>
                 <Text style={styles.UserEmail}>{user_data.user_data.email}</Text>
             </TouchableOpacity>

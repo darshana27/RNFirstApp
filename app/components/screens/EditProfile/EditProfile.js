@@ -52,7 +52,7 @@ export default class EditProfile extends Component{
         let formData=new FormData();
         formData.append("first_name",this.state.first_name!=null?this.state.first_name:this.state.userDet.first_name)
         formData.append("last_name",this.state.last_name!=null?this.state.last_name:this.state.userDet.last_name)
-        formData.append("profile_pic",this.state.isPicSelected?this.state.avatarSource:this.state.userDet.profile_pic)
+        formData.append("profile_pic",this.state.avatarSource)
         formData.append("email",this.state.email!=null?this.state.email:this.state.userDet.email);
         formData.append("dob",this.state.dob!=null?this.state.dob:this.state.userDet.dob);
         formData.append("phone_no",this.state.phone_no!=null?this.state.phone_no:this.state.userDet.phone_no);
@@ -116,7 +116,7 @@ export default class EditProfile extends Component{
         console.log(this.state.userDet.profile_pic)
         var defaultFile=this.state.userDet.profile_pic
         var user_pic=this.state.avatarSource
-        var profile_pic_url = this.state.avatarSource!=null?user_pic:defaultFile;
+        var profile_pic_url = this.state.isPicSelected?user_pic:defaultFile;
 
         var valueFname=this.state.first_name==null?this.state.userDet.first_name:this.state.first_name;
         var valueLname=this.state.last_name==null?this.state.userDet.last_name:this.state.last_name;
@@ -125,7 +125,7 @@ export default class EditProfile extends Component{
         var valueDob=this.state.dob==null?this.state.userDet.dob:this.state.dob
 
         // console.log("Profile Pic : "+this.state.userDet.profile_pic)
-        // console.log(this.state.avatarSource)
+        console.log(this.state.avatarSource)
          return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>
 
@@ -145,7 +145,9 @@ export default class EditProfile extends Component{
                 style={{height:122,width:122,borderWidth:2,borderColor:'white',borderRadius:60,top:20}}
                 onPress={this.onPressPicture}>
                 {this.state.isLoading?<ActivityIndicator style={{marginTop:36}} size='large' animating={true}/>:
-                    <Image              
+                this.state.userDet.profile_pic=='' || this.state.userDet.profile_pic==null && this.state.isPicSelected==false? 
+                <Image source={require('../../../assets/user_placeholder.png')} style={styles.roundedImage}/>:
+                <Image              
                         style={styles.roundedImage}
                         source={{uri:profile_pic_url}}/>}
                 </TouchableOpacity>
