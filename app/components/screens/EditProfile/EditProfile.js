@@ -26,7 +26,7 @@ export default class EditProfile extends Component{
             email:null,
             phone_no:null,
             dob:null,
-            avatarSource:null,
+            avatarSource:user_data.user_data.profile_pic,
             isPicSelected:false,
             isLoading:false,
             isfetching:false,
@@ -149,7 +149,7 @@ export default class EditProfile extends Component{
                 <Image source={require('../../../assets/user_placeholder.png')} style={styles.roundedImage}/>:
                 <Image              
                         style={styles.roundedImage}
-                        source={{uri:profile_pic_url}}/>}
+                        source={{uri:this.state.avatarSource}}/>}
                 </TouchableOpacity>
                       <View style={{marginTop:40}}>
 
@@ -227,7 +227,7 @@ export default class EditProfile extends Component{
                             <Icon style={styles.iconStyle} name="birthday-cake" size={18} color="#FFFFFF"/>
                             <DatePicker
                                 style={styles.inputBox}
-                                
+                                minDate="1980-05-01"
                                 mode="date"
                                 placeholder="Select date"
                                 format="DD-MM-YYYY"

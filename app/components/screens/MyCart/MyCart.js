@@ -91,6 +91,9 @@ export default class productListing extends React.Component {
       formData.append('product_id',rowData)
       fetchApi.fetchData(''+urls.host_url+urls.delete_cart,'POST',{},formData,(response => {
         if(response.status==200){
+          serviceProvider.setData('total_carts',response.count)
+          console.log('Delete Response')
+          console.log(response)
           fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callbackFn)
           rowMap[rowData].closeRow()
           console.log("Success")
