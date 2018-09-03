@@ -49,11 +49,13 @@ const Drawer=createDrawerNavigator({
   MyCart:{
   screen:MyCart,
   title:MyCart,
+  drawerLockMode: 'locked-closed'
   },
   
   MyAccount:{
     screen:MyAccount,
     title:MyAccount,
+    drawerLockMode: 'locked-closed'
   },
   // EditProfile:{
   //   screen:EditProfile,
@@ -62,14 +64,17 @@ const Drawer=createDrawerNavigator({
   StoreLocator:{
     screen:StoreLocator,
     title:StoreLocator,
+    drawerLockMode: 'locked-closed'
   },
   MyOrders:{
     screen:MyOrders,
     title:MyOrders,
+    drawerLockMode: 'locked-closed'
   },
   productListing:{
     screen:productListing,
     title:productListing,
+    drawerLockMode: 'locked-closed'
   },
 
 },{

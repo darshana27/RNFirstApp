@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View,Image, ScrollView,AsyncStorage,TouchableOpacity,Alert} from 'react-native';
+import { Text, View,Image, ScrollView,AsyncStorage,TouchableOpacity,Alert,Vibration} from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import Header from '../../header/header';
@@ -25,23 +25,19 @@ export default class productListing extends React.Component {
       sub_total:0,
     }
     this.callbackFn=this.callbackFn.bind(this);
-    this.onPressDelete=this.onPressDelete.bind(this)
+    // this.onPressDelete=this.onPressDelete.bind(this)
     this.orderNow=this.orderNow.bind(this)
   }
 
   componentDidMount(){
-    console.log("ComponentDidMount")
     const category_id = this.props.navigation.getParam('category_id');
-    console.log("category_id", category_id)
     category_id!==null?
     fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callbackFn)
-    :console.log("Null")
+    :null
   }
   
   callbackFn(response){
-    console.log(response)
-    console.log("TOTAL : "+response.total)
-    console.log("Callback called")
+    
     if(response.status==200){
     this.setState({ 
       isLoading:false,
@@ -56,12 +52,10 @@ export default class productListing extends React.Component {
   }
 
   orderNow(){
+    
     var address=AsyncStorage.getItem('complete_address')
-    console.log(address)
       address.then(value=>{var x=JSON.parse(value); 
-        console.log(x)
         if(x!=null){
-          console.log(x.length)
           if(x.length!=0){
             this.props.navigation.navigate('AddressListing')
           }
@@ -76,47 +70,32 @@ export default class productListing extends React.Component {
     )
     }  
 
-  onPressDelete(rowData,rowMap){
-    console.log(rowMap[rowData])
-    // console.log(rowData.item.product_id)
-    Alert.alert(
-      'Delete Confirmation',
-      'Are you sure you want to delete this item?',
-    [{text:'Cancel'},
-     {text:'Delete',onPress:()=> {
+  onPressDelete=(rowData,rowMap)=>{
+  
+      Alert.alert(
+        'Delete Confirmation',
+        'Are you sure you want to delete this item?',
+        [{text:'Cancel',onPress:()=>{Vibration.vibrate(300)}},
+        {text:'Delete',onPress:()=> {
+          var formData=new FormData()
+          formData.append('product_id',rowData)
+          fetchApi.fetchData(''+urls.host_url+urls.delete_cart,'POST',{},formData,(response => {
+            Vibration.vibrate(300)
+            if(response.status==200){
+              serviceProvider.setData('total_carts',response.count)
+              fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callbackFn)
+              rowMap[rowData].closeRow()
+            }
+          }))
+        }}],{cancelable: true}
+      )
+    rowMap[rowData].closeRow()
 
-      console.log(rowData,rowMap)
-      // console.log(rowData.item.product_id)
-      var formData=new FormData()
-      formData.append('product_id',rowData)
-      fetchApi.fetchData(''+urls.host_url+urls.delete_cart,'POST',{},formData,(response => {
-        if(response.status==200){
-          serviceProvider.setData('total_carts',response.count)
-          console.log('Delete Response')
-          console.log(response)
-          fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callbackFn)
-          rowMap[rowData].closeRow()
-          console.log("Success")
-        }
-        else{
-          console.log("Unsuccessful")
-        }
-      }))
-     }}],{cancelable: true}
-  )
-    // rowMap[rowData].closeRow()
-    console.log("Deleting Item")
-    console.log(this.state.dataSource)
   }
 
   callback(response){
-    console.log(response)
     if(response.status==200){
       serviceProvider.setData('total_carts',response.count)
-      console.log("Success")
-    }
-    else{
-      console.log("Unsuccessful")
     }
   }
 
@@ -131,24 +110,15 @@ export default class productListing extends React.Component {
   );
   
   calcCost(selectedValue,product_id){
-    console.log("Selected Value : "+selectedValue);
-    console.log("Product ID : "+product_id)
-    console.log(this.state.dataSource)
     var arr=this.state.dataSource
     var idx=arr.findIndex(item=>item.id==product_id)
-    console.log(idx)
     var pid=arr[idx].product.id
     var formData=new FormData();
     formData.append("product_id",pid)
     formData.append("quantity",selectedValue)
     fetchApi.fetchData(''+urls.host_url+urls.edit_cart,'POST',{},formData,(response)=>{
       if(response.status==200){
-        console.log(arr[idx])
         fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callback)
-        console.log("Success")
-      }
-      else{
-        console.log("Unsuccessful")
       }
     })  
   }
@@ -156,19 +126,6 @@ export default class productListing extends React.Component {
   render() {
     const { navigation } = this.props;
     const screen = navigation.getParam('screen');
-    console.log(screen)
-    console.log(this.state.isLoading)
-
-    var dropdownValue=1
-    var count=0
-    var total_price=0
-    // for (x in this.state.dataSource){     
-    //   count=count+1
-    //   console.log("here :" + this.state.dataSource[x].product.cost * this.state.qty)
-    //   total_price+=(this.state.dataSource[x].product.cost * this.state.qty);
-    //   console.log(total_price)
-    // }
-    // console.log(count) 
     return (
       <View>
 

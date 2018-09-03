@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { View,StyleSheet, Text,Alert,Image,ScrollView,Dimensions,TouchableOpacity,TextInput,Share} from 'react-native';
+import { View,StyleSheet, Text,Alert,Image,ScrollView,Vibration,TouchableOpacity,TextInput,Share} from 'react-native';
 import Header from '../../header/header';
 import StarRating from 'react-native-star-rating';
 import styles from './styles';
@@ -113,6 +113,7 @@ export default class productDetails extends React.Component {
       
     }
     callbackRating(response){
+      Vibration.vibrate(300)
       if(response.status==200){
         console.log(response)
         alert(response.message)
@@ -175,6 +176,7 @@ export default class productDetails extends React.Component {
   }
 
   callbackAddToCart(response){
+    Vibration.vibrate(300)
     console.log("Add to cart")
     console.log(response)
       if(response.status==200){
@@ -263,6 +265,7 @@ export default class productDetails extends React.Component {
             </View>
             <Text style={styles.modalText}>Enter Qty</Text>
             <TextInput 
+              keyboardType='numeric'
               style={styles.modalTextInput}
               underlineColorAndroid='transparent'
               onChangeText={(product_quantity) => this.setState({product_quantity})}></TextInput>

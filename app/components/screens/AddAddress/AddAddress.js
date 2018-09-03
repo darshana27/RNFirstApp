@@ -94,10 +94,10 @@ export default class AddAddress extends React.Component {
                                 numberOfLines={4}
                                 onChangeText={(address) => this.setState({address})}/>
 
-                            <Text style={styles.text}>CITY</Text>
+                            <Text style={styles.text}>LANDMARK</Text>
 
                             <TextInput 
-                                placeholder="CITY"
+                                placeholder="LANDMARK"
                                 underlineColorAndroid="transparent"
                                 style={styles.cityInput}
                                 onChangeText={(city) => this.setState({city})}/>
@@ -107,7 +107,7 @@ export default class AddAddress extends React.Component {
                                 <View style={styles.colView}>
                                     <Text style={styles.text}>CITY</Text>
                                     <TextInput 
-                                        placeholder="Landmark"
+                                        placeholder="CITY"
                                         underlineColorAndroid="transparent"
                                         style={styles.smallInput}
                                         onChangeText={(landmark) => this.setState({landmark})}></TextInput>
