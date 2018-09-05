@@ -11,9 +11,11 @@ import Icon from '../../../utils/icon'
 import Modal from "react-native-modal";
 import FeatherIcon from 'react-native-vector-icons/dist/Feather';
 import Loader from '../../Loader/Loader';
+import { connect } from 'react-redux';
+import {totalCart} from '../../../redux/actions/userAction';
 // import {Loader} from '../../Loader/Loader';
 
-export default class productListing extends React.Component {
+class MyCart extends React.Component {
   constructor(props){
     super(props);
     this.state ={
@@ -29,6 +31,7 @@ export default class productListing extends React.Component {
   }
 
   componentDidMount(){
+    console.log('From Redux',this.props)
     const category_id = this.props.navigation.getParam('category_id');
     category_id!==null?
     fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callbackFn)
@@ -81,7 +84,7 @@ export default class productListing extends React.Component {
           fetchApi.fetchData(''+urls.host_url+urls.delete_cart,'POST',{},formData,(response => {
             Vibration.vibrate(300)
             if(response.status==200){
-              serviceProvider.setData('total_carts',response.count)
+              this.props.totalCart(response.total_carts)
               fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callbackFn)
               rowMap[rowData].closeRow()
             }
@@ -95,7 +98,7 @@ export default class productListing extends React.Component {
   callback(response){
     if(response.status==200){
       alert('Quantity edited successfully')
-      serviceProvider.setData('total_carts',response.count)
+      
     }
   }
 
@@ -238,3 +241,10 @@ export default class productListing extends React.Component {
     );
   }
 }
+function mapStateToProps(state){
+  return {
+    details:state.user
+  }
+}
+
+export default connect(mapStateToProps,{ totalCart })(MyCart)

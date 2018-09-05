@@ -12,9 +12,11 @@ let fetchApi=require('../../../lib/api').fetchApi();
 import SplashScreen from 'react-native-splash-screen'
 import Loader from '../../Loader/Loader';
 import Modal from "react-native-modal";
+import { connect } from 'react-redux'
+import {userAction} from '../../../redux/actions/userAction'
 
 
-export default class Login extends Component{
+class Login extends Component{
     constructor(props){
         super(props);
         this.state={uname:'darshana27997@gmail.com',
@@ -107,13 +109,13 @@ export default class Login extends Component{
         } 
         callbackFnFetch(response){
             if(response.status!=200){
-              
+                
                 AsyncStorage.removeItem('user_access_token')
                 this.props.navigation.replace('Login')
                 // AsyncStorage.setItem('screen','Login')
             }
             else{
-
+                this.props.userAction(response.data)
                 serviceProvider.setUsrData(response.data)
                 // console.log(user_data.user_details.data.user_data.first_name)
                 console.log("RESPONSE 200")
@@ -195,6 +197,13 @@ export default class Login extends Component{
         )
     }
 }
+function mapStateToProps(state){
+    return {
+      details:state.user
+    }
+  }
+
+export default connect(mapStateToProps,{ userAction })(Login)
 
 
 

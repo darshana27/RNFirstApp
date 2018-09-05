@@ -78,6 +78,7 @@ export default class Homescreen extends Component{
                             search={() => {this.searchBar.show()}}/>
                 </View>
                 <SearchBar
+                autoplayTimeout={2}
                     backgroundColor='#9e0100'
                     iconColor='#ffffff'
                     heightAdjust={-10}

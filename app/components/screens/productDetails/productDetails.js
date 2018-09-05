@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { View,StyleSheet, Text,Alert,Image,ScrollView,Vibration,TouchableOpacity,TextInput,Share} from 'react-native';
 import Header from '../../header/header';
@@ -9,15 +8,16 @@ import * as fontSize from '../../../utils/fontSizes';
 import Modal from "react-native-modal";
 import Icon from '../../../utils/icon'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-// import Share, {ShareSheet, Button} from 'react-native-share';
 let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
 import Loader from '../../Loader/Loader';
-import {user_data,serviceProvider} from '../../../lib/serviceProvider';
+// import {user_data,serviceProvider} from '../../../lib/serviceProvider';
+import { connect } from 'react-redux'
+import {userAction,totalCart} from '../../../redux/actions/userAction'
 
 
 
-export default class productDetails extends React.Component {
+class productDetails extends React.Component {
   constructor(props){
     super(props);
     this.state={
@@ -39,40 +39,19 @@ export default class productDetails extends React.Component {
       this.callbackAddToCart=this.callbackAddToCart.bind(this);
   }
 
-  // onCancel() {
-  //   console.log("CANCEL")
-  //   this.setState({isShareVisible:false});
-  // }
-  // onOpen() {
-  //   console.log("OPEN")
-  //   this.setState({isShareVisible:true});
-  // }
-
   componentDidMount(){
     const { navigation } = this.props;
     const product_id=navigation.getParam('product_id')
-    console.log(product_id);
-   this.setState({productID:product_id})
-    // this.setState({ productId : product_id})
-
+    this.setState({productID:product_id})
     fetchApi.fetchData(''+urls.host_url+urls.get_product_details+'?product_id='+product_id,'GET',{},null,this.callbackFn)
-    // fetch(`http://staging.php-dev.in:8844/trainingapp/api/products/getDetail?product_id=`+product_id,
-    // {method:'GET'}
-    // )
-    // .then(response => response.json())
-    // .then(response => {
-
-    // })
-    // const product_id=this.props.navigation.getParam('product_id')
   }
   callbackFn(response){
     if(response.status==200){
-      this.setState({isLoading:false})
+    this.setState({isLoading:false})
     console.log("Product Details Callback called")
     console.log(response.data)
     this.setState({productDet:response.data})
     this.setState({currentImg:this.state.productDet.product_images[0].image})
-    // console.log("ComponentDidMount currimg:"+this.state.currentImg)
     console.log(this.state.productDet.product_images[0].image)}
     else{
       console.log(response)
@@ -98,19 +77,7 @@ export default class productDetails extends React.Component {
     formData.append('rating',this.state.starCount);
     console.log(this.state.productID)
     fetchApi.fetchData(''+urls.host_url+urls.set_product_ratings,'POST',{},formData,this.callbackRating)
-    this._toggleModal1()
-      // fetch('http://staging.php-dev.in:8844/trainingapp/api/products/setRating',
-      // {
-      //   method:'POST',
-      //  body: formData,
-      // }
-      // )
-      // .then(response => response.json())
-      // .then(response => {
-
-        
-      // })
-      
+    this._toggleModal1() 
     }
     callbackRating(response){
       Vibration.vibrate(300)
@@ -142,14 +109,8 @@ export default class productDetails extends React.Component {
     }
 
   multipleImages(data){
-    
-     
       if(data!=undefined && Object.keys(data).length>0)
         return data.product_images.map((element) => {
-          
-          // console.log(element.image)
-          // this.setState({currentImg:element.image})
-          // console.log("current image :"+this.state.currentImg)
          return (
           <TouchableOpacity 
           key={element}
@@ -159,7 +120,6 @@ export default class productDetails extends React.Component {
           source={{uri:element.image}} />
         </TouchableOpacity>
          ) 
-
       })               
   }
   onSubmit(){
@@ -182,41 +142,18 @@ export default class productDetails extends React.Component {
       if(response.status==200){
         console.log(response)
         alert('Product added to cart')
-        console.log(user_data.total_carts)
-        serviceProvider.setData('total_carts',user_data.total_carts+1)
-        console.log(user_data.total_carts)
+
+        this.props.totalCart(response.total_carts)
+
       }
       else{
         console.log(response)
         alert('Something went wrong. Try again.')
       }
   }
-  // multipleImages(){
-  //   let imageset=[]
-  //   let images = this.state.productDet.product_images.map(element => {
-  //     return
-  //     <TouchableOpacity style={styles.img1} onPress={}> 
-  //       <Image src={{uri:element.image}} />
-  //     </TouchableOpacity>
-  //   });
-  //   imageset.append(images)
-  //   return images
-  // }
-  render() {
 
-    // let shareOptions = {
-    //   title: "React Native",
-    //   message: "Hola mundo",
-    //   url: "http://facebook.github.io/react-native/",
-    //   subject: "Share Link" //  for email
-    // };
-    // console.log(productDet)
-    // const itemName = navigation.getParam('itemName');
-    // const itemProducer=navigation.getParam('itemProducer');
-    // const itemRating=navigation.getParam('itemRatings');
-    // const itemPrice=navigation.getParam('itemPrice');
-    // const itemDesc=navigation.getParam('itemDesc');
-        
+  render() {
+      
     return (
 
       <View style={styles.container}>
@@ -317,35 +254,8 @@ export default class productDetails extends React.Component {
                 <ScrollView contentContainerStyle={{justifyContent:'space-between'}} style={styles.productImgs} horizontal={true}>
                 {
                   this.multipleImages(this.state.productDet)
-                //  this.state.productDet!=undefined && Object.keys(this.state.productDet).length>0 ? 
-                //  this.state.productDet.product_images.map((element) => {
-                //    return (
-                //     <TouchableOpacity
-                //       onPress={this.setState({currentImg:element.image})} 
-                //       style={styles.imageTO}> 
-
-                //     <Image style={styles.imgSmall} 
-                //     source={{uri:element.image}} />
-                //   </TouchableOpacity>
-                //    ) 
-          
-                // })  : null
                   }
                 </ScrollView>
-               
-                
-                {/* <View style={styles.productImgs}>
-          
-                  <View style={styles.img1}>
-                    <Image style={styles.imgSmall} source={furniture[0].image1_url}/>    
-                  </View>
-                  <View style={styles.img1}>
-                    <Image style={styles.imgSmall} source={furniture[0].image2_url}/>
-                  </View>
-                  <View style={styles.img1}>
-                    <Image style={styles.imgSmall} source={furniture[0].image3_url}/>
-                  </View>
-                 </View> */}
                 <View style={styles.productDesc}>
                   <Text style={styles.descHeading}>DESCRIPTION</Text>
                   <Text style={styles.descText}>{this.state.productDet.description}</Text>
@@ -368,3 +278,10 @@ export default class productDetails extends React.Component {
     );
   }
 }
+function mapStateToProps(state){
+  return {
+    details:state.user
+  }
+}
+
+export default connect(mapStateToProps,{ userAction,totalCart })(productDetails)

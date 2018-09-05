@@ -1,4 +1,4 @@
-import {FETCH_DATA,EDIT_DATA} from '../actions/actionTypes'
+import {FETCH_DATA,EDIT_DATA,ADD_CART} from '../actions/actionTypes'
 
 const initialState={
     user_data: {
@@ -29,6 +29,8 @@ export default (state=initialState,action) => {
             return {...state,...action.payload};
         case EDIT_DATA:
             return {...state,user_data:action.payload}
+        case ADD_CART:
+            return {...state,total_carts:action.payload}
         default:
             return state
     }
