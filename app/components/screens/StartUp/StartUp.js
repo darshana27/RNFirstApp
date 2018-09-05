@@ -5,8 +5,10 @@ import Loader from '../../Loader/Loader';
 let fetchApi=require('../../../lib/api').fetchApi();
 import {user_data,serviceProvider} from '../../../lib/serviceProvider';
 import SplashScreen from 'react-native-splash-screen'
+import { connect } from 'react-redux'
+import {userAction} from '../../../redux/actions/userAction'
 
-export default class StartUp extends Component {
+class StartUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,6 +18,7 @@ export default class StartUp extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props)
         // SplashScreen.hide();
         AsyncStorage.getItem('user_access_token')
             .then((value) => {
@@ -23,19 +26,12 @@ export default class StartUp extends Component {
                 if (value != null) {
                     // console.log(value);
                     try{
-                    fetchApi.fetchData(''+urls.host_url+urls.user_fetch_details,'GET',{},null,this.callbackFnFetch)
-                    }catch(err){
+                        fetchApi.fetchData(''+urls.host_url+urls.user_fetch_details,'GET',{},null,this.callbackFnFetch)
+                    }
+                    catch(err){
                         Alert.alert(err.message)
                     }
-                    // fetch(`http://staging.php-dev.in:8844/trainingapp/api/users/getUserData`, {
-                    //         method: 'GET',
-                    //         headers: {
-                    //             'access_token': JSON.parse(value)
-                    //         }
-                    //     })
-                    //     .then(response => response.json())
-                    //     .then(response => {
-                    }    
+                }    
                     else {
                     console.log('Key is null');
                     //   this.setState({isLoggedin:false,isVerifying:false})
@@ -51,10 +47,14 @@ export default class StartUp extends Component {
             AsyncStorage.removeItem('user_access_token')
             // Alert.alert('Something went wrong.Please try again later')
             this.props.navigation.replace('Login')
+            
             // AsyncStorage.setItem('screen','Login')
         } else {
             console.log(response)
             serviceProvider.setUsrData(response.data)
+            this.props.userAction(response.data)
+            
+            console.log('Redux',this.props.details.user_data.first_name)
             this.props.navigation.replace('Homescreen')
             // console.log(response.data.product_categories)
         }
@@ -67,3 +67,11 @@ export default class StartUp extends Component {
         );
     }
 }
+
+function mapStateToProps(state){
+    return {
+      details:state.user
+    }
+  }
+
+export default connect(mapStateToProps,{ userAction })(StartUp)

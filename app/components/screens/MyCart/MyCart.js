@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View,Image, ScrollView,AsyncStorage,TouchableOpacity,Alert,Vibration} from 'react-native';
+import { Text, View,Image, ScrollView,AsyncStorage,TouchableOpacity,Alert,Vibration, Dimensions} from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import Header from '../../header/header';
@@ -25,7 +25,6 @@ export default class productListing extends React.Component {
       sub_total:0,
     }
     this.callbackFn=this.callbackFn.bind(this);
-    // this.onPressDelete=this.onPressDelete.bind(this)
     this.orderNow=this.orderNow.bind(this)
   }
 
@@ -95,9 +94,13 @@ export default class productListing extends React.Component {
 
   callback(response){
     if(response.status==200){
+      alert('Quantity edited successfully')
       serviceProvider.setData('total_carts',response.count)
     }
   }
+
+
+
 
   renderSeparator = () => (
     <View
@@ -110,6 +113,7 @@ export default class productListing extends React.Component {
   );
   
   calcCost(selectedValue,product_id){
+   
     var arr=this.state.dataSource
     var idx=arr.findIndex(item=>item.id==product_id)
     var pid=arr[idx].product.id
@@ -117,8 +121,9 @@ export default class productListing extends React.Component {
     formData.append("product_id",pid)
     formData.append("quantity",selectedValue)
     fetchApi.fetchData(''+urls.host_url+urls.edit_cart,'POST',{},formData,(response)=>{
+      this.setState({isLoading:true})
       if(response.status==200){
-        fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callback)
+        fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callbackFn)
       }
     })  
   }
@@ -158,7 +163,9 @@ export default class productListing extends React.Component {
         </View>
         
         <View style={styles.container}>
-        {this.state.isLoading?<Loader/>:
+        {this.state.isLoading?
+          <Loader/>
+        :
         this.state.dataSource==null?<View style={styles.noItemsView}><Text style={styles.noItemsText}>No items in your cart</Text></View>:
         <ScrollView>
         <SwipeListView
@@ -185,7 +192,7 @@ export default class productListing extends React.Component {
                                         style={styles.modalDropdown}
                                          defaultValue={''+item.quantity}
                                          dropdownStyle={{width:46,left:0}}  
-                                         dropdownTextStyle={{fontSize:15}} 
+                                         dropdownTextStyle={{fontSize:15,borderColor:'black',borderWidth:1}} 
                                          options={[1,2,3,4,5,6,7,8]}
                                          renderButtonText={(value)=>this.calcCost(value,item.id)}
                                       />

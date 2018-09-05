@@ -11,9 +11,10 @@ import * as urls from '../../../lib/urls';
 var ImagePicker = require('react-native-image-picker');
 let validators=require('../../../utils/validators').validators();
 import {user_data,serviceProvider} from '../../../lib/serviceProvider';
+import { connect } from 'react-redux'
+import {userAction} from '../../../redux/actions/userAction'
 
-
-export default class EditProfile extends Component{
+class EditProfile extends Component{
     
     constructor(props){
         super(props);
@@ -290,3 +291,11 @@ export default class EditProfile extends Component{
             )
         }
 }
+
+function mapStateToProps(state){
+    return {
+      details:state.user
+    }
+  }
+
+export default connect(mapStateToProps,{ userAction })(EditProfile)
