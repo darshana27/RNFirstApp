@@ -30,13 +30,9 @@ class MyAccount extends Component{
     }  
 
     componentDidMount(){  
-       this.NavigationListener=this.props.navigation.addListener('willFocus',()=>{
-            this.setState({rerender:this.state.rerender+1})
-        });
-    }
-
-    componentWillUnmount(){
-        this.NavigationListener.remove()
+    //    this.NavigationListener=this.props.navigation.addListener('willFocus',()=>{
+    //         this.setState({rerender:this.state.rerender+1})
+    //     });
     }
 
     _edit(){

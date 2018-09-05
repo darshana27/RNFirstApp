@@ -10,9 +10,9 @@ let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
 var ImagePicker = require('react-native-image-picker');
 let validators=require('../../../utils/validators').validators();
-import {user_data,serviceProvider} from '../../../lib/serviceProvider';
+// import {user_data,serviceProvider} from '../../../lib/serviceProvider';
 import { connect } from 'react-redux'
-import {userAction} from '../../../redux/actions/userAction'
+import {userAction,editData} from '../../../redux/actions/userAction'
 
 class EditProfile extends Component{
     
@@ -27,49 +27,53 @@ class EditProfile extends Component{
             email:null,
             phone_no:null,
             dob:null,
-            avatarSource:user_data.user_data.profile_pic,
+            avatarSource:this.props.details.user_data.profile_pic,
             isPicSelected:false,
             isLoading:false,
             isfetching:false,
             
             // userDet:this.props.navigation.state.params.data,
-            userDet:user_data.user_data
+            // userDet:user_data.user_data
         };
         this._editDetails=this._editDetails.bind(this); 
         this.onPressPicture=this.onPressPicture.bind(this);
         this.callbackFn=this.callbackFn.bind(this)
     }
+
+    componentDidMount(){
+        console.log(this.props)
+    }
+
     getInitialState(){
         return {
           value: 0,
         }
       }
-      componentDidMount(){
-        
-    }
+
     _editDetails(){
         this.setState({isfetching:true})
         // this.state.avatarSource!=""?console.log(this.state.avatarSource):console.log("null")
         let formData=new FormData();
-        formData.append("first_name",this.state.first_name!=null?this.state.first_name:this.state.userDet.first_name)
-        formData.append("last_name",this.state.last_name!=null?this.state.last_name:this.state.userDet.last_name)
+        formData.append("first_name",this.state.first_name!=null?this.state.first_name:this.props.details.user_data.first_name)
+        formData.append("last_name",this.state.last_name!=null?this.state.last_name:this.props.details.user_data.last_name)
         formData.append("profile_pic",this.state.avatarSource)
-        formData.append("email",this.state.email!=null?this.state.email:this.state.userDet.email);
-        formData.append("dob",this.state.dob!=null?this.state.dob:this.state.userDet.dob);
-        formData.append("phone_no",this.state.phone_no!=null?this.state.phone_no:this.state.userDet.phone_no);
+        formData.append("email",this.state.email!=null?this.state.email:this.props.details.user_data.email);
+        formData.append("dob",this.state.dob!=null?this.state.dob:this.props.details.user_data.dob);
+        formData.append("phone_no",this.state.phone_no!=null?this.state.phone_no:this.props.details.user_data.phone_no);
         console.log(formData)
         console.log("editDetails() :"+this.state.access_token);      
         fetchApi.fetchData(''+urls.host_url+urls.user_update_details,'POST',{},formData,this.callbackFn)
     }
     callbackFn(response){  
         this.setState({isfetching:false}) 
-        console.log(this.state.userDet)
+        
         console.log(response)
             if(response.status==200){
-                serviceProvider.setData('user_data',response.data)
+              
+                this.props.editData(response.data)
                 console.log("After set data")
-                console.log(user_data)
-                // serviceProvider.setData('user_details',response.data)
+                console.log(this.props)
+               
                 Alert.alert(response.user_msg)
             }
             else{
@@ -114,18 +118,16 @@ class EditProfile extends Component{
     }
 
     render(){  
-        console.log(this.state.userDet.profile_pic)
-        var defaultFile=this.state.userDet.profile_pic
+  
+        var defaultFile=this.props.details.user_data.profile_pic
         var user_pic=this.state.avatarSource
         var profile_pic_url = this.state.isPicSelected?user_pic:defaultFile;
 
-        var valueFname=this.state.first_name==null?this.state.userDet.first_name:this.state.first_name;
-        var valueLname=this.state.last_name==null?this.state.userDet.last_name:this.state.last_name;
-        var valueEmail=this.state.email==null?this.state.userDet.email:this.state.email;
-        var valuePhone=this.state.phone_no==null?this.state.userDet.phone_no:this.state.phone_no
-        var valueDob=this.state.dob==null?this.state.userDet.dob:this.state.dob
-
-        // console.log("Profile Pic : "+this.state.userDet.profile_pic)
+        var valueFname=this.state.first_name==null?this.props.details.user_data.first_name:this.state.first_name;
+        var valueLname=this.state.last_name==null?this.props.details.user_data.last_name:this.state.last_name;
+        var valueEmail=this.state.email==null?this.props.details.user_data.email:this.state.email;
+        var valuePhone=this.state.phone_no==null?this.props.details.user_data.phone_no:this.state.phone_no
+        var valueDob=this.state.dob==null?this.props.details.user_data.dob:this.state.dob
         console.log(this.state.avatarSource)
          return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>
@@ -146,7 +148,7 @@ class EditProfile extends Component{
                 style={{height:122,width:122,borderWidth:2,borderColor:'white',borderRadius:60,top:20}}
                 onPress={this.onPressPicture}>
                 {this.state.isLoading?<ActivityIndicator style={{marginTop:36}} size='large' animating={true}/>:
-                this.state.userDet.profile_pic=='' || this.state.userDet.profile_pic==null && this.state.isPicSelected==false? 
+                this.props.details.user_data.profile_pic=='' || this.props.details.user_data.profile_pic==null && this.state.isPicSelected==false? 
                 <Image source={require('../../../assets/user_placeholder.png')} style={styles.roundedImage}/>:
                 <Image              
                         style={styles.roundedImage}
@@ -164,11 +166,9 @@ class EditProfile extends Component{
                                 multiline={false}
                                 style={styles.inputBox}
                                 underlineColorAndroid="transparent"
-                                placeholderTextColor='#FFFFFF'
-                                
+                                placeholderTextColor='#FFFFFF'       
                                 onChangeText={(first_name) => this.setState({first_name})}
                                 value={valueFname}
-                                // value={this.state.first_name}
                             />
                             
                         </View>
@@ -187,7 +187,6 @@ class EditProfile extends Component{
                                 underlineColorAndroid='transparent'
                                 value={valueLname}
                                 onChangeText={(last_name) => this.setState({last_name})}
-                                // value={this.state.last_name}
                             />
                         </View>
 
@@ -205,7 +204,6 @@ class EditProfile extends Component{
                                 underlineColorAndroid='transparent'
                                 value={valueEmail}
                                 onChangeText={(email) => this.setState({email})}
-                                // value={this.state.email}
                             />
                         </View>
 
@@ -221,7 +219,6 @@ class EditProfile extends Component{
                                 underlineColorAndroid='transparent'
                                 value={valuePhone}
                                 onChangeText={(phone_no) => this.setState({phone_no})}
-                                // value={this.state.phone_no}
                             />
                         </View>
                         <View style={styles.nestedView}>
@@ -261,16 +258,6 @@ class EditProfile extends Component{
                                 }}
                                 onDateChange={(dob) => {this.setState({dob: dob})}}
                             />
-                            {/* <TextInput
-                                ref={(phoneNo) => {this.Phone= phoneNo}}
-                                style={styles.inputBox}
-                                placeholder="DOB"
-                                placeholderTextColor='#FFFFFF'
-                                returnKeyType="done"
-                                underlineColorAndroid='transparent'
-                                onChangeText={(dob) => this.setState({dob})}
-                                // value={this.state.dob}
-                            /> */}
                         </View>
 
                         <TouchableOpacity
@@ -298,4 +285,4 @@ function mapStateToProps(state){
     }
   }
 
-export default connect(mapStateToProps,{ userAction })(EditProfile)
+export default connect(mapStateToProps,{ userAction,editData })(EditProfile)

@@ -5,26 +5,18 @@ import {Badge} from 'react-native-elements';
 import { StackActions, NavigationActions } from 'react-navigation';
 import {user_data,serviceProvider} from '../lib/serviceProvider';
 import Icon from '../utils/icon'
-
-// const resetAction = StackActions.reset({
-//   index: 0,
-//   actions: [NavigationActions.navigate({ routeName: 'Login' })],
-// });
+import { connect } from 'react-redux'
+import {userAction,editData} from '../redux/actions/userAction'
 
 
-export default class Sidebar extends Component {
+class Sidebar extends Component {
     constructor(props){
         super(props);
         this.state={
-            qty:user_data.total_carts
+           
         }
     }
     componentDidMount(){
-        this.navigationEvent=this.props.navigation.addListener('willFocus',
-    ()=>{
-        console.log('Sidebar     ',user_data)
-        this.setState({qty:user_data.total_carts})
-    })
     }
     isLogout=(item) =>{
         // debugger;
@@ -57,26 +49,26 @@ export default class Sidebar extends Component {
       );
     render(){
         var defaultPic=require('../assets/user_placeholder.png');
-        var userPic={uri:user_data.user_data.profile_pic}
-        var profile_pic=user_data.user_data.profile_pic!=null?userPic:defaultPic
+        var userPic={uri:this.props.details.user_data.profile_pic}
+        var profile_pic=this.props.details.user_data.profile_pic!=null?userPic:defaultPic
    return(
             <View style={styles.mainView}>
             <ScrollView>
             <TouchableOpacity 
                 onPress={()=>this.props.navigation.navigate('MyAccount')}
                 style={styles.header}>
-                {user_data.user_data.profile_pic==''||user_data.user_data.profile_pic==null?
+                {this.props.details.user_data.profile_pic==''||this.props.details.user_data.profile_pic==null?
                     <Image source={require('../assets/user_placeholder.png') }
                         style={styles.roundedImage}/>:
                         <Image 
                         style={styles.roundedImage}
-                        source={{uri:user_data.user_data.profile_pic}}/>
+                        source={{uri:this.props.details.user_data.profile_pic}}/>
                 }
                 {/* <Image 
                 style={styles.roundedImage}
                 source={profile_pic}/> */}
-                <Text style={styles.Username}>{user_data.user_data.first_name+' '+user_data.user_data.last_name}</Text>
-                <Text style={styles.UserEmail}>{user_data.user_data.email}</Text>
+                <Text style={styles.Username}>{this.props.details.user_data.first_name+' '+this.props.details.user_data.last_name}</Text>
+                <Text style={styles.UserEmail}>{this.props.details.user_data.email}</Text>
             </TouchableOpacity>
             <FlatList
                 data={[
@@ -106,7 +98,7 @@ export default class Sidebar extends Component {
                             source={item.img}/>
                         <Text style={styles.item}>{item.key}</Text>
                         <View style={styles.badgeView}>
-                            {(item.key==='My Cart')? <Badge style={styles.badge} containerStyle={{ backgroundColor: 'red'}} value={user_data['total_carts']} textStyle={{ color: 'white' }}/>: null}
+                            {(item.key==='My Cart')? <Badge style={styles.badge} containerStyle={{ backgroundColor: 'red'}} value={this.props.details.total_carts} textStyle={{ color: 'white' }}/>: null}
                         </View>
                      </TouchableOpacity> }
             ></FlatList>
@@ -115,3 +107,10 @@ export default class Sidebar extends Component {
         );
     }
 }
+function mapStateToProps(state){
+    return {
+      details:state.user
+    }
+  }
+
+export default connect(mapStateToProps,{ userAction,editData })(Sidebar)
