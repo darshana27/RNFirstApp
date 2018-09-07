@@ -93,7 +93,7 @@ export default styles=StyleSheet.create({
         fontFamily:fontMedium
     },
     textAmount:{
-        right:20,
+        right:0,
         color:Colors.descContent,
         fontFamily:fontMedium
     },

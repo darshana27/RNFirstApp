@@ -20,7 +20,7 @@ export default styles=StyleSheet.create({
         margin:7,
         top:15,
         flexDirection:'row',
-        height:100,
+        height:110,
     },
     radioView:{
         width:43,
@@ -53,10 +53,15 @@ export default styles=StyleSheet.create({
         fontFamily:fontRegular
     },
     closeView:{
-        height:10,
+        flexDirection:'row',
+        height:15,
         width:'100%',
         alignItems:'flex-end',
-        
+        justifyContent:'flex-end',
+        marginTop:5 
+    },
+    close:{
+        height:20,width:20,marginRight:8,marginTop:5
     },
     btnView:{
         alignItems:'center',justifyContent:'center'

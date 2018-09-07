@@ -5,7 +5,7 @@ import { CheckBox } from 'react-native-elements';
 import styles from './styles';
 import Header from '../../header/header';
 import Icon from '../../../utils/icon'
-// import Icon from 'react-native-vector-icons/FontAwesome';
+import { Toast } from 'native-base'
 import MaterialIcon from 'react-native-vector-icons/dist/MaterialIcons';
 import * as urls from '../../../lib/urls';
 let fetchApi=require('../../../lib/api').fetchApi();
@@ -25,9 +25,12 @@ export default class Register extends Component{
             phone:'',
 
         }
-        
         this._register = this._register.bind(this);
         this.callbackFn = this.callbackFn.bind(this);
+    }
+
+    componentDidMount(){
+        
     }
     getInitialState(){
         return {
@@ -67,33 +70,17 @@ export default class Register extends Component{
             }
             else{
             
-        
-        //     var formData = new FormData();
-        //     formData.append("email", "");
-        //     formData.append("password", "");
-        //    console.log(formData._parts[0][1]);
+                console.log(this.state.value==1?'F':'M')
+                console.log(this.state.phone)
                 var formData = new FormData();
                 formData.append("first_name",this.state.fname);
                 formData.append("last_name", this.state.lname);
                 formData.append("email", this.state.email);
                 formData.append("password", this.state.pwd);
                 formData.append("confirm_password", this.state.cnfPwd);
-                formData.append("gender", "F");
-                formData.append("phone_no", 7738002842);
-                // console.log(formData._parts[0][1]);
-  
+                formData.append("gender", this.state.value==1?'F':'M');
+                formData.append("phone_no", this.state.phone);
                 fetchApi.fetchData(''+urls.host_url+urls.user_register,'POST',null,formData,this.callbackFn)
-                // fetch('http://staging.php-dev.in:8844/trainingapp/api/users/register', {
-                //         method: 'POST',
-                //         body: formData,
-                //     }
-                // )
-                // .then(response => response.json())
-                // .then(response => 
-                //         {
-
-                //         }
-                //     );
             }            
         }
     }
@@ -105,7 +92,12 @@ export default class Register extends Component{
             Alert.alert(response.user_msg)
         }
         else{
-            Alert.alert('Registration Successful');
+            Toast.show({
+                text: "Registration Successful!",
+                buttonText: "Okay",
+                duration: 10000,
+                position:'bottom',
+              })
 
         }
     }
@@ -221,7 +213,7 @@ export default class Register extends Component{
                                 labelStyle={{fontSize: 15, color: '#fff'}}
                                 buttonWrapStyle={{marginLeft: 10}}
                                 returnKeyType="next"
-                                onPress={(value) => {this.setState({value:value})}}/>
+                                onPress={(value) => {this.setState({value:value});}}/>
                         </View>
 
                         <View style={styles.nestedView}>

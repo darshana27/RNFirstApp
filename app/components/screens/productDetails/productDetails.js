@@ -6,7 +6,7 @@ import styles from './styles';
 import * as Colors from '../../../utils/colors';
 import * as fontSize from '../../../utils/fontSizes';
 import Modal from "react-native-modal";
-import Icon from '../../../utils/icon'
+import { Toast } from 'native-base'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
@@ -85,7 +85,13 @@ class productDetails extends React.Component {
       Vibration.vibrate(300)
       if(response.status==200){
         console.log(response)
-        alert(response.message)
+        Toast.show({
+          text: "Rating Successful!",
+          buttonText: "Okay",
+          duration: 10000,
+          position:'bottom',
+        })
+        // alert(response.message)
       }
       else{
         alert(response.message)
@@ -147,8 +153,13 @@ class productDetails extends React.Component {
     console.log(response)
       if(response.status==200){
         console.log(response)
-        alert('Product added to cart')
-
+        Toast.show({
+          text: "Product added to cart!",
+          buttonText: "Okay",
+          duration: 5000,
+          position:'bottom',
+          
+        })
         this.props.totalCart(response.total_carts)
 
       }
@@ -305,3 +316,4 @@ function mapStateToProps(state){
 }
 
 export default connect(mapStateToProps,{ userAction,totalCart })(productDetails)
+

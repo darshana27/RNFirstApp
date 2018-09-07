@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { KeyboardAvoidingView, ImageBackground, Text, TextInput, View, TouchableOpacity, Alert } from 'react-native';
-// import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon from '../../../utils/icon'
 import FeatherIcon from 'react-native-vector-icons/dist/Feather';
 let validators=require('../../../utils/validators').validators();
 import Header from '../../header/header';
-// import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
 let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
+import { Toast } from 'native-base'
+
 
 export default class ForgotPwd extends Component{
     constructor(props){
@@ -17,26 +17,11 @@ export default class ForgotPwd extends Component{
         this._onPress = this._onPress.bind(this);
         this._onRegister = this._onRegister.bind(this);
     }
-    // componentDidMount(){
-    //     return fetch('https://staging.php-dev.in:8844/trainingapp/api/users/login', {
-    //         method: 'POST',
-    //         headers: {
-    //             Accept: 'application/json',
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({
-    //             email: "Kannan.Maravar@wwindia.com",
-    //             password: "KannanMaravar123"
-    //         }),
-    //     }).then((response)=>response.json())
-    //     .then((responseJson => {console.log('fetch')}))
-    //     .catch((error) => {
-    //         console.error(error);
-    //     });
-    // }
+
     _onRegister(){
         this.props.navigation.navigate('Register');
     }
+
     _onPress() {
         
         if(this.state.email===null || this.state.email===""){
@@ -50,28 +35,25 @@ export default class ForgotPwd extends Component{
                 formData.append("email",this.state.email);
                 console.log(formData);
                 fetchApi.fetchData(''+urls.host_url+urls.user_forgot_password,'POST',null,formData,this.callbackFn)
-                // fetch("http://staging.php-dev.in:8844/trainingapp/api/users/forgot",{ 
-                //     method:'POST',
-                //     body:formData })
-                // .then(response => response.json())
-                // .then(  response =>{console.log(response);
-                //     if(response.status==200){
-                //         Alert.alert(response.user_msg)
-                //     }
-                //     else{
-                //         console.log(response.user_msg)
-                //     } 
-                // })
-                }
-   
+        }
     }
     callbackFn(response){
         console.log(response);
         if(response.status==200){
-            Alert.alert(response.user_msg)
+            Toast.show({
+                text: response.user_msg,
+                buttonText: "Okay",
+                duration: 10000,
+                position:'bottom',
+              })
         }
         else{
-            console.log(response.user_msg)
+            Toast.show({
+                text: response.user_msg,
+                buttonText: "Okay",
+                duration: 10000,
+                position:'bottom',
+              })
         } 
     }
     render(){
@@ -99,10 +81,8 @@ export default class ForgotPwd extends Component{
                 </View>
 
                 <TouchableOpacity
-                    // style={[styles.loginButton, this.state.toggle && styles.altBtn]}
                     style={styles.loginButton}
                     onPress={this._onPress}>
-                    {/* onPress={()=> this.setState({toggle: !this.state.toggle})} */}
                     <Text style={styles.btnText}>Submit</Text>
                 </TouchableOpacity>
                 
@@ -113,11 +93,9 @@ export default class ForgotPwd extends Component{
                     <Text
                         style={styles.endText}>DON'T HAVE AN ACCOUNT?
                     </Text>
-                    {/* <View style={styles.registerBtn}> */}
                     <View style={styles.plusView}>
                         <FeatherIcon onPress={this._onRegister} style={styles.addIcon} name="plus" size={30}/>
                     </View>
-                    {/* </View> */}
                 </View>
             </ImageBackground>
         )

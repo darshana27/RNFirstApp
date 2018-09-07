@@ -9,10 +9,11 @@ import * as urls from '../../../lib/urls';
 import {serviceProvider,user_data} from '../../../lib/serviceProvider';
 import Icon from '../../../utils/icon'
 import Modal from "react-native-modal";
-import FeatherIcon from 'react-native-vector-icons/dist/Feather';
+import MaterialIcon from 'react-native-vector-icons/dist/MaterialIcons';
 import Loader from '../../Loader/Loader';
 import { connect } from 'react-redux';
 import {totalCart} from '../../../redux/actions/userAction';
+import { Toast } from 'native-base'
 // import {Loader} from '../../Loader/Loader';
 
 class MyCart extends React.Component {
@@ -31,6 +32,7 @@ class MyCart extends React.Component {
   }
 
   componentDidMount(){
+    
     console.log('From Redux',this.props)
     const category_id = this.props.navigation.getParam('category_id');
     category_id!==null?
@@ -39,13 +41,15 @@ class MyCart extends React.Component {
   }
   
   callbackFn(response){
+    console.log(response.data)
     if(response.status==200){
     this.setState({ 
       isLoading:false,
       dataSource: response.data,
-      totalAmt: response.total
+      totalAmt: response.total,
     }, function(){
-    });}
+    });
+  }
     else{
       alert(response.message)
       this.setState({isLoading:false})
@@ -72,7 +76,7 @@ class MyCart extends React.Component {
     }  
 
   onPressDelete=(rowData,rowMap)=>{
-  
+    console.log(this.state.dataSource)
       Alert.alert(
         'Delete Confirmation',
         'Are you sure you want to delete this item?',
@@ -83,10 +87,21 @@ class MyCart extends React.Component {
           formData.append('product_id',rowData)
           fetchApi.fetchData(''+urls.host_url+urls.delete_cart,'POST',{},formData,(response => {
             Vibration.vibrate(300)
+            console.log(rowData,rowMap)
             if(response.status==200){
               this.props.totalCart(response.total_carts)
-              fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callbackFn)
-              rowMap[rowData].closeRow()
+              var idx=this.state.dataSource.findIndex(item=>item.id==rowData)
+              console.log('This',this.state.dataSource)
+              // this.state.dataSource.total=this.state.dataSource.total-this.state.dataSource[idx].product.sub_total
+              this.state.dataSource.splice(idx,1)
+              this.setState({isLoading:false})
+              Toast.show({
+                text: "Item Deleted successfully!",
+                buttonText: "Okay",
+                duration: 10000,
+                position:'top',
+           
+              })
             }
           }))
         }}],{cancelable: true}
@@ -96,7 +111,7 @@ class MyCart extends React.Component {
 
   callback(response){
     if(response.status==200){
-      alert('Quantity edited successfully')
+      alert(response.message)
       
     }
   }
@@ -112,7 +127,8 @@ class MyCart extends React.Component {
   );
   
   calcCost(selectedValue,product_id){
-   
+
+    this.setState({isLoading:true})
     var arr=this.state.dataSource
     var idx=arr.findIndex(item=>item.id==product_id)
     var pid=arr[idx].product.id
@@ -120,15 +136,24 @@ class MyCart extends React.Component {
     formData.append("product_id",pid)
     formData.append("quantity",selectedValue)
     fetchApi.fetchData(''+urls.host_url+urls.edit_cart,'POST',{},formData,(response)=>{
-      this.setState({isLoading:true})
-      if(response.status==200){
-        Alert.alert('Quantity edited successfully')
-        fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callbackFn)
+    if(response.status==200){
+      console.log('Edit',response)
+      this.state.dataSource[idx].quantity=selectedValue
+      this.state.dataSource[idx].product.sub_total=this.state.dataSource[0].product.cost * selectedValue
+      this.setState({isLoading:false})
+      Toast.show({
+        text: "Quantity edited successfully!",
+        buttonText: "Okay",
+        duration: 10000,
+        position:'top',
+      })
+      // fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callbackFn)
       }
     })  
   }
 
   render() {
+  
     const { navigation } = this.props;
     const screen = navigation.getParam('screen');
     return (
@@ -192,11 +217,15 @@ class MyCart extends React.Component {
                                         style={styles.modalDropdown}
                                          defaultValue={' '+item.quantity+' '}
                                          dropdownStyle={{width:46,left:0}}  
-                                         dropdownTextStyle={{fontSize:15,borderColor:'black',borderWidth:1}} 
-                                         options={[' 1 ',2,3,4,5,6,7,8]}
+                                         dropdownTextStyle={{fontSize:15}} 
+                                         options={['1','2','3','4','5','6','7','8']}
                                          renderButtonText={(value)=>this.calcCost(value,item.id)}
-                                      />
-                          <FeatherIcon name="chevron-down" size={15}/>
+                                      >
+                            <View style={styles.ddstyle}>
+                              <Text style={{fontSize:15}}>{item.quantity+' '}</Text>
+                              <MaterialIcon name="keyboard-arrow-down" size={20}/>
+                            </View>
+                          </ModalDropdown>
                            </View>
                       </View>
                       <View style={styles.ratingsView}>

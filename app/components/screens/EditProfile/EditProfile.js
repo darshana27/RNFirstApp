@@ -13,6 +13,8 @@ let validators=require('../../../utils/validators').validators();
 // import {user_data,serviceProvider} from '../../../lib/serviceProvider';
 import { connect } from 'react-redux'
 import {userAction,editData} from '../../../redux/actions/userAction'
+import { Toast } from 'native-base'
+
 
 class EditProfile extends Component{
     
@@ -74,10 +76,20 @@ class EditProfile extends Component{
                 console.log("After set data")
                 console.log(this.props)
                
-                Alert.alert(response.user_msg)
+                Toast.show({
+                    text: response.user_msg,
+                    buttonText: "Okay",
+                    duration: 10000,
+                    position:'bottom',
+                  })
             }
             else{
-                Alert.alert(response.user_msg)
+                Toast.show({
+                    text: response.user_msg,
+                    buttonText: "Okay",
+                    duration: 10000,
+                    position:'bottom',
+                  })
             } 
     }
     onPressPicture(){
@@ -128,7 +140,7 @@ class EditProfile extends Component{
         var valueEmail=this.state.email==null?this.props.details.user_data.email:this.state.email;
         var valuePhone=this.state.phone_no==null?this.props.details.user_data.phone_no:this.state.phone_no
         var valueDob=this.state.dob==null?this.props.details.user_data.dob:this.state.dob
-        // console.log(this.state.avatarSource)
+
          return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>
 

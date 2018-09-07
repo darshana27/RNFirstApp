@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FeatherIcon from 'react-native-vector-icons/dist/Feather';
+import MaterialIcon from 'react-native-vector-icons/dist/MaterialIcons';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import Icon from '../../utils/icon'
@@ -14,7 +14,7 @@ export default class Header extends Component{
             <View style={styles.mainContainer}>
                 <TouchableOpacity style={styles.backContainer}
                     onPress={this.props.back}>
-                {this.props.isDrawer ? <FeatherIcon name="menu" size={26} style={styles.menuIcon} color="#fff" /> : <FeatherIcon name="chevron-left" size={26} style={styles.menuIcon} color="#fff" />}
+                {this.props.isDrawer ? <MaterialIcon name="menu" size={26} style={styles.menuIcon} color="#fff" /> : <MaterialIcon name="chevron-left" size={26} style={styles.menuIcon} color="#fff" />}
                 </TouchableOpacity>
                 <View style={styles.titleContainer}>
                     <Text style={styles.text}>

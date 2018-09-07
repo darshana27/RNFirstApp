@@ -18,6 +18,7 @@ import StartUp from '../components/screens/StartUp/StartUp';
 import AddAddress from '../components/screens/AddAddress/AddAddress';
 import AddressListing from '../components/screens/AddressListing/AddressListing';
 import OrderDetails from '../components/screens/OrderDetails/OrderDetails';
+import { Root } from "native-base";
 
 
 /** allowfontscaling is to avoid fontscaling when device fonts are changed */
@@ -36,7 +37,9 @@ class Main extends Component {
   }
   render() {
     return(
+      <Root>
       <Stack/>
+      </Root>
     )
   }
 }

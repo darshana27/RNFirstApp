@@ -81,10 +81,13 @@ export default styles=StyleSheet.create({
         height:45,width:45,backgroundColor:'red',borderRadius:50,alignItems:'center',justifyContent:'center',right:10
     },
     modalDropdown:{
-        width:30,height:30,alignItems:'center',justifyContent:'center'
+        width:'100%',height:30,justifyContent:'center'
     },
     dropdownContainer:{
         flexDirection:'row',backgroundColor:'#EDEDED',width:50,alignItems:'center',justifyContent:'center',borderRadius:5,padding:3
+    },
+    ddstyle:{
+        alignItems:'center',justifyContent:'center',height:'100%',width:'100%',flexDirection:'row'
     },
     ModalView:{
         backgroundColor:Colors.white,
@@ -124,7 +127,7 @@ export default styles=StyleSheet.create({
         fontFamily:fontMedium
     },
     textAmount:{
-        right:20,
+        right:1,
         color:Colors.descContent,
         fontFamily:fontMedium
 

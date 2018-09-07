@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { KeyboardAvoidingView, AppRegistry, Text, TextInput, View,ScrollView, TouchableOpacity, Alert,AsyncStorage } from 'react-native';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon from '../../../utils/icon'
-import FeatherIcon from 'react-native-vector-icons/dist/Feather';
+import { Toast } from 'native-base'
 import styles from './styles';
 import Header from '../../header/header';
 let validators=require('../../../utils/validators').validators();
@@ -60,34 +60,27 @@ export default class Homescreen extends Component{
         var access=this.props.navigation.getParam('data')
         console.log(access)
         fetchApi.fetchData(''+urls.host_url+urls.user_change_password,'POST',{},formData,this.callbackFn)
-        // fetch('http://staging.php-dev.in:8844/trainingapp/api/users/change',{ 
-        //     method:'POST',
-        //     headers:{
-        //         'access_token':this.state.access_token    
-        //     },
-        //     body:formData })
-        //     .then(response => response.json())
-        //     .then(response =>{console.log(response)
-            
-        //     if(response.status==200){
-        //         Alert.alert(response.user_msg)
-        //     }
-        //     else{
-        //         Alert.alert(response.user_msg)
-        //     } 
-        // })
     }
 }
 
 
     callbackFn(response){
-        console.log(response)
-            
+        console.log(response)   
             if(response.status==200){
-                Alert.alert(response.user_msg)
+                Toast.show({
+                    text: response.user_msg,
+                    buttonText: "Okay",
+                    duration: 10000,
+                    position:'bottom',
+                  })
             }
             else{
-                Alert.alert(response.user_msg)
+                Toast.show({
+                    text: response.user_msg,
+                    buttonText: "Okay",
+                    duration: 10000,
+                    position:'bottom',
+                  })
             } 
     }
     render(){
