@@ -39,7 +39,6 @@ class MyCart extends React.Component {
   }
   
   callbackFn(response){
-    
     if(response.status==200){
     this.setState({ 
       isLoading:false,
@@ -79,6 +78,7 @@ class MyCart extends React.Component {
         'Are you sure you want to delete this item?',
         [{text:'Cancel',onPress:()=>{Vibration.vibrate(300)}},
         {text:'Delete',onPress:()=> {
+          this.setState({isLoading:true})
           var formData=new FormData()
           formData.append('product_id',rowData)
           fetchApi.fetchData(''+urls.host_url+urls.delete_cart,'POST',{},formData,(response => {
@@ -92,7 +92,6 @@ class MyCart extends React.Component {
         }}],{cancelable: true}
       )
     rowMap[rowData].closeRow()
-
   }
 
   callback(response){
@@ -101,9 +100,6 @@ class MyCart extends React.Component {
       
     }
   }
-
-
-
 
   renderSeparator = () => (
     <View
@@ -126,6 +122,7 @@ class MyCart extends React.Component {
     fetchApi.fetchData(''+urls.host_url+urls.edit_cart,'POST',{},formData,(response)=>{
       this.setState({isLoading:true})
       if(response.status==200){
+        Alert.alert('Quantity edited successfully')
         fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callbackFn)
       }
     })  
@@ -193,10 +190,10 @@ class MyCart extends React.Component {
                           <View style={styles.dropdownContainer}>
                           <ModalDropdown  
                                         style={styles.modalDropdown}
-                                         defaultValue={''+item.quantity}
+                                         defaultValue={' '+item.quantity+' '}
                                          dropdownStyle={{width:46,left:0}}  
                                          dropdownTextStyle={{fontSize:15,borderColor:'black',borderWidth:1}} 
-                                         options={[1,2,3,4,5,6,7,8]}
+                                         options={[' 1 ',2,3,4,5,6,7,8]}
                                          renderButtonText={(value)=>this.calcCost(value,item.id)}
                                       />
                           <FeatherIcon name="chevron-down" size={15}/>

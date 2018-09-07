@@ -23,6 +23,7 @@ class productDetails extends React.Component {
     this.state={
       isModal1Visible:false,
       isModal2Visible:false,
+      isModal2Visible:false,
       productID:0,
       starCount:0,
       productDet:{},
@@ -33,6 +34,7 @@ class productDetails extends React.Component {
     }
       this._toggleModal1 = this._toggleModal1.bind(this);
       this._toggleModal2 = this._toggleModal2.bind(this);
+      this._toggleModal3 = this._toggleModal3.bind(this);
       this.rateNow=this.rateNow.bind(this);
       this.onSubmit=this.onSubmit.bind(this);
       this.callbackFn=this.callbackFn.bind(this);
@@ -96,6 +98,10 @@ class productDetails extends React.Component {
     _toggleModal2(){
       console.log("function called")
       this.setState({ isModal2Visible: !this.state.isModal2Visible });
+    }
+    _toggleModal3(){
+      console.log("function called")
+      this.setState({ isModal3Visible: !this.state.isModal3Visible });
     }
 
     onStarRatingPress(rating) {
@@ -214,6 +220,20 @@ class productDetails extends React.Component {
           </View>
         </Modal>
 
+        <Modal isVisible={this.state.isModal3Visible}
+         onBackdropPress={() => this.setState({ isModal3Visible: false })}>
+          <View style={styles.ModalView3}>
+          <View style={styles.closeBtn}>
+          <TouchableOpacity onPress={()=>this.setState({ isModal3Visible: false })} style={styles.closeStyle}>
+            <MaterialIcon name="close" color='#fff' size={20}/>
+            </TouchableOpacity>
+          </View>
+            <View style={styles.modalImageView2}>
+              <Image style={styles.modalQtyImage} source={{uri:this.state.currentImg}}></Image>
+            </View>
+          </View>
+        </Modal>
+
         <Header 
           styles={styles.header} 
           title={this.state.productDet.name}
@@ -244,13 +264,13 @@ class productDetails extends React.Component {
                   <TouchableOpacity onPress={this.onClick.bind(this)}>
                   <MaterialIcon style={styles.iconStyle} name="share" size={fontSize.xxLarge}/></TouchableOpacity>
                 </View>
-                <View style={styles.mainImg}>
+                <TouchableOpacity style={styles.mainImg}  onPress={this._toggleModal3}>
                 {  this.state.isLoading?<Loader/>:
                   this.state.currentImg?
                   <Image style={styles.imgBig} source={{uri:this.state.currentImg}}/>
                   :null
                 }
-                </View>
+                </TouchableOpacity>
                 <ScrollView contentContainerStyle={{justifyContent:'space-between'}} style={styles.productImgs} horizontal={true}>
                 {
                   this.multipleImages(this.state.productDet)

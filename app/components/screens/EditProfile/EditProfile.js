@@ -128,7 +128,7 @@ class EditProfile extends Component{
         var valueEmail=this.state.email==null?this.props.details.user_data.email:this.state.email;
         var valuePhone=this.state.phone_no==null?this.props.details.user_data.phone_no:this.state.phone_no
         var valueDob=this.state.dob==null?this.props.details.user_data.dob:this.state.dob
-        console.log(this.state.avatarSource)
+        // console.log(this.state.avatarSource)
          return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>
 

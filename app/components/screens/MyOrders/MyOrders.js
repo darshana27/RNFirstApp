@@ -63,6 +63,9 @@ export default class MyOrders extends React.Component {
                 <View style={styles.itemContainer}>
                       <View style={styles.productDetails}>
                           <Text style={styles.item}>Order ID : {item.id}</Text>
+                          <View
+                              style={styles.horizontalRule}
+                            />
                           <Text style={styles.producer}>Ordered Date : {item.created}</Text>
                           
                       </View>

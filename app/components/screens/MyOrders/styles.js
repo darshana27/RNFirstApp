@@ -50,7 +50,7 @@ export default styles=StyleSheet.create({
         fontFamily:fontMedium
     },
     producer:{
-        marginTop:5,
+        marginTop:7,
         fontSize:fontSize.medium,
         color:Colors.productHeading1,
         fontFamily:fontRegular
@@ -59,5 +59,11 @@ export default styles=StyleSheet.create({
         fontSize:fontSize.xxLarge,
         color:Colors.descContent,
         fontFamily:fontRegular
+    },
+    horizontalRule:{
+        marginTop:7,
+        width:'60%',
+        borderBottomColor: Colors.lightGray,
+        borderBottomWidth: 1,
     }
 })

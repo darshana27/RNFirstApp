@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Alert,AsyncStorage} from 'react-native';
+import {Alert,AsyncStorage,BackHandler} from 'react-native';
 
 
 var fetchApi = {};
@@ -23,7 +23,18 @@ exports.fetchApi = function() {
             .then(response => {
                 // console.log(response)  
                 callbackFn!=null?callbackFn(response):response.data})
-            .catch(err => alert(err))
+            .catch((err) => {
+                            Alert.alert(
+                          
+                            'No Internet Connection',
+                            [
+                                {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                              {text: 'Close App', onPress:() =>  {console.log('OK pressed')}},
+                            ],
+                            { cancelable: false }
+                        );
+                            }
+                        )
         }
         catch(err){
             Alert.alert("Something went wrong.Try again.")

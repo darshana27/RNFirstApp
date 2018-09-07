@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text,Image, ScrollView,TouchableOpacity,Alert,ActivityIndicator } from 'react-native';
+import { View, Text,Image, BackHandler,TouchableOpacity,Alert,ActivityIndicator } from 'react-native';
 import styles from './styles';
 import Header from '../../header/header';
 import Swiper from 'react-native-swiper';
@@ -28,8 +28,28 @@ export default class Homescreen extends Component{
 
     componentDidMount(){
         SplashScreen.hide()
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+      }
 
+      handleBackButton = () => {
+        Alert.alert(
+            'Exit App',
+            'Exiting the application?', [{
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel'
+            }, {
+                text: 'OK',
+                onPress: () => BackHandler.exitApp()
+            }, ], {
+                cancelable: false
+            }
+         )
+         return true;
+       }  
     SwiperImages(){
         console.log()
         // console.log('swiperimages')

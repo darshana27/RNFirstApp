@@ -184,6 +184,14 @@ export default styles=StyleSheet.create({
         alignItems:'center',
         paddingTop:20,      
     },
+    ModalView3:{
+        backgroundColor:'transparent',
+        height:'60%',
+        width:'100%',
+        borderRadius:10,
+        alignItems:'center',
+        paddingTop:10,      
+    },
     modalRatingName:{
         fontSize:fontSizes.xxLarge,
         color:Colors.productHeading1,
@@ -244,9 +252,17 @@ export default styles=StyleSheet.create({
         marginTop:'5%',
         padding:5,
         height:'50%',
-        width:'80%',
+        width:'90%',
         borderColor:Colors.lightGray,
         borderWidth:1,
+        shadowOpacity: 0.8,
+
+    },
+    modalImageView2:{
+        marginTop:'3%',
+        padding:5,
+        height:'100%',
+        width:'100%',
         shadowOpacity: 0.8,
 
     },
