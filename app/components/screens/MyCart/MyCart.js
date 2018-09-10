@@ -76,7 +76,7 @@ class MyCart extends React.Component {
     }  
 
   onPressDelete=(rowData,rowMap)=>{
-    console.log(this.state.dataSource)
+    console.log(this.state)
       Alert.alert(
         'Delete Confirmation',
         'Are you sure you want to delete this item?',
@@ -90,9 +90,10 @@ class MyCart extends React.Component {
             console.log(rowData,rowMap)
             if(response.status==200){
               this.props.totalCart(response.total_carts)
-              var idx=this.state.dataSource.findIndex(item=>item.id==rowData)
-              console.log('This',this.state.dataSource)
-              // this.state.dataSource.total=this.state.dataSource.total-this.state.dataSource[idx].product.sub_total
+              var idx=this.state.dataSource.findIndex(item=>item.product_id==rowData)
+              console.log('This',this.state.dataSource,idx,this.state.dataSource.total,this.state.dataSource[idx].product.sub_total)
+
+              this.state.dataSource.totalAmt=this.state.dataSource.totalAmt-this.state.dataSource[idx].product.sub_total
               this.state.dataSource.splice(idx,1)
               this.setState({isLoading:false})
               Toast.show({
@@ -139,7 +140,7 @@ class MyCart extends React.Component {
     if(response.status==200){
       console.log('Edit',response)
       this.state.dataSource[idx].quantity=selectedValue
-      this.state.dataSource[idx].product.sub_total=this.state.dataSource[0].product.cost * selectedValue
+      this.state.dataSource[idx].product.sub_total=this.state.dataSource[idx].product.cost * selectedValue
       this.setState({isLoading:false})
       Toast.show({
         text: "Quantity edited successfully!",
@@ -191,7 +192,7 @@ class MyCart extends React.Component {
         {this.state.isLoading?
           <Loader/>
         :
-        this.state.dataSource==null?<View style={styles.noItemsView}><Text style={styles.noItemsText}>No items in your cart</Text></View>:
+        this.state.dataSource==null || this.state.dataSource.length==0?<View style={styles.noItemsView}><Text style={styles.noItemsText}>No items in your cart</Text></View>:
         <ScrollView>
         <SwipeListView
                 useFlatList={true}

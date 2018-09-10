@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../AddressListing/styles';
-import { Text, View,ScrollView,TouchableOpacity,AsyncStorage } from 'react-native';
+import { Text, View,ScrollView,TouchableOpacity,AsyncStorage,Alert,Vibration } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Header from '../../header/header';
 import * as Colors from '../../../utils/colors';
@@ -41,19 +41,27 @@ export default class AddressListing extends React.Component{
         console.log(this.state.data)
     }
     deleteAdd(idx){
-        var arr=this.state.data
-        arr.splice(idx,1)
-        if(arr.length==0){
-            this.setState({data:[]})
-            AsyncStorage.setItem('complete_address',JSON.stringify(this.state.data))
-            alert('No address. Add your address first');this.props.navigation.navigate('AddAddress')
-        }
-        else{
-        this.setState({data:arr})
-        AsyncStorage.removeItem('complete_address')
-        AsyncStorage.setItem('complete_address',JSON.stringify(this.state.data))
-    }
-    }
+        Alert.alert(
+            'Delete Confirmation',
+            'Are you sure you want to delete this address?',
+            [{text:'Cancel',onPress:()=>{Vibration.vibrate(300)}},
+            {text:'Delete',onPress:()=> {
+                var arr=this.state.data
+                arr.splice(idx,1)
+                if(arr.length==0){
+                    this.setState({data:[]})
+                    AsyncStorage.setItem('complete_address',JSON.stringify(this.state.data))
+                    alert('No address. Add your address first');this.props.navigation.navigate('AddAddress')
+                }
+                else{
+                this.setState({data:arr})
+                AsyncStorage.removeItem('complete_address')
+                AsyncStorage.setItem('complete_address',JSON.stringify(this.state.data))
+                }
+            }}],
+            {cancelable:true})
+      }
+    
     editAdd(idx,element){
         this.props.navigation.navigate('AddAddress',{'addressData':element,'addressIndex':idx})
     }
