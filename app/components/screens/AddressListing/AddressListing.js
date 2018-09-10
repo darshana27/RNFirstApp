@@ -13,7 +13,6 @@ export default class AddressListing extends React.Component{
         super(props);
         this.state={
             data:[],
-            radioBG:Colors.white,
             selected:0,
             rerender:0
         };

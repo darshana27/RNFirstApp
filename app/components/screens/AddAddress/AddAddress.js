@@ -1,13 +1,8 @@
 import React from 'react';
-import { Text, View,Alert, ScrollView,KeyboardAvoidingView,TouchableOpacity,AsyncStorage,TextInput} from 'react-native';
+import { Text, View, ScrollView,TouchableOpacity,AsyncStorage,TextInput} from 'react-native';
 import { Toast } from 'native-base'
-import { SwipeListView } from 'react-native-swipe-list-view';
 import Header from '../../header/header';
 import styles from '../AddAddress/styles';
-let fetchApi=require('../../../lib/api').fetchApi();
-import * as urls from '../../../lib/urls';
-import Modal from "react-native-modal";
-import FeatherIcon from 'react-native-vector-icons/dist/Feather';
 
 export default class AddAddress extends React.Component {
     constructor(props){
@@ -18,8 +13,7 @@ export default class AddAddress extends React.Component {
             landmark:'',
             state:'',
             zipcode:'',
-            country:'',
-            
+            country:'',     
         };
         this.addAddress=this.addAddress.bind(this); 
     }
@@ -36,18 +30,10 @@ export default class AddAddress extends React.Component {
             zipcode:addressData.zipcode,
             country:addressData.country
         }):
-        this.setState({
-            address:'',
-            city:'',
-            landmark:'',
-            state:'',
-            zipcode:'',
-            country:'',
-        })
+        null
     }
     addAddress(){
         console.log('AddressData',addressData)
-                // console.log('add Address'+this.state.address,this.state.city,this.state.landmark,this.state.state,this.state.zipcode,this.state.country)
         if(this.state.address=='' || this.state.city=='' || this.state.landmark=='' || this.state.state=='' || this.state.zipcode=='' || this.state.country=='' ){
             alert("All fields are mandatory")
         }

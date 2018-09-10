@@ -10,7 +10,6 @@ let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
 var ImagePicker = require('react-native-image-picker');
 let validators=require('../../../utils/validators').validators();
-// import {user_data,serviceProvider} from '../../../lib/serviceProvider';
 import { connect } from 'react-redux'
 import {userAction,editData} from '../../../redux/actions/userAction'
 import { Toast } from 'native-base'
@@ -53,8 +52,15 @@ class EditProfile extends Component{
       }
 
     _editDetails(){
+        if(this.state.first_name=='' || this.state.last_name=='' || this.state.email=='' || this.state.phone_no=='' || this.state.dob==''){
+            Toast.show({
+                text: 'Please fill all the fields',
+                buttonText: "Okay",
+                duration: 10000,
+                position:'bottom',
+              })
+        }
         this.setState({isfetching:true})
-        // this.state.avatarSource!=""?console.log(this.state.avatarSource):console.log("null")
         let formData=new FormData();
         formData.append("first_name",this.state.first_name!=null?this.state.first_name:this.props.details.user_data.first_name)
         formData.append("last_name",this.state.last_name!=null?this.state.last_name:this.props.details.user_data.last_name)

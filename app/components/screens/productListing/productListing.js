@@ -16,72 +16,48 @@ export default class productListing extends React.Component {
     this.state ={
       isLoading: true,
       list:[],
-      page:1,
-      refreshing:false
+
     }
     
     this.callback=this.callback.bind(this)
     // this.callbackFn=this.callbackFn.bind(this);
   }
     componentDidMount(){
-
-      console.log("componentdidmount")
+      page=1
       this.makeRemoteRequest()
-
     }
 
     makeRemoteRequest(){
-    
-      console.log("makeremoterequest")
+
       const category_id = this.props.navigation.getParam('category_id');
       this.setState({isLoading:true})
       setTimeout(()=>{
-        fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+category_id+'&page='+this.state.page+'&limit='+7,'GET',{},null,this.callback)
-      },200)
+        fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+category_id+'&page='+page+'&limit='+7,'GET',{},null,this.callback)
+      },100)
+
     }
     
     callback(response){
-      this.setState({isLoading:false})
+      
       if(response.status==200){
-      this.setState({
-        list:[...this.state.list,...response.data],
-        refreshing:false,
-        isLoading:false
-      })
-      console.log(this.state.list)
-    } 
-
+        this.setState({
+          list:[...this.state.list,...response.data],
+          isLoading:false
+        })
+      } 
       else{
         this.setState({
           isLoading:false,
-          refreshing:false
         })
-        console.log(response)
       }
-      
+
     }
-    // handleRefresh =() => {
-    //   this.setState({
-    //     page:1,
-    //     refreshing:true
-    //   },() => this.makeRemoteRequest())
-    // }
+
     handleLoadMore = () => {
-        this.setState({
-          page:this.state.page + 1
-        },() => {this.makeRemoteRequest();
-        })
-       
+      page=page+1;
+      this.makeRemoteRequest()   
     }
-    // renderFooter = () =>{
-    //   if(!this.state.refreshing && !this.state.isLoading) return null;
-    //   return(
-    //     <View
-    //       style={{paddingVertical:20,borderTopWidth:1,borderColor:'blue',backgroundColor:'cyan'}}>
-    //     <Loader/>
-    //     </View>
-    //   )
-    // }              
+             
     renderSeparator = () => (
       <View
         style={{
@@ -95,9 +71,6 @@ export default class productListing extends React.Component {
   render() {
     const { navigation } = this.props;
     const screen = navigation.getParam('screen');
-    // console.log(screen)
-    // console.log(this.state.isLoading)
-    console.log(this.state.list.length)
   
     return (
       <View>
@@ -148,8 +121,6 @@ export default class productListing extends React.Component {
                 onEndReached={this.handleLoadMore}
                 onEndReachedThreshold={0.1}
                 ItemSeparatorComponent={this.renderSeparator}
-                // refreshing={this.state.refreshing}
-                // onRefresh={this.handleRefresh}
                 keyExtractor={(item,index) => ''+item.id}
                 ListFooterComponent={this.renderFooter}
                 renderItem = { ({item,index}) => 

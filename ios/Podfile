@@ -1,8 +1,10 @@
 # platform :ios, '9.0'
 target 'FirstApp' do
+  pod 'Stripe', '~> 11.2.0'
     rn_path = '../node_modules/react-native'
     rn_maps_path = '../node_modules/react-native-maps'
-  
+      # Stripe
+   
     # See http://facebook.github.io/react-native/docs/integration-with-existing-apps.html#configuring-cocoapods-dependencies
     pod 'yoga', path: "#{rn_path}/ReactCommon/yoga/yoga.podspec"
     pod 'React', path: rn_path, subspecs: [
@@ -36,6 +38,8 @@ target 'FirstApp' do
     pod 'GoogleMaps'  # Remove this line if you don't want to support GoogleMaps on iOS
     pod 'Google-Maps-iOS-Utils' # Remove this line if you don't want to support GoogleMaps on iOS
     pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+
 
   end
   
