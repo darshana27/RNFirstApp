@@ -41,6 +41,8 @@ target 'FirstApp' do
 
 
 
+    pod 'tipsi-stripe', :path => '../node_modules/tipsi-stripe'
+
   end
   
   post_install do |installer|
