@@ -23,9 +23,14 @@ exports.fetchApi = function() {
             .then(response => {
                 // console.log(response)  
                 callbackFn!=null?callbackFn(response):response.data})
-            .catch((err) => {console.log(err)})
-            
-                       
+            .catch((err) => {Alert.alert(
+                'Do you really want to exit?',
+                [
+                  {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                  {text: 'OK', onPress: () => {BackHandler.exitApp()}},
+                ],
+                { cancelable: false }
+              )})                
         }
         catch(err){
             Alert.alert("Something went wrong.Try again.")

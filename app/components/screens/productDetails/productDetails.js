@@ -161,11 +161,10 @@ class productDetails extends React.Component {
           
         })
         this.props.totalCart(response.total_carts)
-
       }
       else{
         console.log(response)
-        alert('Something went wrong. Try again.')
+        alert(response.message)
       }
   }
 

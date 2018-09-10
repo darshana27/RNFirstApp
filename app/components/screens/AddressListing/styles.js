@@ -87,6 +87,19 @@ export default styles=StyleSheet.create({
         borderBottomWidth:1,
         borderBottomColor:Colors.addressListRadioInner
     },
-
+    ModalView:{
+        borderRadius:10,
+        height:280,
+        width:330,
+        backgroundColor:'#10BEAA',
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    success:{
+        marginTop:10,
+        fontSize:30,
+        color:Colors.white,
+        fontFamily:fontRegular
+    }
 }
 )

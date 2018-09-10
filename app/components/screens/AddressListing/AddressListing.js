@@ -7,19 +7,28 @@ import * as Colors from '../../../utils/colors';
 import * as urls from '../../../lib/urls';
 import { user_data } from '../../../lib/serviceProvider';
 let fetchApi=require('../../../lib/api').fetchApi();
+import stripe from 'tipsi-stripe';
+import {Toast} from 'native-base';
+import Modal from "react-native-modal";
+import Loader from '../../Loader/Loader';
+
 
 export default class AddressListing extends React.Component{
     constructor(props){
         super(props);
         this.state={
+            isModal1Visible:false,
+            isModal2Visible:false,
             data:[],
             selected:0,
-            rerender:0
+            rerender:0,
+            isloading:false
         };
         this.fetchAddress=this.fetchAddress.bind(this)
         this.deleteAdd=this.deleteAdd.bind(this)
         this.editAdd=this.editAdd.bind(this)
         this.onRadioSelected=this.onRadioSelected.bind(this)  
+        // this._toggleModal1 = this._toggleModal1.bind(this);
     }
 
     componentDidMount(){
@@ -28,6 +37,17 @@ export default class AddressListing extends React.Component{
            this.fetchItems()
         });
     }
+
+    _toggleModal1=()=>{
+        console.log("function called")
+        this.setState({ isModal1Visible: !this.state.isModal1Visible });
+    }
+
+    _toggleModal2=()=>{
+        console.log("function called")
+        this.setState({ isModal2Visible: !this.state.isModal2Visible });
+    }
+
     async fetchItems(){
         var val=await AsyncStorage.getItem('complete_address')
         console.log(val)
@@ -94,21 +114,69 @@ export default class AddressListing extends React.Component{
     }  
 
     orderNow(idx){
+
         var full_address=this.state.data[idx]
         var address=''+full_address.address+', '+full_address.city+', '+full_address.landmark+', '+full_address.state+', '+full_address.zipcode+', '+full_address.country
         let formData=new FormData();
         formData.append('address',address)
-        fetchApi.fetchData(''+urls.host_url+urls.order,'POST',{},formData,this.callbackFn)
+        fetchApi.fetchData(''+urls.host_url+urls.order,'POST',{},formData, (r )=> this.callbackFn(r, this))
+//    this._toggleModal1()
+   
     }
-    callbackFn(response){
+   async callbackFn(response, _this){
+        // let _this = this
         console.log(response)
         if(response.status==200){
+
             Toast.show({
                 text: "Order Placed Successfully!",
                 buttonText: "Okay",
                 duration: 10000,
                 position:'bottom',
               })
+
+              stripe.setOptions({
+                publishableKey: 'pk_test_w3b1DsOC95SwXsrSQUuUruNc',
+                androidPayMode: 'test', // Android only
+              })
+            
+              const options = {
+                requiredBillingAddressFields: 'full',
+                prefilledInformation: {
+                  billingAddress: {
+                    name: 'Gunilla Haugeh',
+                    line1: 'Canary Place',
+                    line2: '3',
+                    city: 'Macon',
+                    state: 'Georgia',
+                    country: 'US',
+                    postalCode: '31217',
+                  },
+                },
+              }
+
+              const token = await stripe.paymentRequestWithCardForm(options)
+                tokenId = token.tokenId;
+                console.log('Token',tokenId);
+                this.setState({isloading:true})
+                // fetchApi.fetchData('http://localhost:9000/charge','POST',{},tokenId,(response => {
+                    fetchApi.fetchData('http://10.0.100.220:9000/charge','POST',{},tokenId,(response => {
+                    console.log(response)
+                    
+                    if(response.status=='succeeded'){
+                        this.setState({isloading:false})
+                        console.log('Payment successful')
+                        _this._toggleModal1()
+                        
+                    }
+                    else{
+                        this.setState({isloading:false})
+                        console.log('Payment unsuccessful')
+                        Alert.alert('Payment unsuccessful.Please try again later.')
+                        _this._toggleModal2()
+                    }
+                })) 
+            // })     
         }
         else{
             Toast.show({
@@ -122,6 +190,24 @@ export default class AddressListing extends React.Component{
     render(){
             return(
             <View style={styles.mainView}>
+            {this.state.isloading?<Loader/>:null}
+             <Modal isVisible={this.state.isModal1Visible}
+                        onBackdropPress={() => this.setState({ isModal1Visible: false })}>
+                <View style={styles.ModalView}>
+                    <MaterialIcon name='check-circle' size={100} color='#FF4C33'/>
+                    <Text style={styles.success}>Payment Successful!</Text>
+                </View>
+
+             </Modal>
+             <Modal isVisible={this.state.isModal2Visible}
+                        onBackdropPress={() => this.setState({ isModal1Visible: false })}>
+                <View style={styles.ModalView}>
+                    <MaterialIcon name='warning' size={100} color='#FF4C33'/>
+                    <Text style={styles.success}>Payment unsuccessful</Text>
+                    <Text>Try again after sometime.</Text>
+                </View>
+
+             </Modal>
                 <Header 
                     styles={styles.header} 
                     title={'Address Listing'}
