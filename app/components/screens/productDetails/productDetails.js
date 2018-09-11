@@ -229,9 +229,9 @@ class productDetails extends React.Component {
                 <MaterialIcon name="close" color='#fff' size={20}/>
               </TouchableOpacity>
             </View>
-            <View style={styles.modalImageView2}>
+            {/* <View style={styles.modalImageView2}> */}
               <Image style={styles.modalQtyImage} source={{uri:this.state.currentImg}}></Image>
-            </View>
+            {/* </View> */}
           </View>
         </Modal>
 
