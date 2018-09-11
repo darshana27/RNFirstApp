@@ -5,8 +5,7 @@ import { CheckBox } from 'react-native-elements';
 import styles from './styles';
 import Header from '../../header/header';
 import Icon from '../../../utils/icon'
-import { Toast } from 'native-base'
-import MaterialIcon from 'react-native-vector-icons/dist/MaterialIcons';
+import { Toast } from 'native-base';
 import * as urls from '../../../lib/urls';
 let fetchApi=require('../../../lib/api').fetchApi();
 let validators=require('../../../utils/validators').validators();
@@ -38,17 +37,15 @@ export default class Register extends Component{
         }
       }
     _register(){
-            let ValidationChk = '';
+        let ValidationChk = '';
+
         if(!validators.RegexNames(this.state.fname)){
-            //Alert.alert("Valid Firstname");
             ValidationChk +=  ' -First Name ';
-        }
-        
+        } 
         if(!validators.RegexNames(this.state.lname)){
             ValidationChk +=  '-Last Name ';
         }
         if(!validators.RegexEmail(this.state.email)){
-            
             ValidationChk +=  '-Email ';
         }
         if(!validators.RegexPassword(this.state.pwd)){
@@ -60,18 +57,16 @@ export default class Register extends Component{
         if(!validators.RegularExpressionMobileNumber(this.state.phone)){
             ValidationChk +=  '-Phone Number ';
         }
-
         if(ValidationChk !== ''){
             Alert.alert('PLease fill valid ' + ValidationChk)
         }
         else{
+
             if(this.state.checked===false){
                 Alert.alert('Please agree the terms and conditions');
             }
             else{
             
-                console.log(this.state.value==1?'F':'M')
-                console.log(this.state.phone)
                 var formData = new FormData();
                 formData.append("first_name",this.state.fname);
                 formData.append("last_name", this.state.lname);
@@ -81,15 +76,21 @@ export default class Register extends Component{
                 formData.append("gender", this.state.value==1?'F':'M');
                 formData.append("phone_no", this.state.phone);
                 fetchApi.fetchData(''+urls.host_url+urls.user_register,'POST',null,formData,this.callbackFn)
+
             }            
         }
     }
 
     callbackFn(response){
-        console.log("Register Callback Called")
-        console.log(response);        
+
         if( response.status != 200){
-            Alert.alert(response.user_msg)
+            Toast.show({
+                text:response.user_msg,
+                buttonText: "Okay",
+                duration: 10000,
+                position:'bottom',
+                type:'danger'
+            })
         }
         else{
             Toast.show({
@@ -97,8 +98,8 @@ export default class Register extends Component{
                 buttonText: "Okay",
                 duration: 10000,
                 position:'bottom',
-              })
-
+                
+            })
         }
     }
     render(){

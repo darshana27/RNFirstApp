@@ -22,8 +22,7 @@ export default class ForgotPwd extends Component{
         this.props.navigation.navigate('Register');
     }
 
-    _onPress() {
-        
+    _onPress() { 
         if(this.state.email===null || this.state.email===""){
             alert("Email cannot be empty")
         }
@@ -32,13 +31,13 @@ export default class ForgotPwd extends Component{
         }
         else{
             let formData=new FormData();
-                formData.append("email",this.state.email);
-                console.log(formData);
-                fetchApi.fetchData(''+urls.host_url+urls.user_forgot_password,'POST',null,formData,this.callbackFn)
+            formData.append("email",this.state.email);
+            fetchApi.fetchData(''+urls.host_url+urls.user_forgot_password,'POST',null,formData,this.callbackFn)
         }
     }
+
     callbackFn(response){
-        console.log(response);
+
         if(response.status==200){
             Toast.show({
                 text: response.user_msg,
@@ -56,47 +55,48 @@ export default class ForgotPwd extends Component{
               })
         } 
     }
+    
     render(){
         return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>
-             <KeyboardAvoidingView style={styles.viewStyle} behavior={'padding'}>
-            <View> 
-                    <Header styles={styles.header} title={'Forgot Password'}
+                <KeyboardAvoidingView style={styles.viewStyle} behavior={'padding'}>
+
+                    <View> 
+                        <Header 
+                            styles={styles.header} title={'Forgot Password'}
                             back={() => {this.props.navigation.goBack()}} />
-            </View>
-            <View style={styles.viewStyle}>
-                <Text style={styles.headingText}>NeoSTORE</Text>
-                <View style={styles.nestedView}>
-                    <Icon style={styles.iconStyle} name="user" size={22} color="#FFFFFF"/>
-                    <TextInput
-                        ref="Username"
-                        style={styles.inputBox}
-                        placeholder="Email"
-                        placeholderTextColor='#FFFFFF'
-                        underlineColorAndroid={'transparent'}
-                        returnKeyType="next"
-                        blurOnSubmit={false}
-                        onChangeText={(email) => this.setState({email})}
-                    />
-                </View>
+                    </View>
+                    <View style={styles.viewStyle}>
+                        <Text style={styles.headingText}>NeoSTORE</Text>
+                        <View style={styles.nestedView}>
+                            <Icon style={styles.iconStyle} name="user" size={22} color="#FFFFFF"/>
+                            <TextInput
+                                ref="Username"
+                                style={styles.inputBox}
+                                placeholder="Email"
+                                placeholderTextColor='#FFFFFF'
+                                underlineColorAndroid={'transparent'}
+                                returnKeyType="next"
+                                blurOnSubmit={false}
+                                onChangeText={(email) => this.setState({email})}
+                            />
+                        </View>
+                        <TouchableOpacity
+                            style={styles.loginButton}
+                            onPress={this._onPress}>
+                            <Text style={styles.btnText}>Submit</Text>
+                        </TouchableOpacity>
+                    </View>
 
-                <TouchableOpacity
-                    style={styles.loginButton}
-                    onPress={this._onPress}>
-                    <Text style={styles.btnText}>Submit</Text>
-                </TouchableOpacity>
-                
+                </KeyboardAvoidingView>
 
-            </View>
-            </KeyboardAvoidingView>
-            <View style={styles.footer}>
-                    <Text
-                        style={styles.endText}>DON'T HAVE AN ACCOUNT?
-                    </Text>
+                <View style={styles.footer}>
+                    <Text style={styles.endText}>DON'T HAVE AN ACCOUNT?</Text>
                     <View style={styles.plusView}>
                         <FeatherIcon onPress={this._onRegister} style={styles.addIcon} name="plus" size={30}/>
                     </View>
                 </View>
+                
             </ImageBackground>
         )
     }

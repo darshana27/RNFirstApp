@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
-import { View, Text,Image, BackHandler,TouchableOpacity,Alert,ActivityIndicator } from 'react-native';
+import { View, Text,Image, BackHandler,TouchableOpacity,Alert } from 'react-native';
 import styles from './styles';
 import Header from '../../header/header';
 import Swiper from 'react-native-swiper';
 import { DrawerActions } from 'react-navigation';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {user_data,serviceProvider} from '../../../lib/serviceProvider';
 import SearchBar from 'react-native-searchbar';
 import SplashScreen from 'react-native-splash-screen';
 import Icon from '../../../utils/icon'
 
 export default class Homescreen extends Component{
+
     constructor(props){
         super(props); 
         console.log(user_data)
         this.state={
             isLoading:true,
             category_id:'',
-            // imageArray:this.props.navigation.state.params.data.data.product_categories
             imageArray:user_data.product_categories
         }
+
         this._TableBtnPressed = this._TableBtnPressed.bind(this);
         this._ChairBtnPressed = this._ChairBtnPressed.bind(this);
         this._SofaBtnPressed = this._SofaBtnPressed.bind(this);
@@ -30,11 +30,12 @@ export default class Homescreen extends Component{
         SplashScreen.hide()
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
+
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-      }
+    }
 
-      handleBackButton = () => {
+    handleBackButton = () => {
         Alert.alert(
             'Exit App',
             'Exiting the application?', [{
@@ -47,19 +48,16 @@ export default class Homescreen extends Component{
             }, ], {
                 cancelable: false
             }
-         )
-         return true;
-       }  
+        )
+        return true;
+    }  
+
     SwiperImages(){
-        console.log()
-        // console.log('swiperimages')
-        console.log(this.state.imageArray.length)
+
         var filteredArray=[]
         for(var i=0;i<=3;i++){
-            filteredArray.push(this.state.imageArray[i])  
-            // console.log(filteredArray[0].icon_image)    
+            filteredArray.push(this.state.imageArray[i])      
         }
-        // console.log(filteredArray[0])
         if(filteredArray!=undefined && filteredArray.length>0)
           return filteredArray.map((element) => {
            return (
@@ -69,7 +67,6 @@ export default class Homescreen extends Component{
                         source={{uri:element.icon_image}}/>
                 </View>
            ) 
-  
         })              
     }
 
@@ -98,7 +95,7 @@ export default class Homescreen extends Component{
                             search={() => {this.searchBar.show()}}/>
                 </View>
                 <SearchBar
-                autoplayTimeout={2}
+                    autoplayTimeout={2}
                     backgroundColor='#9e0100'
                     iconColor='#ffffff'
                     heightAdjust={-10}
@@ -106,43 +103,39 @@ export default class Homescreen extends Component{
                     onBlur={()=>this.searchBar.hide()}
                 />
                 <View style={styles.viewSwiper}>
-                <Swiper style={styles.wrapper} 
-                showsButtons={false}
-                dotColor="red"
-                activeDotColor="#000"
-                loop={true}
-                autoplay={true}> 
-                    {this.SwiperImages()}
+                    <Swiper style={styles.wrapper} 
+                            showsButtons={false}
+                            dotColor="red"
+                            activeDotColor="#000"
+                            loop={true}
+                            autoplay={true}> 
+                        {this.SwiperImages()}
                     </Swiper>
                 </View>
+
                 <View style={styles.cards}>
-                <View style={styles.cardRow}>
-                        <TouchableOpacity 
-                        onPress={this._TableBtnPressed} style={styles.cardTable}>
-                            <Text style={styles.tablesTxt}>Tables</Text>
-                            <Icon style={styles.tableImg} name="table" size={80}/>
-                            {/* <Image 
-                                style={styles.tableImg}
-                                source={require('../../../assets/images/Tables.png')}/> */}
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={this._SofaBtnPressed} style={styles.cardSofa}>
-                        <Icon style={styles.sofaImg} name="sofa" size={80}/>
+                    <View style={styles.cardRow}>
+                            <TouchableOpacity 
+                                onPress={this._TableBtnPressed} style={styles.cardTable}>
+                                <Text style={styles.tablesTxt}>Tables</Text>
+                                <Icon style={styles.tableImg} name="table" size={80}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={this._SofaBtnPressed} style={styles.cardSofa}>
+                                <Icon style={styles.sofaImg} name="sofa" size={80}/>
                                 <Text style={styles.SofaTxt}>Sofas</Text>
-                        </TouchableOpacity>
+                            </TouchableOpacity>
                     </View>
                     <View style={styles.cardRow}>
                         <TouchableOpacity onPress={this._ChairBtnPressed} style={styles.cardChair}>
-                        <Text style={styles.chairTxt}>Chairs</Text>
-                        <Icon style={styles.chairImg} name="chair" size={80}/>
+                            <Text style={styles.chairTxt}>Chairs</Text>
+                            <Icon style={styles.chairImg} name="chair" size={80}/>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={this._CupboardBtnPressed} style={styles.cardCupboard}>
-                        <Icon style={styles.cupboardImg} name="cupboard" size={80}/>
-                                <Text style={styles.cupboardTxt}>Cupboards</Text>
+                            <Icon style={styles.cupboardImg} name="cupboard" size={80}/>
+                            <Text style={styles.cupboardTxt}>Cupboards</Text>
                         </TouchableOpacity>
                     </View>
-
                 </View>
-
             </View>
         )
     }

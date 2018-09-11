@@ -10,8 +10,9 @@ let fetchApi=require('../../../lib/api').fetchApi();
 import SplashScreen from 'react-native-splash-screen'
 import Loader from '../../Loader/Loader';
 import Modal from "react-native-modal";
-import { connect } from 'react-redux'
-import {userAction} from '../../../redux/actions/userAction'
+import { Toast } from 'native-base';
+import { connect } from 'react-redux';
+import {userAction} from '../../../redux/actions/userAction';
 
 
 class Login extends Component{
@@ -39,11 +40,9 @@ class Login extends Component{
         this.props.navigation.navigate('Register');
     }
 
-     _onPress(){
-         this._toggleModal1()
-        console.log('Disabled : '+this.state.isDisabled)
+    _onPress(){
+        this._toggleModal1()
         this.setState({isDisabled:true})
-         console.log('Disabled : '+this.state.isDisabled)
         if(this.state.uname===null || this.state.uname==="" && this.state.pwd===null || this.state.pwd===""){
             alert("Email and password cannot be empty")
         }
@@ -55,98 +54,107 @@ class Login extends Component{
             formData.append("email", this.state.uname);
             formData.append("password", this.state.pwd);
             fetchApi.fetchData(''+urls.host_url+urls.user_login,'POST',null,formData,this.callbackFn)
-            }
-        }          
-        callbackFn(response){
-            console.log("Callback function called")
-            {console.log(response)}
-            if( response.status != 200){
-                Alert.alert(response.user_msg)
-            }
-            else{
-                serviceProvider.setUsrData['access_token',response.data.access_token]
-                var accessToken=response.data.access_token
-                console.log(accessToken)
-                AsyncStorage.setItem('user_access_token',accessToken);
-                fetchApi.fetchData(''+urls.host_url+urls.user_fetch_details,'GET',{},null,this.callbackFnFetch)
-            }   
+        }
+    } 
+
+    callbackFn(response){
+        if( response.status != 200){
+            Toast.show({
+                text:response.user_msg,
+                buttonText: "Okay",
+                duration: 10000,
+                position:'bottom',
+                type:'danger'
+            })
+        }
+        else{
+            serviceProvider.setUsrData['access_token',response.data.access_token]
+            var accessToken=response.data.access_token
+            AsyncStorage.setItem('user_access_token',accessToken);
+            fetchApi.fetchData(''+urls.host_url+urls.user_fetch_details,'GET',{},null,this.callbackFnFetch)
+        }   
+    } 
+
+    callbackFnFetch(response){
+        if(response.status!=200){       
+            AsyncStorage.removeItem('user_access_token')
+            this.props.navigation.replace('Login')
+        }
+        else{
+
+            this.props.userAction(response.data)
+            this.props.navigation.replace('Homescreen',{
+                'data':response
+            }) 
         } 
-        callbackFnFetch(response){
-            if(response.status!=200){       
-                AsyncStorage.removeItem('user_access_token')
-                this.props.navigation.replace('Login')
-            }
-            else{
-                this.props.userAction(response.data)
-                // serviceProvider.setUsrData(response.data)
-                console.log("RESPONSE 200")
-                this.props.navigation.replace('Homescreen',{
-                    'data':response
-                })
-                console.log(response.data.product_categories)   
-            } 
-        }  
+    }  
         
-        _toggleModal1(){
-            console.log("function called")
-            this.setState({ isModal1Visible: !this.state.isModal1Visible });
-            }
+    _toggleModal1(){
+        this.setState({ isModal1Visible: !this.state.isModal1Visible });
+    }
 
     render(){
         return (
             <ImageBackground source={require('../../../assets/images/Android_Master_bg.jpg')} style={styles.backgroundImage}>
-            <Modal style={{width:Dimensions.get('window').width,height:Dimensions.get('window').height}} isVisible={this.state.isModal1Visible}>
-                <Loader/>
-            </Modal>
-            <KeyboardAvoidingView pointerEvents={this.state.isDisabled?'none':'auto'} style={styles.viewStyle} behavior={'padding'}>
-           
-                <Text style={styles.headingText}>NeoSTORE</Text>
-                <View style={styles.nestedView}>
-                    <Icon style={styles.iconStyle} name="user" size={22} color="#FFFFFF"/>
-                    <TextInput
-                        ref="Username"
-                        style={styles.inputBox}
-                        placeholder="Email"
-                        placeholderTextColor='#FFFFFF'
-                        underlineColorAndroid={'transparent'}
-                        returnKeyType="next"
-                        onSubmitEditing={() => {this.Password.focus();} }
-                        blurOnSubmit={false}
-                        onChangeText={(uname) => this.setState({uname})}
-                    />
-                </View>
-                <View style={styles.nestedView}>
-                    <Icon style={styles.iconStyle} name="lock" size={22} color="#FFFFFF"/>
-                    <TextInput
-                        ref={(password) => {this.Password= password}}
-                        style={styles.inputBox}
-                        placeholder="Password"
-                        placeholderTextColor='#FFFFFF'
-                        secureTextEntry={true}
-                        underlineColorAndroid={'transparent'}
-                        returnKeyType="done"
-                        onChangeText={(pwd) => this.setState({pwd})}
-                    />
-                </View>
-                <TouchableOpacity
-                    style={styles.loginButton}
-                    onPress={this._onPress}>
-                    <Text style={styles.btnText}>LOGIN</Text>
-                </TouchableOpacity>
-                <Text 
-                    style={styles.textLink} 
-                    onPress={ ()=>  this.props.navigation.navigate('ForgotPwd')} >Forgot Password?
-                </Text>
-                <View style={styles.footer}>
-                    <Text
-                        style={styles.endText}>DON'T HAVE AN ACCOUNT?
-                    </Text>
-                    <View style={styles.plusView}>
-                        <MaterialIcon onPress={this._onRegister} style={styles.addIcon} name="add" size={30}/>
-                    </View>
-                </View>
 
-            </KeyboardAvoidingView>
+                <Modal style={{width:Dimensions.get('window').width,height:Dimensions.get('window').height}} isVisible={this.state.isModal1Visible}>
+                    <Loader/>
+                </Modal>
+
+                <KeyboardAvoidingView style={styles.viewStyle} behavior={'padding'}>
+            
+                    <Text style={styles.headingText}>NeoSTORE</Text>
+                    <View style={styles.nestedView}>
+                        <Icon style={styles.iconStyle} name="user" size={22} color="#FFFFFF"/>
+                        <TextInput
+                            ref="Username"
+                            style={styles.inputBox}
+                            placeholder="Email"
+                            placeholderTextColor='#FFFFFF'
+                            underlineColorAndroid={'transparent'}
+                            returnKeyType="next"
+                            onSubmitEditing={() => {this.Password.focus();} }
+                            blurOnSubmit={false}
+                            onChangeText={(uname) => this.setState({uname})}
+                        />
+                    </View>
+
+                    <View style={styles.nestedView}>
+                        <Icon style={styles.iconStyle} name="lock" size={22} color="#FFFFFF"/>
+                        <TextInput
+                            ref={(password) => {this.Password= password}}
+                            style={styles.inputBox}
+                            placeholder="Password"
+                            placeholderTextColor='#FFFFFF'
+                            secureTextEntry={true}
+                            underlineColorAndroid={'transparent'}
+                            returnKeyType="done"
+                            onChangeText={(pwd) => this.setState({pwd})}
+                        />
+                    </View>
+
+                    <TouchableOpacity
+                        style={styles.loginButton}
+                        onPress={this._onPress}>
+                        <Text style={styles.btnText}>LOGIN</Text>
+                    </TouchableOpacity>
+
+                    <Text 
+                        style={styles.textLink} 
+                        onPress={ ()=>  this.props.navigation.navigate('ForgotPwd')} >Forgot Password?
+                    </Text>
+
+                    <View style={styles.footer}>
+                        <Text
+                            style={styles.endText}>DON'T HAVE AN ACCOUNT?
+                        </Text>
+                        
+                        <View style={styles.plusView}>
+                            <MaterialIcon onPress={this._onRegister} style={styles.addIcon} name="add" size={30}/>
+                        </View>
+                    </View>
+
+                </KeyboardAvoidingView>
    
             </ImageBackground>
         )

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../AddressListing/styles';
-import { Text, View,ScrollView,TouchableOpacity,AsyncStorage,Alert,Vibration } from 'react-native';
+import { Text, View,ScrollView,TouchableOpacity,AsyncStorage,Alert,Vibration,Platform } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Header from '../../header/header';
 import * as Colors from '../../../utils/colors';
@@ -11,9 +11,10 @@ import stripe from 'tipsi-stripe';
 import {Toast} from 'native-base';
 import Modal from "react-native-modal";
 import Loader from '../../Loader/Loader';
+import { connect } from 'react-redux'
+import {userAction} from '../../../redux/actions/userAction'
 
-
-export default class AddressListing extends React.Component{
+class AddressListing extends React.Component{
     constructor(props){
         super(props);
         this.state={
@@ -32,6 +33,7 @@ export default class AddressListing extends React.Component{
     }
 
     componentDidMount(){
+        console.log(this.props.details.user_data)
         this.NavigationListener=this.props.navigation.addListener('willFocus',()=>{
            this.setState({rerender:this.state.rerender+1})
            this.fetchItems()
@@ -101,7 +103,7 @@ export default class AddressListing extends React.Component{
                             <TouchableOpacity onPress={()=>this.editAdd(idx,element)}><MaterialIcon style={styles.close} name='edit' size={19} color='#333333'/></TouchableOpacity>
                             <TouchableOpacity onPress={()=>this.deleteAdd(idx)}><MaterialIcon style={styles.close} name='close' size={19} color='#333333'/></TouchableOpacity>
                         </View>
-                        <Text style={styles.userName}>{user_data.user_data.first_name+' '+user_data.user_data.last_name}</Text>
+                        <Text style={styles.userName}>{this.props.details.user_data.first_name+' '+this.props.details.user_data.last_name}</Text>
                         <Text style={styles.addressText}>{element.address +','+element.city +','+element.landmark+','+element.state+','+element.zipcode+','+element.country}</Text>
                     </View>
                 </View>
@@ -115,15 +117,15 @@ export default class AddressListing extends React.Component{
 
     orderNow(idx){
 
-        var full_address=this.state.data[idx]
+        full_address=this.state.data[idx]
         var address=''+full_address.address+', '+full_address.city+', '+full_address.landmark+', '+full_address.state+', '+full_address.zipcode+', '+full_address.country
         let formData=new FormData();
         formData.append('address',address)
-        fetchApi.fetchData(''+urls.host_url+urls.order,'POST',{},formData, (r )=> this.callbackFn(r, this))
+        fetchApi.fetchData(''+urls.host_url+urls.order,'POST',{},formData, (r )=> this.callbackFn(r,idx, this))
 //    this._toggleModal1()
    
     }
-   async callbackFn(response, _this){
+   async callbackFn(response,idx, _this){
         // let _this = this
         console.log(response)
         if(response.status==200){
@@ -144,13 +146,13 @@ export default class AddressListing extends React.Component{
                 requiredBillingAddressFields: 'full',
                 prefilledInformation: {
                   billingAddress: {
-                    name: 'Gunilla Haugeh',
-                    line1: 'Canary Place',
-                    line2: '3',
-                    city: 'Macon',
-                    state: 'Georgia',
-                    country: 'US',
-                    postalCode: '31217',
+                    name: this.props.details.user_data.first_name+' '+this.props.details.user_data.last_name,
+                    line1: full_address.address,
+                    line2: full_address.landmark,
+                    city: full_address.city,
+                    state: full_address.state,
+                    country: full_address.country,
+                    postalCode: full_address.zipcode,
                   },
                 },
               }
@@ -159,8 +161,12 @@ export default class AddressListing extends React.Component{
                 tokenId = token.tokenId;
                 console.log('Token',tokenId);
                 this.setState({isloading:true})
-                // fetchApi.fetchData('http://localhost:9000/charge','POST',{},tokenId,(response => {
-                    fetchApi.fetchData('http://10.0.100.220:9000/charge','POST',{},tokenId,(response => {
+                //for ios
+                //  fetchApi.fetchData('http://localhost:9000/charge','POST',{},tokenId,(response => {
+                //for android
+                paymentURL=Platform.OS=='ios'?urls.iosPayment:urls.androidPayment
+                console.log(paymentURL)
+                    fetchApi.fetchData(paymentURL,'POST',{},tokenId,(response => {
                     console.log(response)
                     
                     if(response.status=='succeeded'){
@@ -199,6 +205,7 @@ export default class AddressListing extends React.Component{
                 </View>
 
              </Modal>
+
              <Modal isVisible={this.state.isModal2Visible}
                         onBackdropPress={() => this.setState({ isModal1Visible: false })}>
                 <View style={styles.ModalView}>
@@ -235,3 +242,10 @@ export default class AddressListing extends React.Component{
         )
     }
 }
+function mapStateToProps(state){
+    return {
+      details:state.user
+    }
+  }
+
+export default connect(mapStateToProps,{ userAction })(AddressListing)

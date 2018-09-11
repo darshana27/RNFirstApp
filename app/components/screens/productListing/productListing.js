@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, FlatList, Image, ScrollView, TouchableOpacity,ActivityIndicator } from 'react-native';
+import { Text, View, FlatList, Image, TouchableOpacity } from 'react-native';
 import Loader from '../../Loader/Loader';
 import Header from '../../header/header';
 import styles from '../productListing/styles';
@@ -8,7 +8,6 @@ let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
 import SearchBar from 'react-native-searchbar';
 
-// import {Loader} from '../../Loader/Loader';
 
 export default class productListing extends React.Component {
   constructor(props){
@@ -16,11 +15,9 @@ export default class productListing extends React.Component {
     this.state ={
       isLoading: true,
       list:[],
-
     }
     
     this.callback=this.callback.bind(this)
-    // this.callbackFn=this.callbackFn.bind(this);
   }
     componentDidMount(){
       page=1
@@ -28,17 +25,12 @@ export default class productListing extends React.Component {
     }
 
     makeRemoteRequest(){
-
       const category_id = this.props.navigation.getParam('category_id');
       this.setState({isLoading:true})
-      setTimeout(()=>{
-        fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+category_id+'&page='+page+'&limit='+7,'GET',{},null,this.callback)
-      },100)
-
+      fetchApi.fetchData(''+urls.host_url+urls.get_product_list+'?product_category_id='+category_id+'&page='+page+'&limit='+7,'GET',{},null,this.callback)
     }
     
     callback(response){
-      
       if(response.status==200){
         this.setState({
           list:[...this.state.list,...response.data],
@@ -116,7 +108,6 @@ export default class productListing extends React.Component {
         <View style={styles.container}>
 
         <FlatList
-        
                 data={this.state.list}
                 onEndReached={this.handleLoadMore}
                 onEndReachedThreshold={0.1}
@@ -125,23 +116,20 @@ export default class productListing extends React.Component {
                 ListFooterComponent={this.renderFooter}
                 renderItem = { ({item,index}) => 
                 
-                <TouchableOpacity 
-               
-                onPress={()=>{this.props.navigation.navigate('productDetails',{product_id:item.id})}}>
-                    <View style={styles.itemContainer}>
-                      <View style={styles.productImage}>
-                          <Image 
-                              style={styles.img}
-                              source={{uri:item.product_images}}/>
-                      </View>
-                      <View style={styles.productDetails}>
-                          <Text style={styles.item}>{item.name}</Text>
-                          <Text style={styles.producer}>{item.producer}</Text>
-                          <Text style={styles.price}>Rs.{item.cost}</Text>
-                      </View>
-                      <View style={styles.ratingsView}>
-                      
-                        <StarRating
+                  <TouchableOpacity onPress={()=>{this.props.navigation.navigate('productDetails',{product_id:item.id})}}>
+                      <View style={styles.itemContainer}>
+                          <View style={styles.productImage}>
+                              <Image 
+                                  style={styles.img}
+                                  source={{uri:item.product_images}}/>
+                          </View>
+                        <View style={styles.productDetails}>
+                            <Text style={styles.item}>{item.name}</Text>
+                            <Text style={styles.producer}>{item.producer}</Text>
+                            <Text style={styles.price}>Rs.{item.cost}</Text>
+                        </View>
+                        <View style={styles.ratingsView}>
+                            <StarRating
                                 disabled={false}
                                 maxStars={5}
                                 rating={item.rating}
@@ -151,10 +139,11 @@ export default class productListing extends React.Component {
                                 emptyStarColor='#7F7F7F'/>
                       </View>            
                      </View> 
-                     </TouchableOpacity>
-                     }
-            ></FlatList>
-            {this.state.isLoading?<Loader/>:null}
+                  </TouchableOpacity>
+                }
+            >
+          </FlatList>
+          {this.state.isLoading?<Loader/>:null}
         </View>
         <View style={styles.indicatorView}><Text style={{color:'#FFF'}}>Showing {this.state.list.length} out of {this.state.list.length}</Text></View>
       </View>
