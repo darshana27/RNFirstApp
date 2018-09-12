@@ -131,19 +131,18 @@ class MyCart extends React.Component {
     formData.append("quantity",selectedValue)
     fetchApi.fetchData(''+urls.host_url+urls.edit_cart,'POST',{},formData,(response)=>{
     if(response.status==200){
-      console.log(this.state.dataSource)
-      this.state.dataSource[idx].quantity=selectedValue
-      this.state.totalAmt=this.state.totalAmt-this.state.dataSource[idx].product.sub_total
-      this.state.dataSource[idx].product.sub_total=this.state.dataSource[idx].product.cost * selectedValue 
-      this.state.totalAmt=this.state.totalAmt+this.state.dataSource[idx].product.sub_total
-      this.setState({isLoading:false})
-      Toast.show({
-        text: "Quantity edited successfully!",
-        buttonText: "Okay",
-        duration: 10000,
-        position:'bottom',
-      })
-      // fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callbackFn)
+        console.log(this.state.dataSource)
+        this.state.dataSource[idx].quantity=selectedValue
+        this.state.totalAmt=this.state.totalAmt-this.state.dataSource[idx].product.sub_total
+        this.state.dataSource[idx].product.sub_total=this.state.dataSource[idx].product.cost * selectedValue 
+        this.state.totalAmt=this.state.totalAmt+this.state.dataSource[idx].product.sub_total
+        this.setState({isLoading:false})
+        Toast.show({
+          text: "Quantity edited successfully!",
+          buttonText: "Okay",
+          duration: 10000,
+          position:'bottom',
+        })
       }
     })  
   }
@@ -154,7 +153,6 @@ class MyCart extends React.Component {
     const screen = navigation.getParam('screen');
     return (
       <View>
-
         <View> 
           {this.props.navigation.getParam('category_id')==1?
           <Header styles={styles.header}   

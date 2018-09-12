@@ -38,11 +38,12 @@ export default class AddAddress extends React.Component {
             alert("All fields are mandatory")
         }
         else{
-        var list=[];
-        var completeAddress={address:this.state.address,city:this.state.city,landmark:this.state.landmark,state:this.state.state,zipcode:this.state.zipcode,country:this.state.country}
-        var address=AsyncStorage.getItem('complete_address')
+            var list=[];
+            var completeAddress={address:this.state.address,city:this.state.city,landmark:this.state.landmark,state:this.state.state,zipcode:this.state.zipcode,country:this.state.country}
+            var address=AsyncStorage.getItem('complete_address')
 
-            address.then((value) => {var x=JSON.parse(value);    
+            address.then((value) => {
+                var x=JSON.parse(value);    
                 if(x!=null){
                     if(x.length==0){
                         list.push(completeAddress)
@@ -63,13 +64,13 @@ export default class AddAddress extends React.Component {
                 }
             })
        
-        Toast.show({
-            text: "Address Added Successfully!",
-            buttonText: "Okay",
-            duration: 10000,
-            position:'bottom',
-          })
-    }
+            Toast.show({
+                text: "Address Added Successfully!",
+                buttonText: "Okay",
+                duration: 10000,
+                position:'bottom',
+            })
+        }
 }
 
     render(){

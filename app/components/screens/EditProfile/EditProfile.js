@@ -177,12 +177,13 @@ class EditProfile extends Component{
                 {this.state.isupdating?<Loader/>:null}
                 {this.state.isfetching?<Loader/>:null}
                 <KeyboardAvoidingView style={styles.viewStyle} behavior={Platform.OS === 'ios' ? 'padding' : null}>
-                <ScrollView>
-                <View style={styles.viewStyle}>
-                <TouchableOpacity
-                style={{height:122,width:122,borderWidth:2,borderColor:'white',borderRadius:60,top:20}}
-                onPress={this.onPressPicture}>
-                {this.state.isLoading?<ActivityIndicator style={{marginTop:36}} size='large' animating={true}/>:
+                    <ScrollView>
+                        <View style={styles.viewStyle}>
+                            <TouchableOpacity
+                                 style={{height:122,width:122,borderWidth:2,borderColor:'white',borderRadius:60,top:20}}
+                                 onPress={this.onPressPicture}>
+                {this.state.isLoading?
+                    <ActivityIndicator style={{marginTop:36}} size='large' animating={true}/>:
                 this.props.details.user_data.profile_pic=='' || this.props.details.user_data.profile_pic==null && this.state.isPicSelected==false? 
                 <Image source={require('../../../assets/user_placeholder.png')} style={styles.roundedImage}/>:
                 <Image              

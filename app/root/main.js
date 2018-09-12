@@ -67,10 +67,7 @@ const Drawer=createDrawerNavigator({
       gesturesEnabled: false
     }
   },
-  // EditProfile:{
-  //   screen:EditProfile,
-  //   title:EditProfile,
-  // },
+
   StoreLocator:{
     screen:StoreLocator,
     title:StoreLocator,
