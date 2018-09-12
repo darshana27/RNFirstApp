@@ -89,7 +89,7 @@ class MyCart extends React.Component {
                 text: "Item Deleted successfully!",
                 buttonText: "Okay",
                 duration: 10000,
-                position:'top',
+                position:'bottom',
            
               })
             }
@@ -105,7 +105,7 @@ class MyCart extends React.Component {
         text: response.message,
         buttonText: "Okay",
         duration: 10000,
-        position:'top',
+        position:'bottom',
       })
     }
   }
@@ -141,7 +141,7 @@ class MyCart extends React.Component {
         text: "Quantity edited successfully!",
         buttonText: "Okay",
         duration: 10000,
-        position:'top',
+        position:'bottom',
       })
       // fetchApi.fetchData(''+urls.host_url+urls.list_cart_items,'GET',{},null,this.callbackFn)
       }

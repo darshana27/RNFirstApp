@@ -9,6 +9,7 @@ export default styles=StyleSheet.create({
         height:Dimensions.get('window').height-80,
         padding:15,
         backgroundColor:Colors.addAddressBG,
+
     },
     textArea:{
         alignItems:'flex-start',
@@ -65,5 +66,8 @@ export default styles=StyleSheet.create({
         fontFamily:fontRegular,
         fontSize:fontSize.large,
         
+    },
+    keyboard:{
+        height:Dimensions.get('window').height-50,
     }
 })

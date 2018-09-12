@@ -13,7 +13,7 @@ let validators=require('../../../utils/validators').validators();
 import { connect } from 'react-redux'
 import {userAction,editData} from '../../../redux/actions/userAction'
 import { Toast } from 'native-base'
-
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 class EditProfile extends Component{
     
@@ -32,13 +32,17 @@ class EditProfile extends Component{
             isPicSelected:false,
             isLoading:false,
             isfetching:false,
-            
+            isDateTimePickerVisible: false,
+
             // userDet:this.props.navigation.state.params.data,
             // userDet:user_data.user_data
         };
         this._editDetails=this._editDetails.bind(this); 
         this.onPressPicture=this.onPressPicture.bind(this);
         this.callbackFn=this.callbackFn.bind(this)
+        this._hideDateTimePicker=this._hideDateTimePicker.bind(this)
+        this._handleDatePicked=this._handleDatePicked.bind(this)
+        this._showDateTimePicker=this._showDateTimePicker.bind(this)
     }
 
     componentDidMount(){
@@ -50,7 +54,19 @@ class EditProfile extends Component{
           value: 0,
         }
       }
-
+    _showDateTimePicker() {this.setState({ isDateTimePickerVisible: true });}
+    
+    _hideDateTimePicker(){this.setState({ isDateTimePickerVisible: false });}
+    
+    _handleDatePicked=(date)=>{
+        day=date.getDate()
+        month=date.getMonth()+1
+        year=date.getFullYear()
+        console.log(day,month,year)
+        this.setState({dob: day+'-'+month+'-'+year})
+        console.log('A date has been picked: ', date);
+        this._hideDateTimePicker();
+    };
     _editDetails(){
         if(this.state.first_name=='' || this.state.last_name=='' || this.state.email=='' || this.state.phone_no=='' || this.state.dob==''){
             Toast.show({
@@ -136,7 +152,8 @@ class EditProfile extends Component{
     }
 
     render(){  
-  
+        currentDay= new Date()
+        year=currentDay.getFullYear()
         var defaultFile=this.props.details.user_data.profile_pic
         var user_pic=this.state.avatarSource
         var profile_pic_url = this.state.isPicSelected?user_pic:defaultFile;
@@ -228,7 +245,7 @@ class EditProfile extends Component{
                         <View style={styles.nestedView}>
                             <Icon style={styles.iconStyle} name="mobile" size={25} color="#FFFFFF"/>
                             <TextInput
-                            keyboardType='numeric'
+                                keyboardType='numeric'
                                 ref={(phoneNo) => {this.Phone= phoneNo}}
                                 style={styles.inputBox}
                                 placeholder="Phone Number"
@@ -241,9 +258,22 @@ class EditProfile extends Component{
                         </View>
                         <View style={styles.nestedView}>
                             <Icon style={styles.iconStyle} name="birthday-cake" size={18} color="#FFFFFF"/>
-                            <DatePicker
+                            <TouchableOpacity style={styles.inputBox}  onPress={()=>this._showDateTimePicker()}>
+                                <Text style={styles.dateText}>{valueDob}</Text>
+                            </TouchableOpacity> 
+                             <DateTimePicker
+                                mode='date' 
+                                isVisible={this.state.isDateTimePickerVisible}
+                                onConfirm={(date)=>this._handleDatePicked(date)}
+                                onCancel={()=>this._hideDateTimePicker()}
+                                minimumDate={new Date('1980-01-01')}
+                                maximumDate={new Date('2018-09-09')}
+
+                            />
+                            {/* <DatePicker
                                 style={styles.inputBox}
-                                minDate="1980-05-01"
+                                minDate="2012-05-01"
+                                maxDate="2018-09-01"
                                 mode="date"
                                 placeholder="Select date"
                                 format="DD-MM-YYYY"
@@ -275,7 +305,7 @@ class EditProfile extends Component{
                                   }
                                 }}
                                 onDateChange={(dob) => {this.setState({dob: dob})}}
-                            />
+                            /> */}
                         </View>
 
                         <TouchableOpacity

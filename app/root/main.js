@@ -48,17 +48,24 @@ const Drawer=createDrawerNavigator({
   Homescreen: {
     screen:Homescreen,
     title: Homescreen,
+    drawerLockMode: 'locked-close'
   },
   MyCart:{
   screen:MyCart,
   title:MyCart,
-  drawerLockMode: 'locked-closed'
+  navigationOptions: {
+    drawerLockMode: 'locked-closed',
+    gesturesEnabled: false
+  }
   },
   
   MyAccount:{
     screen:MyAccount,
     title:MyAccount,
-    drawerLockMode: 'locked-closed'
+    navigationOptions: {
+      drawerLockMode: 'locked-closed',
+      gesturesEnabled: false
+    }
   },
   // EditProfile:{
   //   screen:EditProfile,
@@ -67,21 +74,30 @@ const Drawer=createDrawerNavigator({
   StoreLocator:{
     screen:StoreLocator,
     title:StoreLocator,
-    drawerLockMode: 'locked-closed'
+    navigationOptions: {
+      drawerLockMode: 'locked-closed',
+      gesturesEnabled: false
+    }
   },
   MyOrders:{
     screen:MyOrders,
     title:MyOrders,
-    drawerLockMode: 'locked-closed'
+    navigationOptions: {
+      drawerLockMode: 'locked-closed',
+      gesturesEnabled: false
+    }
   },
   productListing:{
     screen:productListing,
     title:productListing,
-    drawerLockMode: 'locked-closed'
+    navigationOptions: {
+      drawerLockMode: 'locked-closed',
+      gesturesEnabled: false
+    }
   },
 
 },{
-drawerPosition : "left",
+// drawerPosition : "left",
 drawerWidth:250,
 contentComponent: ({ navigation }) => (<Sidebar navigation={navigation} />),}
 )
@@ -90,6 +106,7 @@ const Stack = createStackNavigator({
   StartUp: {
     screen:StartUp,
     title:StartUp,
+    
     navigationOptions: {
       header:null
     }
@@ -132,6 +149,7 @@ const Stack = createStackNavigator({
   EditProfile:{
     screen:EditProfile,
     title:EditProfile,
+    drawerLockMode: "locked-closed",
     navigationOptions:{
       header:null
     }

@@ -16,7 +16,7 @@ export default class OrderDetails extends React.Component {
     }
 
     componentDidMount(){
-        var orderId=this.props.navigation.getParam('orderID');
+        orderId=this.props.navigation.getParam('orderID');
         console.log(orderId)
         fetchApi.fetchData(''+urls.host_url+urls.order_details+'?order_id='+orderId,'GET',{},null,this.callbackFn)
 
@@ -41,7 +41,7 @@ export default class OrderDetails extends React.Component {
             <View style={styles.container}>
                 <Header 
                     styles={styles.header} 
-                    title={'My Orders'}
+                    title={'Order ID::'+this.props.navigation.getParam('orderID')}
                     isSearch={true}
                     isAdd={false}
                     back={() => {this.props.navigation.goBack()}}/>

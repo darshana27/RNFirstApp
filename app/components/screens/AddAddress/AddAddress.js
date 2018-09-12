@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, ScrollView,TouchableOpacity,AsyncStorage,TextInput} from 'react-native';
+import { Text, View,Dimensions, ScrollView,TouchableOpacity,AsyncStorage,TextInput,KeyboardAvoidingView,Platform} from 'react-native';
 import { Toast } from 'native-base'
 import Header from '../../header/header';
 import styles from '../AddAddress/styles';
@@ -74,13 +74,13 @@ export default class AddAddress extends React.Component {
 
     render(){
         return(
-   
         <View>
             <Header styles={styles.header} title={'Add Address'}
                     back={() => {this.props.navigation.goBack()}} />
              
-                    <ScrollView>
-                    <View style={styles.viewStyle}>
+                    <ScrollView style={styles.viewStyle}>
+                    <KeyboardAvoidingView style={styles.keyboard} behavior={Platform.OS === 'ios' ? 'padding' : null}>
+                    <View>
                         <Text style={styles.text}>ADDRESS</Text>
 
                             <TextInput
@@ -146,6 +146,7 @@ export default class AddAddress extends React.Component {
                                 <Text style={styles.btnText}>SAVE ADDRESS</Text>
                             </TouchableOpacity>
                     </View> 
+                    </KeyboardAvoidingView>
                 </ScrollView>
        
         </View>

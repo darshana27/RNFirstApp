@@ -60,12 +60,16 @@ export default class StoreLocator extends React.Component {
   //  }
 
    async getDirections(startLoc, destinationLoc) {
-    console.log(''+startLoc,''+destinationLoc)
+    console.log('Start End Loc',''+startLoc,''+destinationLoc)
          try {
-             let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${ startLoc }&destination=${ destinationLoc }`)
+             let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${ startLoc }&destination=${ destinationLoc }&key=AIzaSyCPXhNSCfYL9hK-jU8vt7Nr44Cl0B8nANo`)
+             console.log(resp)
              let respJson = await resp.json();
+             console.log(respJson)
              let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
+             console.log('Points',points)
              let coords = points.map((point, index) => {
+               
                  return  {
                      latitude : point[0],
                      longitude : point[1]
@@ -97,8 +101,7 @@ export default class StoreLocator extends React.Component {
   );
 
   fitPadding(marker){
-    console.log(this.map)
-    console.log(marker)
+
     this.map.fitToCoordinates([marker],{
       edgePadding: { top: 40, right: 40, bottom: 40, left: 40 },
       animated: true});

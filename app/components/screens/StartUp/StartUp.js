@@ -18,52 +18,48 @@ class StartUp extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props)
-        // SplashScreen.hide();
+
         AsyncStorage.getItem('user_access_token')
             .then((value) => {
-                // console.log(value);
                 if (value != null) {
-                    // console.log(value);
                     try{
                         fetchApi.fetchData(''+urls.host_url+urls.user_fetch_details,'GET',{},null,this.callbackFnFetch)
                     }
                     catch(err){
-                        Alert.alert(err.message)
+                        Alert.alert(
+                            'Exit App',
+                            'No Internet Connection', [{
+                                text: 'Exit App',
+                                onPress: () => BackHandler.exitApp(),
+                                style: 'cancel'
+                            }, {
+                                text: 'Try Again',
+                                onPress: () => this.componentDidMount()
+                            }, ], {
+                                cancelable: false
+                            }
+                        )
                     }
                 }    
                     else {
                     console.log('Key is null');
-                    //   this.setState({isLoggedin:false,isVerifying:false})
                     this.props.navigation.replace('Login')
                 }
             })
     }
     callbackFnFetch(response){
-
-        // console.log('COUNT : '+response.data.total_carts)
         if (response.status != 200) {
-            // throw Error(response.message)
             AsyncStorage.removeItem('user_access_token')
-            // Alert.alert('Something went wrong.Please try again later')
             this.props.navigation.replace('Login')
-            
-            // AsyncStorage.setItem('screen','Login')
         } else {
-            console.log(response)
             serviceProvider.setUsrData(response.data)
             this.props.userAction(response.data)
-            
-            console.log('Redux',this.props.details.user_data.first_name)
             this.props.navigation.replace('Homescreen')
-            // console.log(response.data.product_categories)
         }
     }
     render() {
-        return (
-         
-            <Loader/>
-           
+        return ( 
+            <Loader/>  
         );
     }
 }

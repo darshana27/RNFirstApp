@@ -91,14 +91,14 @@ export default styles=StyleSheet.create({
         borderRadius:10,
         height:280,
         width:330,
-        backgroundColor:'#10BEAA',
+        backgroundColor:Colors.white,
         alignItems:'center',
         justifyContent:'center'
     },
     success:{
         marginTop:10,
         fontSize:30,
-        color:Colors.white,
+        color:'#1B9D25',
         fontFamily:fontRegular
     }
 }

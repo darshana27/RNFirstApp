@@ -39,7 +39,7 @@ export default styles=StyleSheet.create({
         height: 45,
         width:'84%',
         color:Colors.white,
-        fontFamily:fontRegular
+        fontFamily:fontRegular,
         // fontSize:16,
         // color:Colors.white,
         // fontFamily:fontRegular
@@ -131,5 +131,12 @@ export default styles=StyleSheet.create({
     resetPassword:{
         fontFamily:fontMedium,
         fontSize:fontSize.medium,
+    },
+    dateText:{
+        color: '#fff',
+        fontSize:16,
+        paddingTop:12,
+        paddingBottom:12,
+        paddingLeft:3,
     }
 });
