@@ -23,19 +23,21 @@ exports.fetchApi = function() {
             .then(response => {
                 // console.log(response)  
                 callbackFn!=null?callbackFn(response):response.data})
-            .catch((err) => Alert.alert(
-                'Exit App',
-                'No Internet Connection', [{
-                    text: 'Exit App',
-                    onPress: () => BackHandler.exitApp(),
-                    style: 'cancel'
-                }, {
-                    text: 'Try Again',
-                    onPress: () => this.componentDidMount()
-                }, ], {
-                    cancelable: false
-                }
-            ) )               
+            .catch((err) => alert(err)
+            // Alert.alert(
+            //     'Exit App',
+            //     'No Internet Connection', [{
+            //         text: 'Exit App',
+            //         onPress: () => BackHandler.exitApp(),
+            //         style: 'cancel'
+            //     }, {
+            //         text: 'Try Again',
+            //         onPress: () => this.componentDidMount()
+            //     }, ], {
+            //         cancelable: false
+            //     }
+            // ) 
+        )               
         }
         catch(err){
             Alert.alert("Something went wrong.Try again.")

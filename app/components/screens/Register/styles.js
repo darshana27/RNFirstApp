@@ -92,12 +92,24 @@ export default styles=StyleSheet.create({
         fontFamily:fontMedium
     },
     viewCheck: {
-        backgroundColor:Colors.red,
-        
+        backgroundColor:'transparent',
+        width:230,
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'center'
     },
     checkBox:{
-        borderWidth:0,
-        backgroundColor:Colors.red,
+        // borderWidth:0,
+        // backgroundColor:Colors.red,
+        height:15,
+        width:15,
+        borderWidth:1,
+        borderColor:'white',
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    innerCheck:{
+        height:10,width:10
     },
     textStyle:{
         color:Colors.white,

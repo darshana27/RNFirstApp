@@ -15,13 +15,14 @@ export default class Register extends Component{
     constructor(props){
         super(props);
         this.state={
-            checked:false,
+            // checked:false,
             fname:'',
             lname:'',
             email:'',
             pwd:'',
             cnfPwd:'',
             phone:'',
+            isChecked:false
 
         }
         this._register = this._register.bind(this);
@@ -62,7 +63,7 @@ export default class Register extends Component{
         }
         else{
 
-            if(this.state.checked===false){
+            if(this.state.isChecked){
                 Alert.alert('Please agree the terms and conditions');
             }
             else{
@@ -230,16 +231,15 @@ export default class Register extends Component{
                             />
                         </View>
 
-                        <View style={styles.viewCheck}>  
-                            <CheckBox
-                                containerStyle={styles.checkBox}
-                                textStyle={styles.textStyle}
-                                center
-                                title='I agree the Terms & Conditions'
-                                // checkedIcon='stop'
-                                checked={this.state.checked}
-                                onPress={() => this.setState({ checked: !this.state.checked })}
-                            />
+                        <View style={styles.viewCheck} >  
+                            <TouchableOpacity style={styles.checkBox}
+                            onPress={()=>{
+                                console.log(this.state.isChecked)
+                                this.setState({isChecked:!this.state.isChecked})
+                                console.log(this.state.isChecked)}}>
+                                <View style={[styles.innerCheck,{backgroundColor:this.state.isChecked?'transparent':'#fff'}]}></View>
+                            </TouchableOpacity>
+                            <Text style={{color:'white'}}>&nbsp;&nbsp;I agree the terms & conditions</Text>
                         </View>
 
                         <TouchableOpacity

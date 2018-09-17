@@ -38,7 +38,7 @@ export default class Homescreen extends Component{
     handleBackButton = () => {
         Alert.alert(
             'Exit App',
-            'Exiting the application?', [{
+            'Exit the application?', [{
                 text: 'Cancel',
                 onPress: () => console.log('Cancel Pressed'),
                 style: 'cancel'

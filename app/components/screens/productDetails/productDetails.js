@@ -1,5 +1,5 @@
 import React from 'react';
-import { View,Text,Image,ScrollView,Vibration,TouchableOpacity,TextInput,Share} from 'react-native';
+import { View,Text,Image,ScrollView,Vibration,TouchableOpacity,TextInput,Share,Dimensions} from 'react-native';
 import Header from '../../header/header';
 import StarRating from 'react-native-star-rating';
 import styles from './styles';
@@ -240,8 +240,8 @@ class productDetails extends React.Component {
           title={this.state.productDet.name}
           isSearch={true}
           back={() => {this.props.navigation.goBack()}} />
-         
-        <ScrollView>
+         <View>
+        <ScrollView style={{height:Dimensions.get('window').height-155}}>
           <View style={styles.itemDetails}>
             <View style={styles.leftContent}>
               <Text style={styles.productHeading}>{this.state.productDet.name}</Text>
@@ -281,6 +281,8 @@ class productDetails extends React.Component {
               <Text style={styles.descText}>{this.state.productDet.description}</Text>
             </View>
           </View>
+          </ScrollView>
+          </View>
           <View style={styles.buttons}>
               <TouchableOpacity
                 onPress={this._toggleModal2}
@@ -293,7 +295,7 @@ class productDetails extends React.Component {
                   <Text style={styles.btnText}>RATE</Text>
               </TouchableOpacity>
           </View>  
-        </ScrollView>
+ 
       </View>   
     );
   }

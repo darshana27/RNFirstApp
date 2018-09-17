@@ -43,22 +43,6 @@ export default class StoreLocator extends React.Component {
 
    }
 
-  // mergeLot(){
-  //   console.log('mergelot called')
-  //   if (this.state.latitude != null && this.state.longitude!=null)
-  //    {
-  //      let concatLot = this.state.latitude +","+this.state.longitude
-
-  //      this.setState({
-  //        concat: concatLot
-  //      }, () => {
-  //        console.log(concatLot,this.state.dest_lat,this.state.dest_long)
-  //        this.getDirections(concatLot, (this.state.dest_lat,this.state.dest_long));
-  //      });
-  //    }
-
-  //  }
-
    async getDirections(startLoc, destinationLoc) {
     console.log('Start End Loc',''+startLoc,''+destinationLoc)
          try {
@@ -184,6 +168,9 @@ export default class StoreLocator extends React.Component {
             style={styles.map}
             loadingEnabled={true}
             loadingIndicatorColor='#000'
+            // mapType='hybrid'
+            maxZoomLevel={18}
+            showsMyLocationButton={true}
               initialRegion={{
                 latitude: 19.019360,
                 longitude: 72.842651,

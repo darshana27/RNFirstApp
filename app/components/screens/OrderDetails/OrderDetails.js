@@ -41,7 +41,7 @@ export default class OrderDetails extends React.Component {
             <View style={styles.container}>
                 <Header 
                     styles={styles.header} 
-                    title={'Order ID::'+this.props.navigation.getParam('orderID')}
+                    title={'Order ID:'+this.props.navigation.getParam('orderID')}
                     isSearch={true}
                     isAdd={false}
                     back={() => {this.props.navigation.goBack()}}/>

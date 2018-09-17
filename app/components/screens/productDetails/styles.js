@@ -6,29 +6,19 @@ import { fontMedium,fontBold,fontRegular } from '../../../styles/appStyles';
 
 export default styles=StyleSheet.create({
     container : {
-        flex:1,
-        // borderColor:'blue',
-        // borderWidth:1,
+        flex:1,  
     },
-    itemDetails:{
-        
+    itemDetails:{   
         backgroundColor:Colors.white,
         width:Dimensions.get('window').width,
-        //height:'22%',
         flexDirection:'row',
-        // borderWidth:1,
-        // borderColor:'red',  
         padding:10
     },
     leftContent:{
-        width:Dimensions.get('window').width-90,
-        // borderWidth:1,
-        // borderColor:'black',  
+        width:Dimensions.get('window').width-90, 
     },
     rightContent:{
         width:'18.5%',
-        // borderColor:'yellow',
-        // borderWidth:1,
         alignContent:'flex-end',
         justifyContent: 'flex-end',
         paddingBottom:5
@@ -137,15 +127,16 @@ export default styles=StyleSheet.create({
     },
     buttons:{
         width:Dimensions.get('window').width,
-        height:'12%',
+        height:'11%',
         backgroundColor:Colors.white,
         flexDirection:'row',
         bottom:0,
+        position:'absolute',
         paddingTop:10,
-        marginBottom:10,
+        // marginBottom:10,
         paddingLeft:20,
         paddingRight:20,
-        marginTop:10,
+    
         alignContent:'center',
         justifyContent:'space-between'
     },

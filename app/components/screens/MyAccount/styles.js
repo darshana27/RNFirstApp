@@ -1,12 +1,11 @@
 import { StyleSheet,Dimensions } from 'react-native';
 import * as Colors from '../../../utils/colors';
 import * as fontSize from '../../../utils/fontSizes';
-// import * as appStyles from '../../../styles/appStyles';
-import {fontMedium,fontBold,fontRegular} from '../../../styles/appStyles';
+import {fontMedium,fontRegular} from '../../../styles/appStyles';
+
 export default styles=StyleSheet.create({
     viewStyle:{
         flex:1,
-        // backgroundColor: Colors.red,
         justifyContent:'center',
         alignItems:'center',
     },
@@ -33,22 +32,16 @@ export default styles=StyleSheet.create({
         paddingBottom:11,
         marginTop:17,
     },
-    inputArea: {height: 38, width: '80%', fontSize: 16, color: Colors.white},
+    inputArea: {
+        height: 38, 
+        width: '80%', 
+        fontSize: 16, 
+        color: Colors.white},
     inputBox: {
         height: 45,
         width:'80%',
-       
         color:Colors.white,
         fontFamily:fontRegular
-        // borderBottomColor:Colors.white,
-        // borderTopColor:Colors.white,
-        // borderLeftColor:Colors.white,
-        // borderRightColor:Colors.white,
-        // borderBottomWidth:1,
-        // borderTopWidth:1,
-        // borderLeftWidth:1,
-        // borderRightWidth:1,
-        // placeholderTextColor:'white',
     },
     registerButton: {
         height:50,
@@ -58,10 +51,7 @@ export default styles=StyleSheet.create({
         marginBottom:20,
         backgroundColor:Colors.white,
         borderRadius:5,
-        borderBottomColor:Colors.white,
-        borderTopColor:Colors.white,
-        borderLeftColor:Colors.white,
-        borderRightColor:Colors.white,
+        borderColor:Colors.white,
         borderWidth:1,
     },
     btnText:{
@@ -76,7 +66,6 @@ export default styles=StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        // backgroundColor: '#fff',
         borderWidth: 1,
         borderColor: Colors.white,
         height: 40,
@@ -90,7 +79,6 @@ export default styles=StyleSheet.create({
         width: '10%',
     },
     viewRadio: {
-
         flexDirection:'row',
         justifyContent:'center', 
         marginTop:5,
@@ -117,12 +105,10 @@ export default styles=StyleSheet.create({
         flex:1,
         height:null,
         width:null,
-        // resizeMode: 'cover'
     },
     resetPasswordBtn:{
         width:Dimensions.get('window').width,
         height:55,
-        // color:Colors.descContent,
         backgroundColor:Colors.white,
         alignItems:'center',
         justifyContent:'center',

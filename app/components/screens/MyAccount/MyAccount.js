@@ -148,14 +148,16 @@ class MyAccount extends Component{
 
                             </View>
 
-                </View>
+                </View>                        
+
                         <TouchableOpacity
                                     style={styles.resetPasswordBtn}
                                     onPress={this._reset}>
                                     <Text style={styles.resetPassword}>RESET PASSWORD</Text>
-                                </TouchableOpacity>
+                        </TouchableOpacity>
                         </ScrollView>
                     </KeyboardAvoidingView>
+
                 </View> 
             </ImageBackground>
             )
