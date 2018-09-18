@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import * as Colors from '../../../utils/colors';
+import * as fontSize from '../../../utils/fontSizes';
 // import * as appStyles from '../../../styles/appStyles';
 import {fontMedium,fontBold,fontRegular} from '../../../styles/appStyles';
 export default styles=StyleSheet.create({
@@ -20,17 +21,8 @@ export default styles=StyleSheet.create({
         height:45,
         width:'70%',
         color:Colors.white,
-        fontSize:20,
+        fontSize:fontSize.medium,
         fontFamily:fontRegular
-         // borderBottomColor:Colors.white,
-        // borderTopColor:Colors.white,
-        // borderLeftColor:Colors.white,
-        // borderRightColor:Colors.white,
-        // borderBottomWidth:1,
-        // borderTopWidth:1,
-        // borderLeftWidth:1,
-        // borderRightWidth:1,
-        // placeholderTextColor:'white',
     },
     loginButton: {
         height:45,

@@ -34,6 +34,7 @@ class AddressListing extends React.Component{
     componentDidMount(){
         console.log(this.props.details.user_data)
         this.NavigationListener=this.props.navigation.addListener('willFocus',()=>{
+            console.log(this.state.rerender)
            this.setState({rerender:this.state.rerender+1})
            this.fetchItems()
         });
@@ -51,14 +52,14 @@ class AddressListing extends React.Component{
 
     async fetchItems(){
         var val=await AsyncStorage.getItem('complete_address')
-        console.log(val)
+        console.log("VAl ",val)
         if(val!=null){
             this.setState({data:JSON.parse(val),addressLoader:false})
         }
         if(val==null){
             this.setState({data:null,addressLoader:false})
         }
-        console.log(this.state.data)
+        console.log("Address : ",this.state.data)
     }
     deleteAdd(idx){
         Alert.alert(

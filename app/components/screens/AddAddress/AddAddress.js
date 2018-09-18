@@ -17,12 +17,14 @@ export default class AddAddress extends React.Component {
             country:'',     
         };
         this.addAddress=this.addAddress.bind(this); 
+        this.navigateAddress=this.navigateAddress.bind(this); 
     }
     componentDidMount(){
         idx=this.props.navigation.getParam('addressIndex')
         console.log(idx)
         addressData=this.props.navigation.getParam('addressData')
-        addressData!=null?
+        console.log("This",addressData)
+        addressData!=undefined?
         this.setState({
             address:addressData.address,
             city:addressData.city,
@@ -58,35 +60,48 @@ export default class AddAddress extends React.Component {
                     if(x.length==0){
                         list.push(completeAddress)
                         console.log(list)
-                        AsyncStorage.setItem('complete_address',JSON.stringify(list))
+                        AsyncStorage.setItem('complete_address',JSON.stringify(list),() => {this.navigateAddress()})
                     
                     }
                     else{
-                        idx!=null ?
-                        x.splice(idx,1):
+                        console.log(idx!==undefined)
+                        idx !== undefined ?
+                        x.splice(idx,1):null
                         x.push(completeAddress)
                         console.log(x)
-                        AsyncStorage.setItem('complete_address',JSON.stringify(x))   
+                        AsyncStorage.setItem('complete_address',JSON.stringify(x),() => {this.navigateAddress()})   
                     }
                 }
                 else{
                     x=[]
                     x.push(completeAddress)
-                    AsyncStorage.setItem('complete_address',JSON.stringify(x))
-                    
+                    AsyncStorage.setItem('complete_address',JSON.stringify(x),  () => {this.navigateAddress()})   
                 }
             })
        
-            Toast.show({
-                text: "Address Added Successfully!",
-                buttonText: "Okay",
-                duration: 10000,
-                position:'bottom',
-            })
-            this.props.navigation.navigate('MyCart')
+            // Toast.show({
+            //     text: "Address Added Successfully!",
+            //     buttonText: "Okay",
+            //     duration: 10000,
+            //     position:'bottom',
+            // })
+            // setTimeout(()=>{this.props.navigation.navigate('AddressListing')},2000)
+            
+            
         }
 }
 
+    navigateAddress(){
+
+        Toast.show({
+            text: "Address Added Successfully!",
+            buttonText: "Okay",
+            duration: 10000,
+            position:'bottom',
+        })
+        this.props.navigation.navigate('AddressListing')
+        
+    }
     render(){
         return(
         <View>

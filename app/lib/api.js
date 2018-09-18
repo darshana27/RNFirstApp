@@ -30,8 +30,13 @@ exports.fetchApi = function() {
                     text: 'Exit App',
                     onPress: () => BackHandler.exitApp(),
                     style: 'cancel'
+                },
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('cancel'),
+                    style: 'cancel'
                 }], {
-                    cancelable: false
+                    cancelable: true
                 }
             ) }
         )               

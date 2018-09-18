@@ -107,7 +107,7 @@ class Login extends Component{
             
                     <Text style={styles.headingText}>NeoSTORE</Text>
                     <View style={styles.nestedView}>
-                        <Icon style={styles.iconStyle} name="user" size={22} color="#FFFFFF"/>
+                        <Icon style={styles.iconStyle} name="user" size={18} color="#FFFFFF"/>
                         <TextInput
                             ref="Username"
                             style={styles.inputBox}
@@ -122,7 +122,7 @@ class Login extends Component{
                     </View>
 
                     <View style={styles.nestedView}>
-                        <Icon style={styles.iconStyle} name="lock" size={22} color="#FFFFFF"/>
+                        <Icon style={styles.iconStyle} name="lock" size={18} color="#FFFFFF"/>
                         <TextInput
                             ref={(password) => {this.Password= password}}
                             style={styles.inputBox}
