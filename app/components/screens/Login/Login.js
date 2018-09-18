@@ -20,7 +20,7 @@ class Login extends Component{
         super(props);
         this.state={
                 uname:'deshpande.darshana@gmail.com',
-                pwd:'darshana123',
+                pwd:'darshana27997',
                 isModal1Visible:false,
                 toggle:false,
                 isDisabled:false
@@ -59,6 +59,7 @@ class Login extends Component{
 
     callbackFn(response){
         if( response.status != 200){
+            this._toggleModal1()
             Toast.show({
                 text:response.user_msg,
                 buttonText: "Okay",
@@ -68,6 +69,7 @@ class Login extends Component{
             })
         }
         else{
+            this._toggleModal1()
             serviceProvider.setUsrData['access_token',response.data.access_token]
             var accessToken=response.data.access_token
             AsyncStorage.setItem('user_access_token',accessToken);

@@ -42,7 +42,7 @@ export default class OrderDetails extends React.Component {
                 <Header 
                     styles={styles.header} 
                     title={'Order ID:'+this.props.navigation.getParam('orderID')}
-                    isSearch={true}
+                    isSearch={false}
                     isAdd={false}
                     back={() => {this.props.navigation.goBack()}}/>
                     {this.state.isLoading?<Loader/>:

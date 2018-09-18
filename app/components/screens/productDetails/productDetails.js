@@ -1,5 +1,5 @@
 import React from 'react';
-import { View,Text,Image,ScrollView,Vibration,TouchableOpacity,TextInput,Share,Dimensions} from 'react-native';
+import { View,Text,Image,ScrollView,Vibration,TouchableOpacity,TextInput,Share,Dimensions,ActivityIndicator} from 'react-native';
 import Header from '../../header/header';
 import StarRating from 'react-native-star-rating';
 import styles from './styles';
@@ -136,7 +136,7 @@ class productDetails extends React.Component {
     this.state.product_quantity != null ?
     fetchApi.fetchData('http://staging.php-dev.in:8844/trainingapp/api/addToCart','POST',{},formData1,this.callbackAddToCart):
     console.log("Null")
-    this._toggleModal2()
+    
   }
 
   callbackAddToCart(response){
@@ -147,9 +147,10 @@ class productDetails extends React.Component {
           buttonText: "Okay",
           duration: 5000,
           position:'bottom',
-          
+        
         })
         this.props.totalCart(response.total_carts)
+        this._toggleModal2()
       }
       else{
         alert(response.message)
@@ -238,7 +239,7 @@ class productDetails extends React.Component {
         <Header 
           styles={styles.header} 
           title={this.state.productDet.name}
-          isSearch={true}
+          isSearch={false}
           back={() => {this.props.navigation.goBack()}} />
          <View>
         <ScrollView style={{height:Dimensions.get('window').height-155}}>
@@ -250,7 +251,7 @@ class productDetails extends React.Component {
             </View>
             <View style={styles.rightContent}>
               <StarRating
-                disabled={false}
+                disabled={true}
                 maxStars={5}
                 rating={this.state.productDet.rating}
                 fullStarColor={Colors.starFilled}
@@ -267,7 +268,7 @@ class productDetails extends React.Component {
                 </TouchableOpacity>
             </View>
             <TouchableOpacity style={styles.mainImg}  onPress={this._toggleModal3}>
-                { this.state.isLoading?<Loader/>:
+                { this.state.isLoading?<View style={{flex:1,alignItems:'center',justifyContent:'center'}}><ActivityIndicator size="large"/></View>:
                   this.state.currentImg?
                   <Image style={styles.imgBig} source={{uri:this.state.currentImg}}/>
                   :null

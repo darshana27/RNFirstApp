@@ -23,13 +23,12 @@ class AddressListing extends React.Component{
             data:[],
             selected:0,
             rerender:0,
-            isloading:false
+            isloading:false,
+            addressLoader:true,
         };
         this.fetchAddress=this.fetchAddress.bind(this)
         this.deleteAdd=this.deleteAdd.bind(this)
         this.editAdd=this.editAdd.bind(this)
-        this.onRadioSelected=this.onRadioSelected.bind(this)  
-        // this._toggleModal1 = this._toggleModal1.bind(this);
     }
 
     componentDidMount(){
@@ -54,10 +53,10 @@ class AddressListing extends React.Component{
         var val=await AsyncStorage.getItem('complete_address')
         console.log(val)
         if(val!=null){
-            this.setState({data:JSON.parse(val)})
+            this.setState({data:JSON.parse(val),addressLoader:false})
         }
         if(val==null){
-            this.setState({data:null})
+            this.setState({data:null,addressLoader:false})
         }
         console.log(this.state.data)
     }
@@ -81,7 +80,7 @@ class AddressListing extends React.Component{
                 }
             }}],
             {cancelable:true})
-      }
+    }
     
     editAdd(idx,element){
         this.props.navigation.navigate('AddAddress',{'addressData':element,'addressIndex':idx})
@@ -110,10 +109,6 @@ class AddressListing extends React.Component{
             )
         })
     }
-    onRadioSelected(idx){
-        console.log("Radio functions")
-        this.setState({radioBG:Colors.addressListRadioInner})
-    }  
 
     orderNow(idx){
 
@@ -166,6 +161,7 @@ class AddressListing extends React.Component{
                 //for android
                 paymentURL=Platform.OS=='ios'?urls.iosPayment:urls.androidPayment
                 console.log(paymentURL)
+                    // Platform.OS=='android'?fetchApi.fetchData(urls.AndroidCustomer,'POST',{},tokenId,(response => {console.log(response)})):{}
                     fetchApi.fetchData(paymentURL,'POST',{},tokenId,(response => {
                     console.log(response)
                     
@@ -196,6 +192,7 @@ class AddressListing extends React.Component{
     render(){
             return(
             <View style={styles.mainView}>
+
             {this.state.isloading?<Loader/>:null}
              <Modal isVisible={this.state.isModal1Visible}
                         onBackdropPress={() => this.setState({ isModal1Visible: false })}>
@@ -222,7 +219,7 @@ class AddressListing extends React.Component{
                     isAdd={true}
                     back={() => {this.props.navigation.goBack()}}
                     search={() => {this.props.navigation.navigate('AddAddress')}}/>
-                    
+                    {this.state.addressLoader?<Loader/>:
                 <ScrollView>
                     <View style={styles.shippingTitleView}>
                         <Text style={styles.shippingText}>Shipping Address</Text>
@@ -237,7 +234,7 @@ class AddressListing extends React.Component{
                         <Text style={styles.btnText}>PLACE ORDER</Text>
                     </TouchableOpacity>
                     </View>
-                </ScrollView>
+                </ScrollView>}
             </View>
         )
     }

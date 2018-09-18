@@ -26,3 +26,5 @@ export const order_details =  'orderDetail';
 
 export const androidPayment='http://10.0.100.220:9000/charge'
 export const iosPayment='http://localhost:9000/charge'
+
+export const AndroidCustomer='http://10.0.100.220:9000/cust'

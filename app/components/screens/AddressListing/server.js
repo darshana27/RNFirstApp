@@ -17,4 +17,16 @@ app.post("/charge", async (req, res) => {
     }
   });
 
-  app.listen(9000, () => console.log("Listening on port 9000"));
+  // app.listen(9000, () => console.log("Listening on port 9000"));
+
+  // app.post("/cust",async (req,res) => {
+  //   try{ 
+  //     let {status} = await stripe.customers.create({
+  //     description: 'Customer for jenny.rosen@example.com',
+  //     });
+  //     res.json({status});
+  //   }
+  //   catch (err) {
+  //     res.status(500).end();
+  //   } 
+  // });

@@ -44,7 +44,7 @@ export default class MyOrders extends React.Component {
         <Header 
             styles={styles.header} 
             title={'My Orders'}
-            isSearch={true}
+            isSearch={false}
             isAdd={false}
             back={() => {this.props.navigation.goBack()}}/>
         {this.state.isLoading?<Loader/>:

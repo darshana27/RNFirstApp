@@ -90,9 +90,9 @@ export default class Homescreen extends Component{
                     <Header styles={styles.header} 
                         title={'NeoSTORE'}
                         isDrawer={true}
-                        isSearch={true}
+                        isSearch={false}
                             back={() => {this.props.navigation.dispatch(DrawerActions.openDrawer())}} 
-                            search={() => {this.searchBar.show()}}/>
+                            />
                 </View>
                 <SearchBar
                     autoplayTimeout={2}

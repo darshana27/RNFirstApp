@@ -70,33 +70,33 @@ export default class productListing extends React.Component {
           {this.props.navigation.getParam('category_id')==1?
           <Header styles={styles.header}   
                   title="Tables"
-                  isSearch={true}
+                  isSearch={false}
                   back={() => {this.props.navigation.goBack()}} 
-                  search={() => {this.searchBar.show()}}/>:null}
+                  />:null}
           {this.props.navigation.getParam('category_id')==2?
           <Header styles={styles.header}   
                   title="Chairs"
-                  isSearch={true}
+                  isSearch={false}
                   back={() => {this.props.navigation.goBack()}} 
-                  search={() => {this.searchBar.show()}}/>:null}
+                  />:null}
           {this.props.navigation.getParam('category_id')==3?
           <Header styles={styles.header}   
                   title="Sofas"
-                  isSearch={true}
+                  isSearch={false}
                   back={() => {this.props.navigation.goBack()}} 
-                  search={() => {this.searchBar.show()}}/>:null}
+                  />:null}
           {this.props.navigation.getParam('category_id')==4?
           <Header styles={styles.header}   
                   title="Cupboards"
-                  isSearch={true}
+                  isSearch={false}
                   back={() => {this.props.navigation.goBack()}} 
-                  search={() => {this.searchBar.show()}}/>:null}
+                  />:null}
           {this.props.navigation.getParam('category_id')==null?
           <Header styles={styles.header}   
                   title={screen}
-                  isSearch={true}
+                  isSearch={false}
                   back={() => {this.props.navigation.goBack()}} 
-                  search={() => {this.searchBar.show()}}/>:null}
+                  />:null}
         </View>
         <SearchBar
                     backgroundColor='#9e0100'

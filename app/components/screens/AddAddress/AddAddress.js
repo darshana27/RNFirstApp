@@ -3,6 +3,7 @@ import { Text, View,Dimensions, ScrollView,TouchableOpacity,AsyncStorage,TextInp
 import { Toast } from 'native-base'
 import Header from '../../header/header';
 import styles from '../AddAddress/styles';
+let validators=require('../../../utils/validators').validators();
 
 export default class AddAddress extends React.Component {
     constructor(props){
@@ -37,6 +38,15 @@ export default class AddAddress extends React.Component {
         if(this.state.address=='' || this.state.city=='' || this.state.landmark=='' || this.state.state=='' || this.state.zipcode=='' || this.state.country=='' ){
             alert("All fields are mandatory")
         }
+        else if(this.state.zipcode.length!=6){
+           alert("Enter valid zipcode")
+        }
+        else if(!validators.RegexNames(this.state.state)){
+           alert("Enter valid state name")
+        }
+        else if(!validators.RegexNames(this.state.country)){
+            alert("Enter valid country name")
+         }
         else{
             var list=[];
             var completeAddress={address:this.state.address,city:this.state.city,landmark:this.state.landmark,state:this.state.state,zipcode:this.state.zipcode,country:this.state.country}
@@ -49,18 +59,21 @@ export default class AddAddress extends React.Component {
                         list.push(completeAddress)
                         console.log(list)
                         AsyncStorage.setItem('complete_address',JSON.stringify(list))
+                    
                     }
                     else{
-                        x.splice(idx,1)
+                        idx!=null ?
+                        x.splice(idx,1):
                         x.push(completeAddress)
                         console.log(x)
-                        AsyncStorage.setItem('complete_address',JSON.stringify(x))
+                        AsyncStorage.setItem('complete_address',JSON.stringify(x))   
                     }
                 }
                 else{
                     x=[]
                     x.push(completeAddress)
                     AsyncStorage.setItem('complete_address',JSON.stringify(x))
+                    
                 }
             })
        
@@ -70,6 +83,7 @@ export default class AddAddress extends React.Component {
                 duration: 10000,
                 position:'bottom',
             })
+            this.props.navigation.navigate('MyCart')
         }
 }
 

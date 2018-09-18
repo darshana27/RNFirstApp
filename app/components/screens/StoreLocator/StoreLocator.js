@@ -157,7 +157,7 @@ export default class StoreLocator extends React.Component {
         <Header 
                     styles={styles.header} 
                     title={'Store Locator'}
-                    isSearch={true}
+                    isSearch={false}
                     isAdd={false}
                     back={() => {this.props.navigation.goBack()}}
                     />
