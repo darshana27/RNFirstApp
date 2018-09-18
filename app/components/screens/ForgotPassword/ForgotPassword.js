@@ -7,6 +7,8 @@ import Header from '../../header/header';
 let validators=require('../../../utils/validators').validators();
 let fetchApi=require('../../../lib/api').fetchApi();
 import * as urls from '../../../lib/urls';
+import { StackActions, NavigationActions } from 'react-navigation';
+
 
 export default class Homescreen extends Component{
     constructor(props){
@@ -46,7 +48,30 @@ export default class Homescreen extends Component{
             formData.append("password",this.state.nPwd);
             formData.append("confirm_password",this.state.cPwd);
             var access=this.props.navigation.getParam('data')
-            fetchApi.fetchData(''+urls.host_url+urls.user_change_password,'POST',{},formData,this.callbackFn)
+            fetchApi.fetchData(''+urls.host_url+urls.user_change_password,'POST',{},formData,(response)=>{
+                console.log(response)   
+                if(response.status==200){
+                    const resetAction = StackActions.reset({
+                        index: 0,
+                        actions: [NavigationActions.navigate({ routeName: 'Login' })],
+                      });
+                      this.props.navigation.dispatch(resetAction);
+                    Toast.show({
+                        text: response.user_msg,
+                        buttonText: "Okay",
+                        duration: 10000,
+                        position:'bottom',
+                      })
+                }
+                else{
+                    Toast.show({
+                        text: response.user_msg,
+                        buttonText: "Okay",
+                        duration: 10000,
+                        position:'bottom',
+                      })
+                }
+            })
         }
     }
 
@@ -60,6 +85,7 @@ export default class Homescreen extends Component{
                     duration: 10000,
                     position:'bottom',
                   })
+
             }
             else{
                 Toast.show({

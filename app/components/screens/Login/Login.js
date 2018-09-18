@@ -19,12 +19,12 @@ class Login extends Component{
     constructor(props){
         super(props);
         this.state={
-                uname:'darshana27997@gmail.com',
-                pwd:'Darshana27997',
+                uname:'deshpande.darshana@gmail.com',
+                pwd:'darshana123',
                 isModal1Visible:false,
                 toggle:false,
                 isDisabled:false
-                };
+        };
         this._onPress = this._onPress.bind(this);
         this._onRegister = this._onRegister.bind(this);
         this.callbackFn=this.callbackFn.bind(this);
